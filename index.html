@@ -171,6 +171,45 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .page-text{font-size:0.24rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
 .page-text.left{text-align:left}
 
+/* Interactive: Map dots clickable */
+.map-dot-interactive{cursor:pointer;transition:all 0.3s}
+.map-dot-interactive:active{transform:scale(2)}
+.map-popup{position:absolute;background:rgba(0,0,0,0.9);border:0.01rem solid #DAA520;border-radius:0.08rem;padding:0.12rem 0.15rem;font-size:0.16rem;color:#e8d5c4;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:10;white-space:nowrap;max-width:3rem}
+.map-popup.show{opacity:1}
+
+/* Interactive: Spirit characters tappable */
+.spirit-char{cursor:pointer;transition:all 0.3s;position:relative}
+.spirit-char:active{transform:scale(1.4);color:#c41e3a;text-shadow:0 0 0.1rem #DAA520}
+.spirit-char.pulse{animation:charPulse 0.6s ease-out}
+@keyframes charPulse{0%{transform:scale(1.5);color:#ffd700}100%{transform:scale(1);color:#DAA520}}
+.spirit-meaning{font-size:0.18rem;color:#c41e3a;margin-top:0.05rem;min-height:0.25rem;text-align:center;transition:all 0.3s}
+
+/* Interactive: Battle scene elements */
+.battle-hotspot{cursor:pointer;transition:all 0.2s}
+.battle-hotspot:active{filter:brightness(1.5)}
+.battle-info{position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.15rem 0.2rem;font-size:0.18rem;color:#e8d5c4;text-align:center;z-index:5;opacity:0;transition:opacity 0.4s;width:4.5rem}
+.battle-info.show{opacity:1}
+
+/* Interactive: Legacy flip cards */
+.legacy-card{cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s;position:relative}
+.legacy-card.flipped{transform:rotateY(180deg)}
+.legacy-front,.legacy-back{backface-visibility:hidden}
+.legacy-back{position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,0,0,0.7),rgba(0,0,0,0.85));border:0.01rem solid #DAA520;border-radius:0.12rem;padding:0.2rem;transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;align-items:center}
+.legacy-back-title{font-size:0.2rem;color:#DAA520;font-weight:bold;margin-bottom:0.08rem}
+.legacy-back-desc{font-size:0.17rem;color:#e8d5c4;line-height:1.5;text-align:center}
+.legacy-hint{font-size:0.14rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.1rem;z-index:1}
+
+/* Interactive: Event cards on P3 */
+.event-card{cursor:pointer;transition:all 0.3s;border-radius:0.1rem;padding:0.12rem 0.18rem;border:0.01rem solid rgba(218,165,32,0.2);margin:0.06rem 0;background:rgba(0,0,0,0.2)}
+.event-card:active{background:rgba(196,30,58,0.3);border-color:#DAA520}
+.event-detail{max-height:0;overflow:hidden;transition:max-height 0.3s;font-size:0.18rem;color:#cdb38b;line-height:1.5}
+.event-card.open .event-detail{max-height:1.5rem}
+
+/* Interactive: Sanwan org nodes */
+.org-node-interactive{cursor:pointer;transition:all 0.3s}
+.org-node-interactive:active{fill:rgba(218,165,32,0.5);stroke:#ffd700}
+.sanwan-detail{font-size:0.18rem;color:#cdb38b;text-align:center;margin-top:0.08rem;min-height:0.22rem}
+
 @media(max-width:375px){
   .hero-card{width:100%}
   .flip-card{width:1.4rem;height:2rem}
@@ -222,11 +261,14 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
     <polygon points="175,115 180,105 185,115 195,115 187,122 190,132 180,125 170,132 173,122 165,115" fill="#DAA520" opacity="0.9"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></polygon>
     <circle cx="175" cy="115" r="18" fill="none" stroke="#c41e3a" stroke-width="1" opacity="0.5"><animate attributeName="r" values="18;30;18" dur="2.5s" repeatCount="indefinite"/></circle>
     <text x="175" y="95" text-anchor="middle" fill="#DAA520" font-size="10" font-weight="bold">★ 茨坪</text>
-    <circle cx="120" cy="130" r="4" fill="#DAA520" opacity="0.6"/><text x="105" y="125" text-anchor="end" fill="#cdb38b" font-size="7">大井</text>
-    <circle cx="210" cy="100" r="4" fill="#DAA520" opacity="0.6"/><text x="220" y="98" fill="#cdb38b" font-size="7">黄洋界</text>
-    <circle cx="175" cy="160" r="4" fill="#DAA520" opacity="0.6"/><text x="185" y="163" fill="#cdb38b" font-size="7">茅坪</text>
+    <circle cx="120" cy="130" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="大井" data-info="毛泽东旧居所在地，井冈山斗争时期的重要驻地，设有红军医院和教导队。"/><text x="105" y="126" text-anchor="end" fill="#cdb38b" font-size="7">大井</text>
+    <circle cx="210" cy="100" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="黄洋界" data-info="井冈山五大哨口之一，1928年8月黄洋界保卫战发生地，海拔1343米，地势险要。"/><text x="220" y="98" fill="#cdb38b" font-size="7">黄洋界</text>
+    <circle cx="175" cy="160" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="茅坪" data-info="湘赣边界党政军机关所在地，八角楼坐落于此，毛泽东在此写下多篇光辉著作。"/><text x="185" y="163" fill="#cdb38b" font-size="7">茅坪</text>
+    <circle cx="260" cy="130" r="7" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="龙市" data-info="1928年4月朱毛会师地点，红四军在此诞生，是井冈山革命的重要历史地标。"/><text x="268" y="133" fill="#cdb38b" font-size="7">龙市</text>
     <rect x="0" y="0" width="400" height="220" rx="10" fill="none" stroke="rgba(218,165,32,0.3)" stroke-width="1.5"/>
   </svg>
+  <div class="map-popup" id="mapPopup"></div>
+  <div class="page-text" style="font-size:0.18rem;color:rgba(205,179,139,0.5)">👆 点击地图上的金色圆点查看详情</div>
   <div class="page-text">井冈山革命根据地由<span class="danwei">毛泽东、朱德</span>等创建，开辟了<span class="danwei">"农村包围城市、武装夺取政权"</span>的正确革命道路。</div>
 </section>
 
@@ -240,11 +282,11 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
     <polygon points="60,20 40,65 80,65" fill="#DAA520" opacity="0.7"/>
     <rect x="10" y="70" width="4" height="25" fill="#8B4513"/>
   </svg>
-  <div class="page-text left" style="font-size:0.22rem">
-    <p style="margin:0.08rem 0">◆ <span class="danwei">1927.08.01</span> — 南昌起义，打响武装反抗国民党反动派的第一枪</p>
-    <p style="margin:0.08rem 0">◆ <span class="danwei">1927.09.09</span> — 毛泽东领导湘赣边秋收起义爆发</p>
-    <p style="margin:0.08rem 0">◆ <span class="danwei">1927.10</span> — 毛泽东率部抵达井冈山，建立第一个农村革命根据地</p>
-    <p style="margin:0.08rem 0">◆ <span class="danwei">1928.04</span> — 朱德、陈毅率部与毛泽东井冈山会师，合编为红四军</p>
+  <div class="page-text left" style="font-size:0.22rem;width:5rem">
+    <div class="event-card"><p>◆ <span class="danwei">1927.08.01</span> — 南昌起义</p><div class="event-detail">周恩来、贺龙、叶挺、朱德、刘伯承等领导，打响了武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争的开端。</div></div>
+    <div class="event-card"><p>◆ <span class="danwei">1927.09.09</span> — 秋收起义</p><div class="event-detail">毛泽东领导的湘赣边秋收起义爆发。受挫后，毛泽东果断决定放弃攻打长沙，向敌人统治力量薄弱的井冈山地区进军。</div></div>
+    <div class="event-card"><p>◆ <span class="danwei">1927.10</span> — 创建井冈山根据地</p><div class="event-detail">毛泽东率工农革命军到达井冈山茨坪，收编袁文才、王佐地方武装，开始创建中国第一个农村革命根据地。</div></div>
+    <div class="event-card"><p>◆ <span class="danwei">1928.04</span> — 井冈山会师</p><div class="event-detail">朱德、陈毅率南昌起义余部和湘南起义农军到达井冈山，与毛泽东会师。两军合编为中国工农革命军第四军，朱德任军长，毛泽东任党代表。</div></div>
   </div>
 </section>
 
@@ -359,11 +401,12 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
     <circle cx="50" cy="45" r="12" fill="#c41e3a" opacity="0.3"><animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite"/></circle>
   </svg>
   <div id="spiritBlock">
-    <div class="spirit-line"><span class="spirit-char">坚</span><span class="spirit-char">定</span><span class="spirit-char">执</span><span class="spirit-char">着</span><span class="spirit-char">追</span><span class="spirit-char">理</span><span class="spirit-char">想</span></div>
-    <div class="spirit-line"><span class="spirit-char">实</span><span class="spirit-char">事</span><span class="spirit-char">求</span><span class="spirit-char">是</span><span class="spirit-char">闯</span><span class="spirit-char">新</span><span class="spirit-char">路</span></div>
-    <div class="spirit-line"><span class="spirit-char">艰</span><span class="spirit-char">苦</span><span class="spirit-char">奋</span><span class="spirit-char">斗</span><span class="spirit-char">攻</span><span class="spirit-char">难</span><span class="spirit-char">关</span></div>
-    <div class="spirit-line"><span class="spirit-char">依</span><span class="spirit-char">靠</span><span class="spirit-char">群</span><span class="spirit-char">众</span><span class="spirit-char">求</span><span class="spirit-char">胜</span><span class="spirit-char">利</span></div>
+    <div class="spirit-line" data-meaning="革命理想高于天，是井冈山精神的灵魂"><span class="spirit-char">坚</span><span class="spirit-char">定</span><span class="spirit-char">执</span><span class="spirit-char">着</span><span class="spirit-char">追</span><span class="spirit-char">理</span><span class="spirit-char">想</span></div>
+    <div class="spirit-line" data-meaning="把马克思主义与中国实际相结合，走自己的路"><span class="spirit-char">实</span><span class="spirit-char">事</span><span class="spirit-char">求</span><span class="spirit-char">是</span><span class="spirit-char">闯</span><span class="spirit-char">新</span><span class="spirit-char">路</span></div>
+    <div class="spirit-line" data-meaning="在极端困难条件下自力更生，战胜一切艰难险阻"><span class="spirit-char">艰</span><span class="spirit-char">苦</span><span class="spirit-char">奋</span><span class="spirit-char">斗</span><span class="spirit-char">攻</span><span class="spirit-char">难</span><span class="spirit-char">关</span></div>
+    <div class="spirit-line" data-meaning="真心实意为群众谋利益，得到人民群众的衷心拥护"><span class="spirit-char">依</span><span class="spirit-char">靠</span><span class="spirit-char">群</span><span class="spirit-char">众</span><span class="spirit-char">求</span><span class="spirit-char">胜</span><span class="spirit-char">利</span></div>
   </div>
+  <div class="spirit-meaning" id="spiritMeaning" style="z-index:1"></div>
 </section>
 
 <!-- ====== P8 Flip Cards ====== -->
@@ -417,10 +460,12 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
     <circle cx="80" cy="80" r="12" fill="#ff8c00" opacity="0.5"><animate attributeName="opacity" values="0.5;0;0.5" dur="0.8s" repeatCount="indefinite"/></circle>
     <circle cx="55" cy="65" r="18" fill="#ff4500" opacity="0.25"><animate attributeName="opacity" values="0.25;0;0.25" dur="1s" repeatCount="indefinite"/></circle>
     <rect x="30" y="135" width="6" height="4" fill="#8b8b8b" opacity="0.4"/><rect x="55" y="138" width="6" height="4" fill="#8b8b8b" opacity="0.4"/>
-    <rect x="128" y="88" width="5" height="8" fill="#c41e3a" opacity="0.7"/><rect x="138" y="85" width="5" height="8" fill="#c41e3a" opacity="0.7"/><rect x="148" y="90" width="5" height="8" fill="#c41e3a" opacity="0.7"/>
+    <rect x="128" y="88" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/><rect x="138" y="85" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/><rect x="148" y="90" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/>
   </svg>
+  <div class="battle-info" id="battleInfo"></div>
   <div class="poem-text">"山下旌旗在望，山头鼓角相闻。<br>敌军围困万千重，<span class="danwei">我自岿然不动</span>。"</div>
-  <div class="page-text" style="font-size:0.2rem;margin-top:0.08rem">红军以不足一个营击退敌军四个团，毛泽东挥笔写下《西江月·井冈山》。</div>
+  <div class="page-text" style="font-size:0.18rem;margin-top:0.05rem">红军以不足一个营击退敌军四个团，毛泽东挥笔写下《西江月·井冈山》。</div>
+  <div class="page-text" style="font-size:0.16rem;color:rgba(205,179,139,0.5);margin-top:0.05rem">👆 点击战场中的红军战士和炮火查看细节</div>
 </section>
 
 <!-- ====== P10 Songs ====== -->
@@ -468,24 +513,37 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 <section class="page page-12">
   <div class="page-title">薪火相传</div>
   <div class="page-subtitle">井冈山精神在新时代绽放光芒</div>
-  <div class="legacy-grid">
+  <div class="legacy-grid" id="legacyGrid">
     <div class="legacy-card">
-      <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a0d0d" rx="5"/><polygon points="50,5 65,25 60,45 40,45 35,25" fill="#c41e3a" opacity="0.5" stroke="#DAA520" stroke-width="1"/><rect x="30" y="45" width="40" height="15" rx="2" fill="#8b0000" opacity="0.4"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">🏫</text></svg>
-      <div class="legacy-title">红色教育基地</div><div class="legacy-desc">井冈山是全国爱国主义教育示范基地，每年数百万人接受精神洗礼</div>
+      <div class="legacy-front">
+        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a0d0d" rx="5"/><polygon points="50,5 65,25 60,45 40,45 35,25" fill="#c41e3a" opacity="0.5" stroke="#DAA520" stroke-width="1"/><rect x="30" y="45" width="40" height="15" rx="2" fill="#8b0000" opacity="0.4"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">🏫</text></svg>
+        <div class="legacy-title">红色教育基地</div><div class="legacy-desc">井冈山是全国爱国主义教育示范基地，每年数百万人接受精神洗礼</div>
+      </div>
+      <div class="legacy-back"><div class="legacy-back-title">🏫 红色教育基地</div><div class="legacy-back-desc">井冈山革命博物馆、烈士陵园、黄洋界哨口等100多处革命旧址，每年接待游客超千万人次，是全国最著名的红色旅游目的地之一。</div></div>
     </div>
     <div class="legacy-card">
-      <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#0d1a0d" rx="5"/><path d="M20,55 L30,25 L70,25 L80,55Z" fill="none" stroke="#DAA520" stroke-width="1.5"/><rect x="35" y="40" width="30" height="15" rx="2" fill="#8b0000" opacity="0.3"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">📖</text></svg>
-      <div class="legacy-title">干部学院</div><div class="legacy-desc">井冈山干部学院传承红色基因，培养新时代的优秀干部</div>
+      <div class="legacy-front">
+        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#0d1a0d" rx="5"/><path d="M20,55 L30,25 L70,25 L80,55Z" fill="none" stroke="#DAA520" stroke-width="1.5"/><rect x="35" y="40" width="30" height="15" rx="2" fill="#8b0000" opacity="0.3"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">📖</text></svg>
+        <div class="legacy-title">干部学院</div><div class="legacy-desc">井冈山干部学院传承红色基因，培养新时代的优秀干部</div>
+      </div>
+      <div class="legacy-back"><div class="legacy-back-title">📖 干部学院</div><div class="legacy-back-desc">中国井冈山干部学院是国家级干部培训基地，开设"重走红军路""体验红军餐"等特色课程，让红色基因代代相传。</div></div>
     </div>
     <div class="legacy-card">
-      <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a1010" rx="5"/><circle cx="50" cy="35" r="20" fill="none" stroke="#DAA520" stroke-width="1"/><circle cx="50" cy="35" r="8" fill="#c41e3a" opacity="0.4"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🌿</text></svg>
-      <div class="legacy-title">绿色发展</div><div class="legacy-desc">井冈山已实现整体脱贫，红色旅游与绿色生态交相辉映</div>
+      <div class="legacy-front">
+        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a1010" rx="5"/><circle cx="50" cy="35" r="20" fill="none" stroke="#DAA520" stroke-width="1"/><circle cx="50" cy="35" r="8" fill="#c41e3a" opacity="0.4"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🌿</text></svg>
+        <div class="legacy-title">绿色发展</div><div class="legacy-desc">井冈山已实现整体脱贫，红色旅游与绿色生态交相辉映</div>
+      </div>
+      <div class="legacy-back"><div class="legacy-back-title">🌿 绿色发展</div><div class="legacy-back-desc">2017年井冈山在全国率先脱贫摘帽，森林覆盖率达86%以上，"红绿相映"的发展模式成为革命老区振兴的典范。</div></div>
     </div>
     <div class="legacy-card">
-      <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#101a1a" rx="5"/><polygon points="50,10 35,30 25,55 75,55 65,30" fill="none" stroke="#DAA520" stroke-width="1.5"/><circle cx="50" cy="35" r="5" fill="#DAA520" opacity="0.6"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🚀</text></svg>
-      <div class="legacy-title">精神永存</div><div class="legacy-desc">井冈山精神在中华民族伟大复兴的征程中持续闪耀</div>
+      <div class="legacy-front">
+        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#101a1a" rx="5"/><polygon points="50,10 35,30 25,55 75,55 65,30" fill="none" stroke="#DAA520" stroke-width="1.5"/><circle cx="50" cy="35" r="5" fill="#DAA520" opacity="0.6"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🚀</text></svg>
+        <div class="legacy-title">精神永存</div><div class="legacy-desc">井冈山精神在中华民族伟大复兴的征程中持续闪耀</div>
+      </div>
+      <div class="legacy-back"><div class="legacy-back-title">🚀 精神永存</div><div class="legacy-back-desc">从井冈山到延安，从西柏坡到北京，井冈山精神作为中国革命精神的源头，始终激励着中华民族在伟大复兴道路上奋勇前进。</div></div>
     </div>
   </div>
+  <div class="legacy-hint">👆 点击卡片翻转查看详情 · 双击全部还原</div>
 </section>
 
 <!-- ====== P13 Message ====== -->
@@ -570,6 +628,61 @@ function shareH5(){if(navigator.share)navigator.share({title:'星火燎原·井�
 
 // Audio
 let ap=false;document.getElementById('audioBtn').addEventListener('click',function(){ap=!ap;this.textContent=ap?'🔊':'🔇'});
+
+// ======== Map Popups ========
+(function(){
+  const dots=document.querySelectorAll('.map-dot-interactive');
+  const popup=document.getElementById('mapPopup');
+  if(!dots.length||!popup)return;
+  dots.forEach(function(d){
+    d.addEventListener('click',function(e){
+      e.stopPropagation();
+      const loc=this.dataset.loc,info=this.dataset.info;
+      popup.innerHTML='<strong style="color:#DAA520">'+loc+'</strong><br>'+info;
+      const rect=this.getBoundingClientRect();
+      const container=this.closest('.page').getBoundingClientRect();
+      popup.style.left=(rect.left-container.left+12)+'px';
+      popup.style.top=(rect.top-container.top-50)+'px';
+      popup.classList.add('show');
+      setTimeout(function(){popup.classList.remove('show')},3000);
+    });
+  });
+  document.querySelector('.page-2').addEventListener('click',function(){popup.classList.remove('show')});
+})();
+
+// ======== Event Cards (P3) ========
+document.querySelectorAll('.event-card').forEach(function(card){
+  card.addEventListener('click',function(){this.classList.toggle('open')});
+});
+
+// ======== Spirit Tap (P7) ========
+document.querySelectorAll('.spirit-line').forEach(function(line){
+  line.addEventListener('click',function(){
+    const meaning=this.dataset.meaning;
+    document.getElementById('spiritMeaning').textContent=meaning||'';
+    this.querySelectorAll('.spirit-char').forEach(function(c,i){
+      c.classList.remove('pulse');void c.offsetWidth;c.classList.add('pulse');
+    });
+  });
+});
+
+// ======== Battle Hotspots (P9) ========
+document.querySelectorAll('.battle-hotspot').forEach(function(hs){
+  hs.addEventListener('click',function(e){
+    e.stopPropagation();
+    const info=document.getElementById('battleInfo');
+    info.innerHTML='<strong style="color:#DAA520">'+this.dataset.spot+'</strong>：'+this.dataset.detail;
+    info.classList.add('show');
+    setTimeout(function(){info.classList.remove('show')},3500);
+  });
+});
+document.querySelector('.page-9')&&document.querySelector('.page-9').addEventListener('click',function(){document.getElementById('battleInfo').classList.remove('show')});
+
+// ======== Legacy Flip (P12) ========
+document.querySelectorAll('.legacy-card').forEach(function(card){
+  card.addEventListener('click',function(){this.classList.toggle('flipped')});
+  card.addEventListener('dblclick',function(){document.querySelectorAll('.legacy-card').forEach(function(c){c.classList.remove('flipped')})});
+});
 
 // Keyboard nav
 let cp=0;
