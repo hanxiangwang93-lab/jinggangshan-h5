@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "id": "5610a4ab",
+      "cron": "30 17 * * *",
+      "prompt": "提醒用户：现在已经下午5:30了，记得要在晚上11点之前睡觉！早点休息，别熬夜。",
+      "createdAt": 1777713735483,
+      "lastFiredAt": 1777975200527,
+      "recurring": true,
+      "createdBySessionId": "8dfba334-49da-4263-9948-1cfcf20cff9c",
+      "createdByPid": 35788
+    }
+  ]
+}

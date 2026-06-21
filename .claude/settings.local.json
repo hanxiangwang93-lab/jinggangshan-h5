@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "AskUserQuestion(*)",
+      "Agent(*)",
+      "TodoWrite(*)",
+      "NotebookEdit(*)",
+      "Skill(*)"
+    ],
+    "additionalDirectories": ["D:\\ceshi", "C:\\Users\\ASUS\\Desktop\\ksd"]
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
+}

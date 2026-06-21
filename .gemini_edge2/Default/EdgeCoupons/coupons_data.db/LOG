@@ -1,0 +1,5 @@
+2026/05/05-19:42:31.338 954 Creating DB d:\ceshi\.gemini_edge2\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/05/05-19:42:31.341 954 Reusing MANIFEST d:\ceshi\.gemini_edge2\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/05/05-19:42:31.413 79d4 Level-0 table #5: started
+2026/05/05-19:42:31.415 79d4 Level-0 table #5: 682137 bytes OK
+2026/05/05-19:42:31.416 79d4 Delete type=0 #3

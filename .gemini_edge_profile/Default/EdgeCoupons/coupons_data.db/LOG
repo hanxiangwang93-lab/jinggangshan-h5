@@ -1,0 +1,6 @@
+2026/05/05-13:50:54.276 65a0 Reusing MANIFEST d:\ceshi\.gemini_edge_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/05/05-13:50:54.277 65a0 Recovering log #26
+2026/05/05-13:50:54.277 65a0 Reusing old log d:\ceshi\.gemini_edge_profile\Default\EdgeCoupons/coupons_data.db/000026.log 
+2026/05/05-13:50:54.331 9294 Level-0 table #30: started
+2026/05/05-13:50:54.333 9294 Level-0 table #30: 682240 bytes OK
+2026/05/05-13:50:54.334 9294 Delete type=0 #26
