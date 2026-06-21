@@ -87,16 +87,30 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .timeline-hint{font-size:0.18rem;color:rgba(205,179,139,0.6);text-align:center;margin-top:0.2rem;animation:blink 1.5s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.4}50%{opacity:1}}
 
-/* === Page 5: Hero Cards === */
-.hero-grid{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem}
-.hero-card{width:1.5rem;height:2rem;background:linear-gradient(180deg,rgba(196,30,58,0.3),rgba(0,0,0,0.5));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;text-align:center;padding:0.2rem 0.1rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;flex-direction:column;align-items:center;justify-content:center}
+/* === Page 5: Enhanced Hero Cards with Bio === */
+.hero-scroll{width:100%;overflow-y:auto;overflow-x:hidden;max-height:60vh;padding:0 0.2rem;-webkit-overflow-scrolling:touch}
+.hero-scroll::-webkit-scrollbar{width:0.03rem}
+.hero-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,0.03)}
+.hero-scroll::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.5);border-radius:0.02rem}
+.hero-grid{display:flex;flex-direction:column;gap:0.2rem;max-width:5.5rem;margin:0 auto}
+.hero-card{background:linear-gradient(135deg,rgba(196,30,58,0.2),rgba(0,0,0,0.5));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;align-items:center;gap:0.2rem;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.hero-card:nth-child(1){animation-delay:0.1s}.hero-card:nth-child(2){animation-delay:0.2s}
+.hero-card:nth-child(3){animation-delay:0.3s}.hero-card:nth-child(4){animation-delay:0.4s}
+.hero-card:nth-child(5){animation-delay:0.5s}.hero-card:nth-child(6){animation-delay:0.6s}
+.hero-card:nth-child(7){animation-delay:0.7s}.hero-card:nth-child(8){animation-delay:0.8s}
 @keyframes cardUp{0%{opacity:0;transform:translateY(0.3rem)}100%{opacity:1;transform:translateY(0)}}
-.hero-card:nth-child(1){animation-delay:0.1s}.hero-card:nth-child(2){animation-delay:0.3s}
-.hero-card:nth-child(3){animation-delay:0.5s}.hero-card:nth-child(4){animation-delay:0.7s}
-.hero-card:nth-child(5){animation-delay:0.9s}.hero-card:nth-child(6){animation-delay:1.1s}
-.hero-avatar{width:0.7rem;height:0.7rem;border-radius:50%;background:linear-gradient(135deg,#c41e3a,#8b0000);margin-bottom:0.15rem;display:flex;align-items:center;justify-content:center;font-size:0.32rem}
-.hero-name{font-size:0.2rem;color:#DAA520;font-weight:bold}
-.hero-role{font-size:0.16rem;color:#cdb38b;margin-top:0.05rem}
+.hero-card:active{transform:scale(0.97);border-color:#DAA520}
+.hero-card::after{content:'';position:absolute;left:0;top:0;width:0.04rem;height:100%;background:linear-gradient(180deg,#c41e3a,#DAA520)}
+.hero-avatar{min-width:0.7rem;width:0.7rem;height:0.7rem;border-radius:50%;background:linear-gradient(135deg,#c41e3a,#8b0000);display:flex;align-items:center;justify-content:center;font-size:0.32rem;border:0.02rem solid #DAA520}
+.hero-info{flex:1;min-width:0}
+.hero-name{font-size:0.22rem;color:#DAA520;font-weight:bold}
+.hero-era{font-size:0.16rem;color:#c41e3a;margin:0.03rem 0}
+.hero-role{font-size:0.17rem;color:#cdb38b;margin-bottom:0.05rem}
+.hero-bio{font-size:0.18rem;color:#e8d5c4;line-height:1.6;max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.hero-card.expanded .hero-bio{max-height:3rem}
+.hero-card.expanded{background:linear-gradient(135deg,rgba(196,30,58,0.35),rgba(0,0,0,0.6));border-color:#DAA520}
+.hero-expand-icon{font-size:0.18rem;color:#DAA520;margin-left:auto;transition:transform 0.3s;min-width:0.2rem;text-align:center}
+.hero-card.expanded .hero-expand-icon{transform:rotate(180deg)}
 
 /* === Page 6: Sanwan Reform === */
 .org-chart{display:flex;flex-direction:column;align-items:center;gap:0.15rem;margin:0.2rem 0}
@@ -255,17 +269,93 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
     <div class="timeline-hint">← 左右滑动浏览历史节点，点击查看详情 →</div>
   </section>
 
-  <!-- ===== Page 5: Heroes ===== -->
+  <!-- ===== Page 5: Heroes with Detailed Bios ===== -->
   <section class="page page-5">
     <div class="page-title">革命先驱</div>
-    <div class="page-subtitle">井冈山时期的卓越领袖</div>
-    <div class="hero-grid">
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">毛泽东</div><div class="hero-role">前委书记</div></div>
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">朱 德</div><div class="hero-role">红四军军长</div></div>
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">彭德怀</div><div class="hero-role">红五军军长</div></div>
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">陈 毅</div><div class="hero-role">政治部主任</div></div>
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">滕代远</div><div class="hero-role">红五军党代表</div></div>
-      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">何长工</div><div class="hero-role">红军将领</div></div>
+    <div class="page-subtitle">🔥 点击人物卡片展开生平事迹</div>
+    <div class="hero-scroll">
+    <div class="hero-grid" id="heroGrid">
+      <div class="hero-card">
+        <div class="hero-avatar">毛</div>
+        <div class="hero-info">
+          <div class="hero-name">毛泽东</div>
+          <div class="hero-era">1893 — 1976</div>
+          <div class="hero-role">前敌委员会书记 · 红四军党代表</div>
+          <div class="hero-bio">湖南湘潭人。1927年领导秋收起义，率部上井冈山，创建中国第一个农村革命根据地。在八角楼写下了《中国的红色政权为什么能够存在？》《井冈山的斗争》等光辉著作，提出"工农武装割据"思想，开创了"农村包围城市、武装夺取政权"的革命道路。井冈山时期是毛泽东思想的萌芽阶段，为后来的革命胜利奠定了理论基础。朱德曾评价："毛泽东同志是井冈山根据地的主要创始人。"</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">朱</div>
+        <div class="hero-info">
+          <div class="hero-name">朱 德</div>
+          <div class="hero-era">1886 — 1976</div>
+          <div class="hero-role">红四军军长 · 中华苏维埃军委主席</div>
+          <div class="hero-bio">四川仪陇人。1927年参与领导南昌起义，1928年4月率南昌起义余部和湘南起义农军到达井冈山，与毛泽东领导的秋收起义部队胜利会师，合编为中国工农革命军第四军（后改称红四军），任军长。"朱毛红军"从此成为革命的象征。他提出的"敌进我退、敌驻我扰、敌疲我打、敌退我追"十六字诀，成为红军游击战争的基本原则。井冈山时期，朱德坚持官兵平等，亲自挑粮上山，"朱德的扁担"成为革命传统的生动写照。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">彭</div>
+        <div class="hero-info">
+          <div class="hero-name">彭德怀</div>
+          <div class="hero-era">1898 — 1974</div>
+          <div class="hero-role">红五军军长 · 红三军团总指挥</div>
+          <div class="hero-bio">湖南湘潭人。1928年7月领导平江起义，组建红五军，同年12月率红五军主力到达井冈山，与红四军会合，进一步壮大了井冈山的革命武装力量。在井冈山保卫战中，彭德怀率部英勇作战，多次击退敌军进攻。他性格刚毅，作战勇猛，被誉为"横刀立马"的红军猛将。毛泽东曾赋诗赞曰："谁敢横刀立马？唯我彭大将军！"井冈山失守后，彭德怀率部转战，后又收复了井冈山，表现出卓越的军事指挥才能。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">陈</div>
+        <div class="hero-info">
+          <div class="hero-name">陈 毅</div>
+          <div class="hero-era">1901 — 1972</div>
+          <div class="hero-role">红四军政治部主任 · 军委书记</div>
+          <div class="hero-bio">四川乐至人。1927年参加南昌起义，1928年协助朱德率部到达井冈山会师。会师后任红四军政治部主任、军委书记，主管部队政治工作和思想政治建设。他积极贯彻"支部建在连上"原则，加强部队的纪律教育，参与制定《三大纪律六项注意》。井冈山时期，陈毅与毛泽东、朱德密切配合，被誉为核心决策成员之一。他还是一位诗人，在井冈山写下了许多革命诗篇。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">滕</div>
+        <div class="hero-info">
+          <div class="hero-name">滕代远</div>
+          <div class="hero-era">1904 — 1974</div>
+          <div class="hero-role">红五军党代表 · 红三军团政委</div>
+          <div class="hero-bio">湖南麻阳人。1928年与彭德怀一起领导平江起义，任红五军党代表，后率部到达井冈山。在井冈山革命根据地最艰难的时期，滕代远坚持政治工作，稳定部队士气，为巩固和发展根据地做出了重要贡献。他是红军政治工作的先驱之一，在部队中建立了健全的政治工作制度，保证了党对军队的绝对领导。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">何</div>
+        <div class="hero-info">
+          <div class="hero-name">何长工</div>
+          <div class="hero-era">1900 — 1987</div>
+          <div class="hero-role">红四军三十二团党代表 · 红军将领</div>
+          <div class="hero-bio">湖南华容人。早年赴法国勤工俭学，1923年加入中国共产党。秋收起义后随毛泽东到达井冈山，参加了创建井冈山革命根据地的全过程。1928年初，受毛泽东委派下山联络南昌起义余部，历尽艰险找到了朱德、陈毅的部队，为井冈山会师做出了关键贡献。他还受命改造袁文才、王佐的地方武装，成功将他们编入红军，为井冈山根据地的巩固做出了不可替代的贡献。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">袁</div>
+        <div class="hero-info">
+          <div class="hero-name">袁文才</div>
+          <div class="hero-era">1898 — 1930</div>
+          <div class="hero-role">红四军三十二团团长 · 原井冈山地方武装领袖</div>
+          <div class="hero-bio">江西宁冈人，客籍。早年加入"马刀队"，是井冈山地区有影响力的地方武装首领。1927年9月毛泽东率部到达井冈山后，袁文才主动迎接配合，打开山门接纳工农革命军，为井冈山革命根据地的建立奠定了最初的基础。他的部队后编入红四军三十二团，在保卫井冈山的战斗中发挥了重要作用。1930年被错杀，后平反昭雪。</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-avatar">王</div>
+        <div class="hero-info">
+          <div class="hero-name">王 佐</div>
+          <div class="hero-era">1898 — 1930</div>
+          <div class="hero-role">红四军三十二团副团长 · 原井冈山地方武装首领</div>
+          <div class="hero-bio">江西遂川人，土籍。井冈山茨坪地方武装首领，曾率领农民武装反抗地主压迫。毛泽东率部到达井冈山后，王佐与袁文才一同迎接红军，将自己控制的茨坪、大小五井等区域交给红军使用，使革命军获得了稳固的后方基地。他熟悉井冈山地形，在防御作战中发挥了重要作用。1930年与袁文才一同被错杀，后平反。毛泽东后来痛惜地说："袁王二人是井冈山的功臣。"</div>
+        </div>
+        <div class="hero-expand-icon">▼</div>
+      </div>
+    </div>
     </div>
   </section>
 
@@ -573,6 +663,22 @@ function resetQuiz(){
 }
 
 renderQuiz();
+
+// ======== Hero Card Expand ========
+document.querySelectorAll('.hero-card').forEach(card=>{
+  card.addEventListener('click',function(e){
+    // Toggle current card
+    const wasExpanded = this.classList.contains('expanded');
+    // Close all cards
+    document.querySelectorAll('.hero-card').forEach(c=>c.classList.remove('expanded'));
+    // Open if it wasn't open
+    if(!wasExpanded) this.classList.add('expanded');
+    // Scroll into view if expanding
+    if(!wasExpanded){
+      setTimeout(()=>this.scrollIntoView({behavior:'smooth',block:'nearest'}),200);
+    }
+  });
+});
 
 // ======== Song Player ========
 document.querySelectorAll('.song-player').forEach(player=>{
