@@ -485,13 +485,22 @@ pages.forEach(p=>pageObserver.observe(p));
 
 // ======== 3D Flip Cards (Advanced 2) ========
 (function(){
-  const cards = document.querySelectorAll('.flip-card');
-  cards.forEach(card=>{
-    card.addEventListener('click',()=>{
-      card.classList.toggle('flipped');
-    });
-    card.addEventListener('dblclick',()=>{
-      cards.forEach(c=>c.classList.remove('flipped'));
+  var cards = document.querySelectorAll('.flip-card');
+  var taps = {};
+  cards.forEach(function(card, idx){
+    card.addEventListener('click', function(e){
+      e.stopPropagation();
+      var now = Date.now();
+      var last = taps[idx] || 0;
+      if(now - last < 350){
+        // Double tap - reset all
+        cards.forEach(function(c){ c.classList.remove('flipped'); });
+        taps[idx] = 0;
+      } else {
+        // Single tap - toggle this card
+        this.classList.toggle('flipped');
+        taps[idx] = now;
+      }
     });
   });
 })();
@@ -502,7 +511,8 @@ const quizData = [
   {q:'井冈山会师是在哪一年？',opts:['1926年','1928年','1929年','1931年'],ans:1},
   {q:'井冈山会师的两位主要领导人是谁？',opts:['毛泽东和周恩来','毛泽东和朱德','朱德和彭德怀','毛泽东和刘少奇'],ans:1},
   {q:'三湾改编确立了哪项重要原则？',opts:['枪杆子里出政权','支部建在连上','农村包围城市','土地革命'],ans:1},
-  {q:'黄洋界保卫战发生在哪一年？',opts:['1927年','1928年','1929年','1930年'],ans:1}
+  {q:'黄洋界保卫战发生在哪一年？',opts:['1927年','1928年','1929年','1930年'],ans:1},
+  {q:'毛泽东在哪座建筑中写下《中国的红色政权为什么能够存在？》？',opts:['茨坪毛泽东旧居','八角楼','大井毛泽东旧居','黄洋界哨口'],ans:1}
 ];
 
 let quizIdx = 0, quizScore = 0;
