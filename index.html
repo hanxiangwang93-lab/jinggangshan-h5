@@ -6,7 +6,7 @@
 <title>星火燎原 · 井冈山红色文化</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{font-size:calc(100vw/7.5);scroll-behavior:smooth}
+html{font-size:calc(100vw/6.5);scroll-behavior:smooth}
 body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#1a0a0a;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 
 /* === Scroll Container === */
@@ -14,7 +14,7 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .container::-webkit-scrollbar{display:none}
 
 /* === Page Base === */
-.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;padding:0.6rem}
+.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;position:relative;overflow-y:auto;overflow-x:hidden;padding:0.5rem 0.4rem 0.6rem}
 
 /* === Page Backgrounds === */
 .page-1{background:radial-gradient(ellipse at center,#5c1414 0%,#1a0000 100%)}
@@ -33,9 +33,9 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .page-14{background:radial-gradient(ellipse at center,#8b1a1a 0%,#1a0000 100%)}
 
 /* === Shared Page Elements === */
-.page-title{font-size:0.48rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.3rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif}
-.page-subtitle{font-size:0.22rem;color:#cdb38b;text-align:center;margin-bottom:0.4rem}
-.page-body{font-size:0.26rem;color:#e8d5c4;line-height:1.8;text-align:justify;max-width:6rem}
+.page-title{font-size:0.55rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.15rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif}
+.page-subtitle{font-size:0.28rem;color:#cdb38b;text-align:center;margin-bottom:0.2rem}
+.page-body{font-size:0.32rem;color:#e8d5c4;line-height:1.9;text-align:justify;max-width:7rem}
 .danwei{color:#c41e3a;font-weight:bold}
 
 /* === Page Indicator === */
@@ -55,7 +55,7 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(0.1rem)}}
 
 /* === Page 2: Intro + Map === */
-.map-container{width:5rem;height:3rem;position:relative;margin:0.2rem auto}
+.map-container{width:6.5rem;height:3.5rem;position:relative;margin:0.2rem auto}
 .map-outline{width:100%;height:100%;border:0.02rem solid rgba(218,165,32,0.4);border-radius:0.2rem;background:rgba(139,0,0,0.15);position:relative;overflow:hidden}
 .map-svg{position:absolute;width:100%;height:100%}
 .map-dot{position:absolute;width:0.12rem;height:0.12rem;background:#c41e3a;border-radius:50%;animation:mapPulse 1.5s ease-in-out infinite}
@@ -77,48 +77,48 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .timeline-container::-webkit-scrollbar-thumb{background:#DAA520;border-radius:0.02rem}
 .timeline-track{display:flex;gap:0;padding:0 0.5rem;min-width:max-content;position:relative}
 .timeline-track::before{content:'';position:absolute;left:0.5rem;right:0.5rem;top:0.8rem;height:0.03rem;background:linear-gradient(90deg,#DAA520 0%,#c41e3a 50%,#DAA520 100%);z-index:0}
-.timeline-item{min-width:1.6rem;padding:0.2rem 0.15rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
-.timeline-item.expanded{min-width:2.8rem}
-.timeline-year{font-size:0.3rem;color:#DAA520;font-weight:bold;margin-bottom:0.15rem}
+.timeline-item{min-width:2rem;padding:0.2rem 0.15rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
+.timeline-item.expanded{min-width:3.5rem}
+.timeline-year{font-size:0.36rem;color:#DAA520;font-weight:bold;margin-bottom:0.15rem}
 .timeline-dot{width:0.2rem;height:0.2rem;background:#c41e3a;border-radius:50%;margin:0 auto 0.2rem;border:0.03rem solid #DAA520;box-shadow:0 0 0.1rem #c41e3a}
-.timeline-title{font-size:0.22rem;color:#e8d5c4;margin-bottom:0.05rem;white-space:nowrap}
-.timeline-desc{font-size:0.18rem;color:#cdb38b;display:none;line-height:1.6;margin-top:0.1rem}
+.timeline-title{font-size:0.26rem;color:#e8d5c4;margin-bottom:0.05rem;white-space:nowrap}
+.timeline-desc{font-size:0.22rem;color:#cdb38b;display:none;line-height:1.6;margin-top:0.1rem}
 .timeline-item.expanded .timeline-desc{display:block}
 .timeline-hint{font-size:0.18rem;color:rgba(205,179,139,0.6);text-align:center;margin-top:0.2rem;animation:blink 1.5s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.4}50%{opacity:1}}
 
 /* === Page 5: Hero Cards === */
 .hero-grid{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem}
-.hero-card{width:1.5rem;height:2rem;background:linear-gradient(180deg,rgba(196,30,58,0.3),rgba(0,0,0,0.5));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;text-align:center;padding:0.2rem 0.1rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-card{width:2.2rem;height:2.8rem;background:linear-gradient(180deg,rgba(196,30,58,0.3),rgba(0,0,0,0.5));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;text-align:center;padding:0.2rem 0.1rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;flex-direction:column;align-items:center;justify-content:center}
 @keyframes cardUp{0%{opacity:0;transform:translateY(0.3rem)}100%{opacity:1;transform:translateY(0)}}
 .hero-card:nth-child(1){animation-delay:0.1s}.hero-card:nth-child(2){animation-delay:0.3s}
 .hero-card:nth-child(3){animation-delay:0.5s}.hero-card:nth-child(4){animation-delay:0.7s}
 .hero-card:nth-child(5){animation-delay:0.9s}.hero-card:nth-child(6){animation-delay:1.1s}
-.hero-avatar{width:0.7rem;height:0.7rem;border-radius:50%;background:linear-gradient(135deg,#c41e3a,#8b0000);margin-bottom:0.15rem;display:flex;align-items:center;justify-content:center;font-size:0.32rem}
-.hero-name{font-size:0.2rem;color:#DAA520;font-weight:bold}
-.hero-role{font-size:0.16rem;color:#cdb38b;margin-top:0.05rem}
+.hero-avatar{width:1rem;height:1rem;border-radius:50%;background:linear-gradient(135deg,#c41e3a,#8b0000);margin-bottom:0.15rem;display:flex;align-items:center;justify-content:center;font-size:0.32rem}
+.hero-name{font-size:0.28rem;color:#DAA520;font-weight:bold}
+.hero-role{font-size:0.22rem;color:#cdb38b;margin-top:0.05rem}
 
 /* === Page 6: Sanwan Reform === */
 .org-chart{display:flex;flex-direction:column;align-items:center;gap:0.15rem;margin:0.2rem 0}
-.org-node{background:rgba(196,30,58,0.4);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.15rem 0.3rem;font-size:0.2rem;color:#e8d5c4;text-align:center}
+.org-node{background:rgba(196,30,58,0.4);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.18rem 0.4rem;font-size:0.26rem;color:#e8d5c4;text-align:center}
 .org-line{width:0.02rem;height:0.2rem;background:#DAA520}
 .org-sub{display:flex;gap:0.3rem}
 
 /* === Page 7: Spirit === */
 .spirit-block{text-align:center;margin:0.15rem 0}
-.spirit-char{display:inline-block;font-size:0.4rem;color:#DAA520;margin:0.05rem;font-family:"STKaiti","KaiTi","楷体",serif;animation:charIn 0.2s forwards;opacity:0}
+.spirit-char{display:inline-block;font-size:0.5rem;color:#DAA520;margin:0.05rem;font-family:"STKaiti","KaiTi","楷体",serif;animation:charIn 0.2s forwards;opacity:0}
 @keyframes charIn{to{opacity:1;transform:translateY(0)}}
 
 /* === Page 8: 3D Flip Cards (Advanced Component 2) === */
 .flip-grid{display:flex;flex-wrap:wrap;gap:0.2rem;justify-content:center;max-width:5.5rem;perspective:1000px}
-.flip-card{width:1.5rem;height:2rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s}
+.flip-card{width:2.1rem;height:2.8rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s}
 .flip-card.flipped{transform:rotateY(180deg)}
 .flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.15rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
 .flip-front{background:linear-gradient(180deg,rgba(196,30,58,0.5),rgba(0,0,0,0.6));border:0.01rem solid rgba(218,165,32,0.4)}
 .flip-back{background:linear-gradient(180deg,rgba(0,0,0,0.8),rgba(139,0,0,0.6));border:0.01rem solid #DAA520;transform:rotateY(180deg);padding:0.2rem}
-.flip-emoji{font-size:0.5rem;margin-bottom:0.1rem}
-.flip-name{font-size:0.2rem;color:#DAA520;font-weight:bold}
-.flip-story{font-size:0.17rem;color:#e8d5c4;line-height:1.6;text-align:center}
+.flip-emoji{font-size:0.7rem;margin-bottom:0.15rem}
+.flip-name{font-size:0.26rem;color:#DAA520;font-weight:bold}
+.flip-story{font-size:0.22rem;color:#e8d5c4;line-height:1.6;text-align:center}
 .flip-hint{font-size:0.16rem;color:rgba(205,179,139,0.6);text-align:center;margin-top:0.25rem}
 
 /* === Page 9: Battle === */
@@ -128,15 +128,15 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 /* === Page 10: Red Songs === */
 .song-player{background:rgba(196,30,58,0.2);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;text-align:center;cursor:pointer;transition:all 0.3s;margin:0.1rem 0}
 .song-player:hover,.song-player.playing{background:rgba(196,30,58,0.4);border-color:#DAA520}
-.song-name{font-size:0.24rem;color:#DAA520}
+.song-name{font-size:0.3rem;color:#DAA520}
 .song-lyric{font-size:0.18rem;color:#cdb38b;margin-top:0.1rem;max-height:0;overflow:hidden;transition:max-height 0.5s}
 .song-player.playing .song-lyric{max-height:2rem}
 
 /* === Page 11: Quiz (Advanced Component 3) === */
-.quiz-container{width:5.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.2rem;padding:0.3rem}
-.quiz-question{font-size:0.28rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
+.quiz-container{width:6.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.2rem;padding:0.3rem}
+.quiz-question{font-size:0.34rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
 .quiz-options{display:flex;flex-wrap:wrap;gap:0.15rem}
-.quiz-option{width:calc(50% - 0.075rem);padding:0.18rem;background:rgba(255,255,255,0.05);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.1rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
+.quiz-option{width:calc(50% - 0.075rem);padding:0.25rem 0.2rem;background:rgba(255,255,255,0.05);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.1rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
 .quiz-option:active{transform:scale(0.96)}
 .quiz-option.correct{background:rgba(0,200,0,0.3);border-color:#0a0;color:#0f0}
 .quiz-option.wrong{background:rgba(200,0,0,0.3);border-color:#c00;color:#f66}
@@ -148,16 +148,16 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 
 /* === Page 12: Legacy === */
 .legacy-cards{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem}
-.legacy-card{width:2.4rem;padding:0.25rem;background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(0,0,0,0.4));border-radius:0.15rem;border:0.01rem solid rgba(218,165,32,0.3);animation:cardUp 0.5s forwards;opacity:0}
+.legacy-card{width:3rem;padding:0.25rem;background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(0,0,0,0.4));border-radius:0.15rem;border:0.01rem solid rgba(218,165,32,0.3);animation:cardUp 0.5s forwards;opacity:0}
 .legacy-card:nth-child(1){animation-delay:0.1s}.legacy-card:nth-child(2){animation-delay:0.3s}
 .legacy-card:nth-child(3){animation-delay:0.5s}.legacy-card:nth-child(4){animation-delay:0.7s}
 .legacy-icon{font-size:0.4rem;text-align:center;margin-bottom:0.1rem}
-.legacy-title{font-size:0.22rem;color:#DAA520;text-align:center;font-weight:bold}
-.legacy-desc{font-size:0.18rem;color:#cdb38b;text-align:center;line-height:1.6;margin-top:0.08rem}
+.legacy-title{font-size:0.28rem;color:#DAA520;text-align:center;font-weight:bold}
+.legacy-desc{font-size:0.22rem;color:#cdb38b;text-align:center;line-height:1.6;margin-top:0.08rem}
 
 /* === Page 13: Message Wall === */
 .msg-area{width:5.5rem;background:rgba(0,0,0,0.3);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;margin:0.2rem 0}
-.msg-input{width:100%;height:0.8rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.1rem;color:#e8d5c4;font-size:0.2rem;padding:0.15rem;resize:none;font-family:inherit}
+.msg-input{width:100%;height:1rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.1rem;color:#e8d5c4;font-size:0.2rem;padding:0.15rem;resize:none;font-family:inherit}
 .msg-input:focus{outline:none;border-color:#DAA520}
 .msg-submit{display:block;width:1.5rem;height:0.5rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.25rem;font-size:0.2rem;margin:0.15rem auto 0;cursor:pointer;letter-spacing:0.02rem}
 .msg-wall{max-height:1.5rem;overflow-y:auto;margin-top:0.15rem}
@@ -167,11 +167,11 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 /* === Page 14: Ending === */
 .firework{position:absolute;width:0.04rem;height:0.04rem;border-radius:50%;animation:fireworkBurst 1.5s ease-out forwards}
 @keyframes fireworkBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
-.end-title{font-size:0.48rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
+.end-title{font-size:0.6rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
 .end-stats{display:flex;gap:0.4rem;margin:0.3rem 0;z-index:1}
 .end-stat{text-align:center}
-.end-num{font-size:0.5rem;color:#DAA520;font-weight:bold}
-.end-label{font-size:0.18rem;color:#cdb38b}
+.end-num{font-size:0.6rem;color:#DAA520;font-weight:bold}
+.end-label{font-size:0.22rem;color:#cdb38b}
 .end-share{display:inline-block;padding:0.15rem 0.5rem;background:linear-gradient(135deg,#DAA520,#c41e3a);color:#fff;border-radius:0.25rem;font-size:0.22rem;cursor:pointer;z-index:1;letter-spacing:0.02rem;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0.1rem #DAA520}50%{box-shadow:0 0 0.3rem #DAA520,0 0 0.5rem #c41e3a}}
 
@@ -180,9 +180,9 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 
 /* === Mobile Tweaks === */
 @media (max-width:375px){
-  .hero-card{width:1.3rem;height:1.8rem}
-  .flip-card{width:1.3rem;height:1.8rem}
-  .quiz-option{font-size:0.18rem}
+  .hero-card{width:2rem;height:2.6rem}
+  .flip-card{width:1.9rem;height:2.6rem}
+  .quiz-option{font-size:0.22rem}
 }
 </style>
 </head>
@@ -309,7 +309,7 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
   </section>
 
   <!-- ===== Page 8: 3D Flip Cards (Advanced Component 2) ===== -->
-  <section class="page page-8" style="overflow-y:auto;justify-content:flex-start;padding-top:0.5rem">
+  <section class="page page-8" style="overflow-y:auto;justify-content:flex-start;padding-top:0.3rem">
     <div class="page-title">⭐ 革命文物</div>
     <div class="page-subtitle">交互组件 · 点击卡片查看文物背后的故事</div>
     <div class="flip-grid" id="flipGrid">
@@ -353,7 +353,7 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
   </section>
 
   <!-- ===== Page 11: Quiz (Advanced Component 3) ===== -->
-  <section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.5rem">
+  <section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.3rem">
     <div class="page-title">⭐ 红色知识挑战</div>
     <div class="page-subtitle">交互组件 · 答题测试你对井冈山历史的了解</div>
     <div class="quiz-container" id="quizContainer">
