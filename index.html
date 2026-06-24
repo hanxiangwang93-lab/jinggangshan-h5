@@ -3,697 +3,714 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>星火燎原 · 井冈山红色文化主题展</title>
+<title>星火燎原 · 井冈山红色文化</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{font-size:calc(100vw/7.5);scroll-behavior:smooth}
-body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#0d0808;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#1a0a0a;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 
+/* === Scroll Container === */
 .container{width:100vw;height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;position:relative}
 .container::-webkit-scrollbar{display:none}
-.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;position:relative;overflow-y:auto;overflow-x:hidden;padding:0.25rem 0.35rem 0.4rem}
-.page::-webkit-scrollbar{width:0.02rem}
-.page::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.3);border-radius:0.01rem}
 
-/* Backgrounds */
-.page-1{background:radial-gradient(ellipse at 50% 30%,#7a1a1a 0%,#0d0000 70%)}
-.page-2{background:linear-gradient(180deg,#1a0d0d 0%,#0d0d1a 100%)}
-.page-3{background:linear-gradient(180deg,#0d0d1a 0%,#1a0f0a 100%)}
-.page-4{background:linear-gradient(180deg,#1a0a0a 0%,#0a0a1a 100%)}
-.page-5{background:linear-gradient(180deg,#0a0a1a 0%,#1a0d0d 100%)}
-.page-6{background:linear-gradient(180deg,#1a0d0d 0%,#0d1a0d 100%)}
-.page-7{background:radial-gradient(ellipse at 50% 20%,#8b1a1a 0%,#0d0000 100%)}
-.page-8{background:linear-gradient(180deg,#1a0d0d 0%,#0d0d1a 100%)}
-.page-9{background:linear-gradient(180deg,#0d0d1a 0%,#1a0f0a 100%)}
-.page-10{background:linear-gradient(180deg,#1a0a0a 0%,#1a0d1a 100%)}
+/* === Page Base === */
+.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;padding:0.6rem}
+
+/* === Page Backgrounds === */
+.page-1{background:radial-gradient(ellipse at center,#5c1414 0%,#1a0000 100%)}
+.page-2{background:linear-gradient(180deg,#2d1414 0%,#1a0a0a 50%,#0d1a0d 100%)}
+.page-3{background:linear-gradient(180deg,#1a0a0a 0%,#2a1a0a 100%)}
+.page-4{background:linear-gradient(180deg,#1a0808 0%,#0a0a1a 100%)}
+.page-5{background:linear-gradient(180deg,#0a0a1a 0%,#1a0a0a 100%)}
+.page-6{background:linear-gradient(180deg,#1a0f0a 0%,#1a0a0a 100%)}
+.page-7{background:radial-gradient(ellipse at 50% 30%,#8b1a1a 0%,#1a0000 100%)}
+.page-8{background:linear-gradient(180deg,#1a0a0a 0%,#1a1414 100%)}
+.page-9{background:linear-gradient(180deg,#1a1414 0%,#1a0a0a 50%,#0a0a1a 100%)}
+.page-10{background:linear-gradient(180deg,#0a0a1a 0%,#1a0a1a 100%)}
 .page-11{background:linear-gradient(180deg,#1a0a0a 0%,#1a0a0a 100%)}
-.page-12{background:radial-gradient(ellipse at 50% 80%,#c41e3a 0%,#0d0000 100%)}
-.page-13{background:linear-gradient(180deg,#1a0d0d 0%,#1a0d0d 100%)}
-.page-14{background:radial-gradient(ellipse at center,#8b1a1a 0%,#0d0000 100%)}
+.page-12{background:radial-gradient(ellipse at 50% 80%,#c41e3a 0%,#1a0000 100%)}
+.page-13{background:linear-gradient(180deg,#1a0a0a 0%,#1a1414 100%)}
+.page-14{background:radial-gradient(ellipse at center,#8b1a1a 0%,#1a0000 100%)}
 
-/* Shared */
-.page-title{font-size:0.5rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.08rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
-.page-subtitle{font-size:0.24rem;color:#cdb38b;text-align:center;margin-bottom:0.12rem;z-index:1}
+/* === Shared Page Elements === */
+.page-title{font-size:0.48rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.3rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif}
+.page-subtitle{font-size:0.22rem;color:#cdb38b;text-align:center;margin-bottom:0.4rem}
+.page-body{font-size:0.26rem;color:#e8d5c4;line-height:1.8;text-align:justify;max-width:6rem}
 .danwei{color:#c41e3a;font-weight:bold}
 
-/* Indicator */
-.indicator{position:fixed;right:0.12rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:0.08rem}
-.indicator-dot{width:0.08rem;height:0.08rem;border-radius:50%;background:rgba(255,255,255,0.25);transition:all 0.3s;cursor:pointer}
-.indicator-dot.active{background:#DAA520;height:0.28rem;border-radius:0.04rem;box-shadow:0 0 0.08rem #DAA520}
+/* === Page Indicator === */
+.indicator{position:fixed;right:0.15rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:0.12rem}
+.indicator-dot{width:0.1rem;height:0.1rem;border-radius:50%;background:rgba(255,255,255,0.3);transition:all 0.3s;cursor:pointer}
+.indicator-dot.active{background:#DAA520;height:0.3rem;border-radius:0.05rem;box-shadow:0 0 0.08rem #DAA520}
 
-/* Cover */
-.cover-svg{width:1.6rem;height:2rem;z-index:1;margin-bottom:0.05rem}
-.cover-title{font-size:0.7rem;color:#DAA520;font-weight:bold;letter-spacing:0.08rem;font-family:"STKaiti","KaiTi","楷体",serif;text-shadow:0 0 0.25rem #c41e3a;z-index:1}
-.cover-line{width:2rem;height:0.02rem;background:linear-gradient(90deg,transparent,#DAA520,transparent);margin:0.15rem auto;z-index:1}
-.cover-sub{font-size:0.3rem;color:#cdb38b;z-index:1;letter-spacing:0.04rem}
-.cover-swipe{position:absolute;bottom:0.25rem;font-size:0.18rem;color:rgba(218,165,32,0.6);animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(0.08rem)}}
+/* === Page 1: Cover === */
+.cover-star{position:absolute;width:0.04rem;height:0.04rem;background:#DAA520;border-radius:50%;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{0%{opacity:0.3;box-shadow:0 0 0.02rem #DAA520}100%{opacity:1;box-shadow:0 0 0.06rem #ff6b6b}}
+.cover-torch{font-size:1rem;animation:torchFlicker 0.2s infinite alternate}
+@keyframes torchFlicker{0%{filter:brightness(0.9)}100%{filter:brightness(1.1)}}
+.cover-title{font-size:0.64rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;text-shadow:0 0 0.2rem #c41e3a;z-index:1;text-align:center}
+.cover-subtitle{font-size:0.28rem;color:#cdb38b;margin-top:0.2rem;z-index:1;letter-spacing:0.04rem}
+.cover-line{width:1.6rem;height:0.02rem;background:linear-gradient(90deg,transparent,#DAA520,transparent);margin:0.2rem auto;z-index:1}
+.cover-swipe{position:absolute;bottom:0.3rem;font-size:0.2rem;color:rgba(218,165,32,0.7);animation:bounceDown 2s infinite}
+@keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(0.1rem)}}
 
-/* Star particles */
-.star{position:absolute;background:#DAA520;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
-@keyframes twinkle{0%{opacity:0.2;box-shadow:0 0 0.01rem #DAA520}100%{opacity:1;box-shadow:0 0 0.06rem #ff6b6b}}
+/* === Page 2: Intro + Map === */
+.map-container{width:5rem;height:3rem;position:relative;margin:0.2rem auto}
+.map-outline{width:100%;height:100%;border:0.02rem solid rgba(218,165,32,0.4);border-radius:0.2rem;background:rgba(139,0,0,0.15);position:relative;overflow:hidden}
+.map-svg{position:absolute;width:100%;height:100%}
+.map-dot{position:absolute;width:0.12rem;height:0.12rem;background:#c41e3a;border-radius:50%;animation:mapPulse 1.5s ease-in-out infinite}
+@keyframes mapPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(2);opacity:0.3}}
+.map-dot-1{left:35%;top:55%}.map-dot-2{left:45%;top:48%}.map-dot-3{left:52%;top:62%}
+.map-dot-4{left:40%;top:40%}.map-dot-5{left:48%;top:35%}
+.map-label{position:absolute;font-size:0.16rem;color:#cdb38b}
 
-/* Section SVGs */
-.section-illust{width:2rem;height:1.6rem;margin-bottom:0.08rem;z-index:1}
-.section-illust.small{width:1.5rem;height:1.2rem}
+/* === Page 3: Background === */
+.stagger-text{opacity:0;transform:translateX(-0.3rem);animation:slideIn 0.6s forwards}
+.stagger-text:nth-child(1){animation-delay:0.1s}.stagger-text:nth-child(2){animation-delay:0.3s}
+.stagger-text:nth-child(3){animation-delay:0.5s}.stagger-text:nth-child(4){animation-delay:0.7s}
+@keyframes slideIn{to{opacity:1;transform:translateX(0)}}
 
-/* Page 2 Map */
-.map-illust{width:5.5rem;height:3rem;z-index:1;margin:0.05rem 0}
+/* === Page 4: Timeline (Advanced Component 1) === */
+.timeline-container{width:100%;overflow-x:auto;overflow-y:hidden;padding:0.2rem 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.timeline-container::-webkit-scrollbar{height:0.04rem}
+.timeline-container::-webkit-scrollbar-track{background:rgba(255,255,255,0.05)}
+.timeline-container::-webkit-scrollbar-thumb{background:#DAA520;border-radius:0.02rem}
+.timeline-track{display:flex;gap:0;padding:0 0.5rem;min-width:max-content;position:relative}
+.timeline-track::before{content:'';position:absolute;left:0.5rem;right:0.5rem;top:0.8rem;height:0.03rem;background:linear-gradient(90deg,#DAA520 0%,#c41e3a 50%,#DAA520 100%);z-index:0}
+.timeline-item{min-width:1.6rem;padding:0.2rem 0.15rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
+.timeline-item.expanded{min-width:2.8rem}
+.timeline-year{font-size:0.3rem;color:#DAA520;font-weight:bold;margin-bottom:0.15rem}
+.timeline-dot{width:0.2rem;height:0.2rem;background:#c41e3a;border-radius:50%;margin:0 auto 0.2rem;border:0.03rem solid #DAA520;box-shadow:0 0 0.1rem #c41e3a}
+.timeline-title{font-size:0.22rem;color:#e8d5c4;margin-bottom:0.05rem;white-space:nowrap}
+.timeline-desc{font-size:0.18rem;color:#cdb38b;display:none;line-height:1.6;margin-top:0.1rem}
+.timeline-item.expanded .timeline-desc{display:block}
+.timeline-hint{font-size:0.18rem;color:rgba(205,179,139,0.6);text-align:center;margin-top:0.2rem;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:0.4}50%{opacity:1}}
 
-/* Page 5 Hero */
-.hero-scroll{width:100%;overflow-y:auto;overflow-x:hidden;max-height:70vh;padding:0 0.1rem;-webkit-overflow-scrolling:touch}
-.hero-scroll::-webkit-scrollbar{width:0.03rem}
-.hero-scroll::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.4);border-radius:0.02rem}
-.hero-row{display:flex;gap:0.12rem;flex-wrap:wrap;justify-content:center}
-.hero-card{width:6rem;background:linear-gradient(135deg,rgba(196,30,58,0.25),rgba(0,0,0,0.6));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.22rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;align-items:flex-start;gap:0.18rem;cursor:pointer;transition:all 0.3s;position:relative}
-.hero-card:nth-child(1){animation-delay:0.05s}.hero-card:nth-child(2){animation-delay:0.1s}
-.hero-card:nth-child(3){animation-delay:0.15s}.hero-card:nth-child(4){animation-delay:0.2s}
-.hero-card:nth-child(5){animation-delay:0.25s}.hero-card:nth-child(6){animation-delay:0.3s}
-.hero-card:nth-child(7){animation-delay:0.35s}.hero-card:nth-child(8){animation-delay:0.4s}
+/* === Page 5: Hero Cards === */
+.hero-grid{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem}
+.hero-card{width:1.5rem;height:2rem;background:linear-gradient(180deg,rgba(196,30,58,0.3),rgba(0,0,0,0.5));border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;text-align:center;padding:0.2rem 0.1rem;opacity:0;animation:cardUp 0.5s forwards;display:flex;flex-direction:column;align-items:center;justify-content:center}
 @keyframes cardUp{0%{opacity:0;transform:translateY(0.3rem)}100%{opacity:1;transform:translateY(0)}}
-.hero-card:active{transform:scale(0.97)}
-.hero-card::before{content:'';position:absolute;left:0;top:0;width:0.03rem;height:100%;background:linear-gradient(180deg,#c41e3a,#DAA520);border-radius:0.15rem 0 0 0.15rem}
-.hero-portrait{min-width:0.9rem;width:0.9rem;height:0.9rem;border-radius:0.1rem;display:flex;align-items:center;justify-content:center;border:0.02rem solid #DAA520;overflow:hidden}
-.hero-info{flex:1;min-width:0}
-.hero-name{font-size:0.28rem;color:#DAA520;font-weight:bold}
-.hero-era{font-size:0.2rem;color:#c41e3a}
-.hero-role{font-size:0.2rem;color:#cdb38b;margin:0.04rem 0}
-.hero-bio{font-size:0.22rem;color:#e8d5c4;line-height:1.6;max-height:0;overflow:hidden;transition:max-height 0.4s}
-.hero-card.expanded .hero-bio{max-height:4rem}
-.hero-expand{font-size:0.16rem;color:#DAA520;margin-left:auto;transition:transform 0.3s;align-self:center}
-.hero-card.expanded .hero-expand{transform:rotate(180deg)}
+.hero-card:nth-child(1){animation-delay:0.1s}.hero-card:nth-child(2){animation-delay:0.3s}
+.hero-card:nth-child(3){animation-delay:0.5s}.hero-card:nth-child(4){animation-delay:0.7s}
+.hero-card:nth-child(5){animation-delay:0.9s}.hero-card:nth-child(6){animation-delay:1.1s}
+.hero-avatar{width:0.7rem;height:0.7rem;border-radius:50%;background:linear-gradient(135deg,#c41e3a,#8b0000);margin-bottom:0.15rem;display:flex;align-items:center;justify-content:center;font-size:0.32rem}
+.hero-name{font-size:0.2rem;color:#DAA520;font-weight:bold}
+.hero-role{font-size:0.16rem;color:#cdb38b;margin-top:0.05rem}
 
-/* Timeline */
-.tl-box{width:100%;overflow-x:auto;overflow-y:hidden;padding:0.15rem 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
-.tl-box::-webkit-scrollbar{height:0.03rem}
-.tl-box::-webkit-scrollbar-thumb{background:#DAA520;border-radius:0.02rem}
-.tl-track{display:flex;gap:0;padding:0 0.4rem;min-width:max-content;position:relative}
-.tl-track::before{content:'';position:absolute;left:0.4rem;right:0.4rem;top:0.7rem;height:0.025rem;background:linear-gradient(90deg,#DAA520 0%,#c41e3a 50%,#DAA520 100%)}
-.tl-item{min-width:1.8rem;padding:0.15rem 0.12rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
-.tl-item.on{min-width:3rem}
-.tl-year{font-size:0.3rem;color:#DAA520;font-weight:bold}
-.tl-dot{width:0.18rem;height:0.18rem;background:#c41e3a;border-radius:50%;margin:0.12rem auto;border:0.025rem solid #DAA520;box-shadow:0 0 0.08rem #c41e3a}
-.tl-title{font-size:0.22rem;color:#e8d5c4;white-space:nowrap}
-.tl-desc{font-size:0.2rem;color:#cdb38b;display:none;line-height:1.5;margin-top:0.08rem}
-.tl-item.on .tl-desc{display:block}
-.tl-hint{font-size:0.18rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.15rem}
+/* === Page 6: Sanwan Reform === */
+.org-chart{display:flex;flex-direction:column;align-items:center;gap:0.15rem;margin:0.2rem 0}
+.org-node{background:rgba(196,30,58,0.4);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.15rem 0.3rem;font-size:0.2rem;color:#e8d5c4;text-align:center}
+.org-line{width:0.02rem;height:0.2rem;background:#DAA520}
+.org-sub{display:flex;gap:0.3rem}
 
-/* Timeline illustration row */
-.tl-ill-row{display:flex;gap:0.1rem;justify-content:center;margin-bottom:0.15rem;flex-wrap:wrap}
-.tl-ill{width:0.8rem;height:0.6rem;border-radius:0.08rem;border:0.01rem solid rgba(218,165,32,0.3);overflow:hidden}
+/* === Page 7: Spirit === */
+.spirit-block{text-align:center;margin:0.15rem 0}
+.spirit-char{display:inline-block;font-size:0.4rem;color:#DAA520;margin:0.05rem;font-family:"STKaiti","KaiTi","楷体",serif;animation:charIn 0.2s forwards;opacity:0}
+@keyframes charIn{to{opacity:1;transform:translateY(0)}}
 
-/* 3D Flip */
-.flip-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:5.5rem;perspective:800px;z-index:1}
-.flip-card{width:1.8rem;height:2.6rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.5s}
+/* === Page 8: 3D Flip Cards (Advanced Component 2) === */
+.flip-grid{display:flex;flex-wrap:wrap;gap:0.2rem;justify-content:center;max-width:5.5rem;perspective:1000px}
+.flip-card{width:1.5rem;height:2rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s}
 .flip-card.flipped{transform:rotateY(180deg)}
-.flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.12rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.18rem}
-.flip-front{background:linear-gradient(180deg,rgba(196,30,58,0.5),rgba(0,0,0,0.7));border:0.015rem solid rgba(218,165,32,0.4)}
-.flip-back{background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(139,0,0,0.7));border:0.015rem solid #DAA520;transform:rotateY(180deg);padding:0.2rem}
-.flip-ill{width:1.2rem;height:1rem;margin-bottom:0.1rem;display:flex;align-items:center;justify-content:center}
-.flip-name{font-size:0.24rem;color:#DAA520;font-weight:bold}
-.flip-story{font-size:0.2rem;color:#e8d5c4;line-height:1.5;text-align:center}
-.flip-hint{font-size:0.18rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.2rem;z-index:1}
+.flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.15rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
+.flip-front{background:linear-gradient(180deg,rgba(196,30,58,0.5),rgba(0,0,0,0.6));border:0.01rem solid rgba(218,165,32,0.4)}
+.flip-back{background:linear-gradient(180deg,rgba(0,0,0,0.8),rgba(139,0,0,0.6));border:0.01rem solid #DAA520;transform:rotateY(180deg);padding:0.2rem}
+.flip-emoji{font-size:0.5rem;margin-bottom:0.1rem}
+.flip-name{font-size:0.2rem;color:#DAA520;font-weight:bold}
+.flip-story{font-size:0.17rem;color:#e8d5c4;line-height:1.6;text-align:center}
+.flip-hint{font-size:0.16rem;color:rgba(205,179,139,0.6);text-align:center;margin-top:0.25rem}
 
-/* Battle */
-.battle-ill{width:5.5rem;height:3rem;z-index:1;margin-bottom:0.05rem}
-.poem-text{font-size:0.26rem;color:#DAA520;line-height:2;text-align:center;z-index:1;font-family:"STKaiti","KaiTi","楷体",serif}
+/* === Page 9: Battle === */
+.battle-bg{position:absolute;width:100%;height:100%;opacity:0.15;font-size:3rem;display:flex;align-items:center;justify-content:center;color:#c41e3a;animation:slowFloat 6s ease-in-out infinite}
+@keyframes slowFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-0.1rem)}}
 
-/* Quiz */
-.quiz-box{width:5.5rem;background:rgba(0,0,0,0.5);border:0.01rem solid rgba(218,165,32,0.35);border-radius:0.15rem;padding:0.3rem;z-index:1}
-.quiz-q{font-size:0.3rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
-.quiz-opts{display:flex;flex-wrap:wrap;gap:0.12rem}
-.quiz-opt{width:calc(50% - 0.06rem);padding:0.2rem;background:rgba(255,255,255,0.06);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.08rem;font-size:0.24rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
-.quiz-opt:active{transform:scale(0.95)}
-.quiz-opt.ok{background:rgba(0,180,0,0.3);border-color:#0a0}
-.quiz-opt.no{background:rgba(200,0,0,0.3);border-color:#c00;color:#f66}
+/* === Page 10: Red Songs === */
+.song-player{background:rgba(196,30,58,0.2);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;text-align:center;cursor:pointer;transition:all 0.3s;margin:0.1rem 0}
+.song-player:hover,.song-player.playing{background:rgba(196,30,58,0.4);border-color:#DAA520}
+.song-name{font-size:0.24rem;color:#DAA520}
+.song-lyric{font-size:0.18rem;color:#cdb38b;margin-top:0.1rem;max-height:0;overflow:hidden;transition:max-height 0.5s}
+.song-player.playing .song-lyric{max-height:2rem}
+
+/* === Page 11: Quiz (Advanced Component 3) === */
+.quiz-container{width:5.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.2rem;padding:0.3rem}
+.quiz-question{font-size:0.28rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
+.quiz-options{display:flex;flex-wrap:wrap;gap:0.15rem}
+.quiz-option{width:calc(50% - 0.075rem);padding:0.18rem;background:rgba(255,255,255,0.05);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.1rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
+.quiz-option:active{transform:scale(0.96)}
+.quiz-option.correct{background:rgba(0,200,0,0.3);border-color:#0a0;color:#0f0}
+.quiz-option.wrong{background:rgba(200,0,0,0.3);border-color:#c00;color:#f66}
 .quiz-result{display:none;text-align:center;padding:0.3rem}
 .quiz-result.show{display:block}
 .quiz-score{font-size:0.6rem;color:#DAA520;font-weight:bold}
-.quiz-comment{font-size:0.24rem;color:#cdb38b;margin-top:0.08rem}
-.quiz-retry{display:inline-block;padding:0.15rem 0.4rem;background:#c41e3a;color:#fff;border-radius:0.2rem;font-size:0.22rem;margin-top:0.15rem;cursor:pointer}
+.quiz-comment{font-size:0.22rem;color:#cdb38b;margin-top:0.1rem}
+.quiz-retry{display:inline-block;padding:0.15rem 0.4rem;background:#c41e3a;color:#fff;border-radius:0.25rem;font-size:0.2rem;margin-top:0.2rem;cursor:pointer}
 
-/* Legacy */
-.legacy-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:5.5rem;z-index:1}
-.legacy-card{width:2.6rem;padding:0.22rem;background:linear-gradient(135deg,rgba(196,30,58,0.25),rgba(0,0,0,0.5));border-radius:0.12rem;border:0.01rem solid rgba(218,165,32,0.3);text-align:center;opacity:0;animation:cardUp 0.5s forwards}
-.legacy-card:nth-child(1){animation-delay:0.1s}.legacy-card:nth-child(2){animation-delay:0.25s}
-.legacy-card:nth-child(3){animation-delay:0.4s}.legacy-card:nth-child(4){animation-delay:0.55s}
-.legacy-ill{width:100%;height:1rem;display:flex;align-items:center;justify-content:center;margin-bottom:0.1rem}
-.legacy-title{font-size:0.24rem;color:#DAA520;font-weight:bold}
-.legacy-desc{font-size:0.2rem;color:#cdb38b;line-height:1.5;margin-top:0.06rem}
+/* === Page 12: Legacy === */
+.legacy-cards{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem}
+.legacy-card{width:2.4rem;padding:0.25rem;background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(0,0,0,0.4));border-radius:0.15rem;border:0.01rem solid rgba(218,165,32,0.3);animation:cardUp 0.5s forwards;opacity:0}
+.legacy-card:nth-child(1){animation-delay:0.1s}.legacy-card:nth-child(2){animation-delay:0.3s}
+.legacy-card:nth-child(3){animation-delay:0.5s}.legacy-card:nth-child(4){animation-delay:0.7s}
+.legacy-icon{font-size:0.4rem;text-align:center;margin-bottom:0.1rem}
+.legacy-title{font-size:0.22rem;color:#DAA520;text-align:center;font-weight:bold}
+.legacy-desc{font-size:0.18rem;color:#cdb38b;text-align:center;line-height:1.6;margin-top:0.08rem}
 
-/* Message */
-.msg-box{width:5.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.12rem;padding:0.2rem;z-index:1}
-.msg-input{width:100%;height:0.7rem;background:rgba(255,255,255,0.07);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.08rem;color:#e8d5c4;font-size:0.18rem;padding:0.12rem;resize:none;font-family:inherit}
+/* === Page 13: Message Wall === */
+.msg-area{width:5.5rem;background:rgba(0,0,0,0.3);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;margin:0.2rem 0}
+.msg-input{width:100%;height:0.8rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.1rem;color:#e8d5c4;font-size:0.2rem;padding:0.15rem;resize:none;font-family:inherit}
 .msg-input:focus{outline:none;border-color:#DAA520}
-.msg-submit{display:block;width:1.4rem;height:0.45rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.2rem;font-size:0.18rem;margin:0.12rem auto 0;cursor:pointer}
-.msg-wall{max-height:1.3rem;overflow-y:auto;margin-top:0.12rem}
-.msg-item{font-size:0.22rem;color:#e8d5c4;padding:0.06rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.06);animation:msgIn 0.3s}
+.msg-submit{display:block;width:1.5rem;height:0.5rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.25rem;font-size:0.2rem;margin:0.15rem auto 0;cursor:pointer;letter-spacing:0.02rem}
+.msg-wall{max-height:1.5rem;overflow-y:auto;margin-top:0.15rem}
+.msg-item{font-size:0.18rem;color:#e8d5c4;padding:0.08rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.08);animation:msgIn 0.3s}
 @keyframes msgIn{0%{opacity:0;transform:translateX(0.2rem)}100%{opacity:1;transform:translateX(0)}}
 
-/* End */
-.end-title{font-size:0.6rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1;text-align:center}
-.end-stats{display:flex;gap:0.35rem;margin:0.25rem 0;z-index:1}
+/* === Page 14: Ending === */
+.firework{position:absolute;width:0.04rem;height:0.04rem;border-radius:50%;animation:fireworkBurst 1.5s ease-out forwards}
+@keyframes fireworkBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.end-title{font-size:0.48rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
+.end-stats{display:flex;gap:0.4rem;margin:0.3rem 0;z-index:1}
 .end-stat{text-align:center}
 .end-num{font-size:0.5rem;color:#DAA520;font-weight:bold}
-.end-label{font-size:0.2rem;color:#cdb38b}
-.end-share{display:inline-block;padding:0.16rem 0.5rem;background:linear-gradient(135deg,#DAA520,#c41e3a);color:#fff;border-radius:0.2rem;font-size:0.2rem;cursor:pointer;z-index:1;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0.08rem #DAA520}50%{box-shadow:0 0 0.25rem #DAA520,0 0 0.4rem #c41e3a}}
-.firework{position:absolute;width:0.04rem;height:0.04rem;border-radius:50%;animation:fw 1.5s ease-out forwards}
-@keyframes fw{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.end-label{font-size:0.18rem;color:#cdb38b}
+.end-share{display:inline-block;padding:0.15rem 0.5rem;background:linear-gradient(135deg,#DAA520,#c41e3a);color:#fff;border-radius:0.25rem;font-size:0.22rem;cursor:pointer;z-index:1;letter-spacing:0.02rem;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0.1rem #DAA520}50%{box-shadow:0 0 0.3rem #DAA520,0 0 0.5rem #c41e3a}}
 
-/* Audio */
-.audio-btn{position:fixed;top:0.15rem;right:0.15rem;width:0.38rem;height:0.38rem;border-radius:50%;background:rgba(0,0,0,0.5);border:0.01rem solid #DAA520;z-index:200;display:flex;align-items:center;justify-content:center;font-size:0.18rem;cursor:pointer}
+/* === Audio Toggle === */
+.audio-btn{position:fixed;top:0.2rem;right:0.2rem;width:0.4rem;height:0.4rem;border-radius:50%;background:rgba(0,0,0,0.5);border:0.01rem solid #DAA520;z-index:200;display:flex;align-items:center;justify-content:center;font-size:0.2rem;cursor:pointer;transition:all 0.3s}
 
-/* Spirit */
-.spirit-ill{width:1.5rem;height:1.5rem;z-index:1;margin-bottom:0.2rem}
-.spirit-line{text-align:center;margin:0.08rem 0}
-.spirit-char{display:inline-block;font-size:0.44rem;color:#DAA520;margin:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;opacity:0}
-
-/* Page body text */
-.page-text{font-size:0.24rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
-.page-text.left{text-align:left}
-
-/* Interactive: Map dots clickable */
-.map-dot-interactive{cursor:pointer;transition:all 0.3s}
-.map-dot-interactive:active{transform:scale(2)}
-.map-popup{position:absolute;background:rgba(0,0,0,0.92);border:0.01rem solid #DAA520;border-radius:0.08rem;padding:0.15rem 0.18rem;font-size:0.2rem;color:#e8d5c4;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:10;white-space:nowrap;max-width:3rem}
-.map-popup.show{opacity:1}
-
-/* Interactive: Spirit characters tappable */
-.spirit-char{cursor:pointer;transition:all 0.3s;position:relative}
-.spirit-char:active{transform:scale(1.4);color:#c41e3a;text-shadow:0 0 0.1rem #DAA520}
-.spirit-char.pulse{animation:charPulse 0.6s ease-out}
-@keyframes charPulse{0%{transform:scale(1.5);color:#ffd700}100%{transform:scale(1);color:#DAA520}}
-.spirit-meaning{font-size:0.24rem;color:#c41e3a;margin-top:0.08rem;min-height:0.3rem;text-align:center;transition:all 0.3s}
-
-/* Interactive: Battle scene elements */
-.battle-hotspot{cursor:pointer;transition:all 0.2s}
-.battle-hotspot:active{filter:brightness(1.5)}
-.battle-info{position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.88);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.2rem 0.25rem;font-size:0.22rem;color:#e8d5c4;text-align:center;z-index:5;opacity:0;transition:opacity 0.4s;width:4.5rem}
-.battle-info.show{opacity:1}
-
-/* Interactive: Legacy flip cards */
-.legacy-card{cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s;position:relative}
-.legacy-card.flipped{transform:rotateY(180deg)}
-.legacy-front,.legacy-back{backface-visibility:hidden}
-.legacy-back{position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,0,0,0.7),rgba(0,0,0,0.85));border:0.01rem solid #DAA520;border-radius:0.12rem;padding:0.2rem;transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;align-items:center}
-.legacy-back-title{font-size:0.24rem;color:#DAA520;font-weight:bold;margin-bottom:0.08rem}
-.legacy-back-desc{font-size:0.22rem;color:#e8d5c4;line-height:1.5;text-align:center}
-.legacy-hint{font-size:0.14rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.1rem;z-index:1}
-
-/* Interactive: Event cards on P3 */
-.event-card{cursor:pointer;transition:all 0.3s;border-radius:0.1rem;padding:0.12rem 0.18rem;border:0.01rem solid rgba(218,165,32,0.2);margin:0.06rem 0;background:rgba(0,0,0,0.2)}
-.event-card:active{background:rgba(196,30,58,0.3);border-color:#DAA520}
-.event-detail{max-height:0;overflow:hidden;transition:max-height 0.3s;font-size:0.22rem;color:#cdb38b;line-height:1.5}
-.event-card.open .event-detail{max-height:1.5rem}
-
-/* Interactive: Sanwan org nodes */
-.org-node-interactive{cursor:pointer;transition:all 0.3s}
-.org-node-interactive:active{fill:rgba(218,165,32,0.5);stroke:#ffd700}
-.sanwan-detail{font-size:0.22rem;color:#cdb38b;text-align:center;margin-top:0.1rem;min-height:0.25rem}
-
-@media(max-width:375px){
-  .hero-card{width:100%}
-  .flip-card{width:1.4rem;height:2rem}
-  .legacy-card{width:45%}
+/* === Mobile Tweaks === */
+@media (max-width:375px){
+  .hero-card{width:1.3rem;height:1.8rem}
+  .flip-card{width:1.3rem;height:1.8rem}
+  .quiz-option{font-size:0.18rem}
 }
 </style>
 </head>
 <body>
-<div class="audio-btn" id="audioBtn">🔇</div>
+
+<!-- Audio Toggle -->
+<div class="audio-btn" id="audioBtn" title="背景音乐">🔇</div>
+
+<!-- Page Indicator -->
 <div class="indicator" id="indicator"></div>
+
+<!-- ======== Main Container ======== -->
 <div class="container" id="container">
 
-<!-- ====== P1 Cover ====== -->
-<section class="page page-1" id="page1">
-  <div id="particles1" style="position:absolute;width:100%;height:100%;pointer-events:none;z-index:0"></div>
-  <!-- SVG Torch Illustration -->
-  <svg class="cover-svg" viewBox="0 0 120 160">
-    <defs><radialGradient id="flameGrad" cx="50%" cy="30%"><stop offset="0%" stop-color="#fff8dc"/><stop offset="30%" stop-color="#DAA520"/><stop offset="60%" stop-color="#c41e3a"/><stop offset="100%" stop-color="#8b0000" stop-opacity="0"/></radialGradient></defs>
-    <rect x="48" y="100" width="24" height="55" rx="3" fill="#8B4513" stroke="#A0522D" stroke-width="1.5"/>
-    <rect x="44" y="95" width="32" height="10" rx="2" fill="#A0522D"/>
-    <ellipse cx="60" cy="50" rx="28" ry="45" fill="url(#flameGrad)" opacity="0.9"><animate attributeName="ry" values="45;40;48;45" dur="0.3s" repeatCount="indefinite"/></ellipse>
-    <ellipse cx="60" cy="40" rx="16" ry="28" fill="#ff8c00" opacity="0.7"><animate attributeName="ry" values="28;23;30;28" dur="0.25s" repeatCount="indefinite"/></ellipse>
-    <ellipse cx="60" cy="30" rx="8" ry="16" fill="#ffd700" opacity="0.8"><animate attributeName="ry" values="16;12;18;16" dur="0.2s" repeatCount="indefinite"/></ellipse>
-    <circle cx="50" cy="130" r="6" fill="#DAA520" opacity="0.6"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="1s" repeatCount="indefinite"/></circle>
-    <circle cx="70" cy="135" r="4" fill="#ff8c00" opacity="0.5"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="0.7s" repeatCount="indefinite"/></circle>
-    <circle cx="65" cy="125" r="3" fill="#ffd700" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="0.5s" repeatCount="indefinite"/></circle>
-  </svg>
-  <div class="cover-title">星火燎原</div>
-  <div class="cover-line"></div>
-  <div class="cover-sub">井冈山红色文化主题展</div>
-  <div class="cover-line"></div>
-  <div style="font-size:0.18rem;color:#cdb38b;z-index:1">1927.10 — 1930.02</div>
-  <div class="cover-swipe">↑ 向上滑动启阅 ↑</div>
-</section>
+  <!-- ===== Page 1: Cover ===== -->
+  <section class="page page-1" id="page1">
+    <div id="particles1"></div>
+    <div style="font-size:1.2rem;z-index:1;animation:torchFlicker 0.15s infinite alternate">🔥</div>
+    <div class="cover-title">星火燎原</div>
+    <div class="cover-line"></div>
+    <div class="cover-subtitle">井冈山红色文化主题展</div>
+    <div class="cover-line"></div>
+    <div style="font-size:0.2rem;color:#cdb38b;z-index:1">1927 — 1930</div>
+    <div class="cover-swipe">↑ 向上滑动启阅 ↑</div>
+  </section>
 
-
-<!-- ====== P2 Map ====== -->
-<section class="page page-2">
-  <div class="page-title">革命摇篮 · 井冈山</div>
-  <div class="page-subtitle">中国第一个农村革命根据地</div>
-  <svg class="map-illust" viewBox="0 0 400 220">
-    <defs>
-      <linearGradient id="mGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2d5016"/><stop offset="100%" stop-color="#1a3008"/></linearGradient>
-    </defs>
-    <rect width="400" height="220" rx="10" fill="#1a0d0d"/>
-    <polygon points="0,150 80,60 160,140 240,50 320,130 400,70 400,220 0,220" fill="url(#mGrad)" opacity="0.5"/>
-    <polygon points="0,170 60,90 120,160 200,100 280,155 340,110 400,150 400,220 0,220" fill="#1a3008" opacity="0.6"/>
-    <polygon points="100,80 220,70 280,130 240,170 160,190 80,150 60,110" fill="none" stroke="#DAA520" stroke-width="2" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.5s" repeatCount="indefinite"/></polygon>
-    <polygon points="175,115 180,105 185,115 195,115 187,122 190,132 180,125 170,132 173,122 165,115" fill="#DAA520" opacity="0.9"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></polygon>
-    <circle cx="175" cy="115" r="18" fill="none" stroke="#c41e3a" stroke-width="1" opacity="0.5"><animate attributeName="r" values="18;30;18" dur="2.5s" repeatCount="indefinite"/></circle>
-    <text x="175" y="95" text-anchor="middle" fill="#DAA520" font-size="10" font-weight="bold">★ 茨坪</text>
-    <circle cx="120" cy="130" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="大井" data-info="毛泽东旧居所在地，井冈山斗争时期的重要驻地，设有红军医院和教导队。"/><text x="105" y="126" text-anchor="end" fill="#cdb38b" font-size="7">大井</text>
-    <circle cx="210" cy="100" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="黄洋界" data-info="井冈山五大哨口之一，1928年8月黄洋界保卫战发生地，海拔1343米，地势险要。"/><text x="220" y="98" fill="#cdb38b" font-size="7">黄洋界</text>
-    <circle cx="175" cy="160" r="8" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="茅坪" data-info="湘赣边界党政军机关所在地，八角楼坐落于此，毛泽东在此写下多篇光辉著作。"/><text x="185" y="163" fill="#cdb38b" font-size="7">茅坪</text>
-    <circle cx="260" cy="130" r="7" fill="#DAA520" opacity="0.5" class="map-dot-interactive" data-loc="龙市" data-info="1928年4月朱毛会师地点，红四军在此诞生，是井冈山革命的重要历史地标。"/><text x="268" y="133" fill="#cdb38b" font-size="7">龙市</text>
-    <rect x="0" y="0" width="400" height="220" rx="10" fill="none" stroke="rgba(218,165,32,0.3)" stroke-width="1.5"/>
-  </svg>
-  <div class="map-popup" id="mapPopup"></div>
-  <div class="page-text" style="font-size:0.18rem;color:rgba(205,179,139,0.5)">👆 点击地图上的金色圆点查看详情</div>
-  <div class="page-text" style="width:6rem">井冈山位于<span class="danwei">湘赣边界罗霄山脉中段</span>，方圆五百里，地势险要，易守难攻。1927年10月，毛泽东率部在此创建中国<span class="danwei">第一个农村革命根据地</span>，开辟了<span class="danwei">"农村包围城市、武装夺取政权"</span>的正确道路。井冈山斗争历时两年零四个月，牺牲烈士48000余名，为中国革命积累了宝贵经验，被誉为<span class="danwei">"中国革命的摇篮"</span>。</div>
-</section>
-
-<!-- ====== P3 Background ====== -->
-<section class="page page-3">
-  <div class="page-title">历史背景</div>
-  <div class="page-subtitle">1927年 · 革命的关键转折</div>
-  <svg width="1rem" height="0.7rem" viewBox="0 0 120 90" style="z-index:1;margin-bottom:0.06rem">
-    <rect width="120" height="90" rx="2" fill="#c41e3a"/>
-    <polygon points="60,20 50,50 70,50" fill="#DAA520"/>
-    <polygon points="60,20 40,65 80,65" fill="#DAA520" opacity="0.7"/>
-    <rect x="10" y="70" width="4" height="25" fill="#8B4513"/>
-  </svg>
-  <div class="page-text left" style="font-size:0.24rem;width:6rem">
-    <div class="event-card"><p>◆ <span class="danwei">1927.08.01</span> — 南昌起义</p><div class="event-detail">周恩来、贺龙、叶挺、朱德、刘伯承等领导，打响了武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争的开端。</div></div>
-    <div class="event-card"><p>◆ <span class="danwei">1927.09.09</span> — 秋收起义</p><div class="event-detail">毛泽东领导的湘赣边秋收起义爆发。受挫后，毛泽东果断决定放弃攻打长沙，向敌人统治力量薄弱的井冈山地区进军。</div></div>
-    <div class="event-card"><p>◆ <span class="danwei">1927.10</span> — 创建井冈山根据地</p><div class="event-detail">毛泽东率工农革命军到达井冈山茨坪，收编袁文才、王佐地方武装，开始创建中国第一个农村革命根据地。</div></div>
-    <div class="event-card"><p>◆ <span class="danwei">1928.04</span> — 井冈山会师</p><div class="event-detail">朱德、陈毅率南昌起义余部和湘南起义农军到达井冈山，与毛泽东会师。两军合编为中国工农革命军第四军，朱德任军长，毛泽东任党代表。</div></div>
-  </div>
-</section>
-
-<!-- ====== P4 Timeline ====== -->
-<section class="page page-4">
-  <div class="page-title">⭐ 井冈山时间轴</div>
-  <div class="page-subtitle">交互组件 · 左右滑动探索历史</div>
-  <div class="tl-ill-row">
-    <svg class="tl-ill" viewBox="0 0 80 60"><rect width="80" height="60" fill="#2a1010"/><polygon points="40,10 20,50 60,50" fill="#c41e3a" opacity="0.6"/><text x="40" y="38" text-anchor="middle" fill="#DAA520" font-size="12">⚔</text></svg>
-    <svg class="tl-ill" viewBox="0 0 80 60"><rect width="80" height="60" fill="#2a1010"/><circle cx="40" cy="30" r="16" fill="none" stroke="#DAA520" stroke-width="1.2"/><text x="40" y="35" text-anchor="middle" fill="#DAA520" font-size="14">★</text></svg>
-    <svg class="tl-ill" viewBox="0 0 80 60"><rect width="80" height="60" fill="#2a1010"/><rect x="22" y="17" width="36" height="26" rx="2" fill="#8b0000" opacity="0.4" stroke="#DAA520" stroke-width="0.8"/><text x="40" y="35" text-anchor="middle" fill="#DAA520" font-size="12">📜</text></svg>
-    <svg class="tl-ill" viewBox="0 0 80 60"><rect width="80" height="60" fill="#2a1010"/><ellipse cx="40" cy="28" rx="20" ry="14" fill="none" stroke="#c41e3a" stroke-width="1.2"/><text x="40" y="33" text-anchor="middle" fill="#DAA520" font-size="14">🤝</text></svg>
-    <svg class="tl-ill" viewBox="0 0 80 60"><rect width="80" height="60" fill="#2a1010"/><polygon points="40,8 54,22 50,42 30,42 26,22" fill="#8b0000" opacity="0.4" stroke="#DAA520" stroke-width="0.8"/><text x="40" y="33" text-anchor="middle" fill="#DAA520" font-size="12">🏰</text></svg>
-  </div>
-  <div class="tl-box" id="tlBox">
-    <div class="tl-track" id="tlTrack">
-      <div class="tl-item" data-idx="0"><div class="tl-year">1927.09</div><div class="tl-dot"></div><div class="tl-title">秋收起义</div><div class="tl-desc">毛泽东领导湘赣边秋收起义，受挫后决定转向井冈山。</div></div>
-      <div class="tl-item" data-idx="1"><div class="tl-year">1927.10</div><div class="tl-dot"></div><div class="tl-title">进军井冈山</div><div class="tl-desc">毛泽东率工农革命军到达茨坪，开始创建革命根据地。</div></div>
-      <div class="tl-item" data-idx="2"><div class="tl-year">1927.11</div><div class="tl-dot"></div><div class="tl-title">三湾改编</div><div class="tl-desc">支部建在连上，确立党对军队绝对领导。</div></div>
-      <div class="tl-item" data-idx="3"><div class="tl-year">1928.04</div><div class="tl-dot"></div><div class="tl-title">井冈山会师</div><div class="tl-desc">朱德陈毅率部与毛泽东会师，合编红四军，兵力过万。</div></div>
-      <div class="tl-item" data-idx="4"><div class="tl-year">1928.08</div><div class="tl-dot"></div><div class="tl-title">黄洋界保卫战</div><div class="tl-desc">红军以不足一营击退四个团，毛泽东赋词《西江月·井冈山》。</div></div>
-      <div class="tl-item" data-idx="5"><div class="tl-year">1928.12</div><div class="tl-dot"></div><div class="tl-title">彭德怀上山</div><div class="tl-desc">彭德怀、滕代远率红五军主力到达井冈山。</div></div>
-      <div class="tl-item" data-idx="6"><div class="tl-year">1930.02</div><div class="tl-dot"></div><div class="tl-title">二七会议</div><div class="tl-desc">确定扩大红色区域、深入土地革命的方针。</div></div>
-      <div class="tl-item" data-idx="7"><div class="tl-year">1930.10</div><div class="tl-dot"></div><div class="tl-title">星星之火</div><div class="tl-desc">毛泽东发表《星星之火，可以燎原》，指明方向。</div></div>
-    </div>
-  </div>
-  <div class="tl-hint">← 左右滑动浏览 → 点击节点展开详情</div>
-</section>
-
-
-<!-- ====== P5 Heroes ====== -->
-<section class="page page-5">
-  <div class="page-title">革命先驱</div>
-  <div class="page-subtitle">🔥 点击人物卡片展开生平事迹</div>
-  <div class="hero-scroll">
-  <div class="hero-row" id="heroGrid">
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#2a1010"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">毛</text></svg>
-      <div class="hero-info"><div class="hero-name">毛泽东</div><div class="hero-era">1893 — 1976 · 湖南湘潭</div><div class="hero-role">前敌委员会书记 · 红四军党代表</div><div class="hero-bio">1927年领导秋收起义，率部上井冈山，创建中国第一个农村革命根据地。在八角楼油灯下写下《中国的红色政权为什么能够存在？》《井冈山的斗争》等光辉著作，提出"工农武装割据"思想，开创"农村包围城市、武装夺取政权"的革命道路。井冈山时期是毛泽东思想的萌芽阶段。朱德评价："毛泽东同志是井冈山根据地的主要创始人。"</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#1a1510"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">朱</text></svg>
-      <div class="hero-info"><div class="hero-name">朱 德</div><div class="hero-era">1886 — 1976 · 四川仪陇</div><div class="hero-role">红四军军长 · 中华苏维埃军委主席</div><div class="hero-bio">1928年4月率南昌起义余部到达井冈山与毛泽东会师，合编红四军。"朱毛红军"从此成为革命象征。提出"敌进我退、敌驻我扰、敌疲我打、敌退我追"十六字诀，成为红军游击战争基本原则。坚持官兵平等，亲自挑粮上山，"朱德的扁担"成为革命传统的美谈。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#151a10"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">彭</text></svg>
-      <div class="hero-info"><div class="hero-name">彭德怀</div><div class="hero-era">1898 — 1974 · 湖南湘潭</div><div class="hero-role">红五军军长 · 红三军团总指挥</div><div class="hero-bio">1928年7月领导平江起义，同年12月率红五军主力到达井冈山。在保卫战中英勇作战，多次击退敌军。性格刚毅，作战勇猛，被誉为"横刀立马"的红军猛将。毛泽东赋诗赞曰："谁敢横刀立马？唯我彭大将军！"井冈山失守后率部转战，后又收复井冈山。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#101a1a"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">陈</text></svg>
-      <div class="hero-info"><div class="hero-name">陈 毅</div><div class="hero-era">1901 — 1972 · 四川乐至</div><div class="hero-role">红四军政治部主任 · 军委书记</div><div class="hero-bio">协助朱德率部到达井冈山会师。任红四军政治部主任，主管部队政治工作。积极贯彻"支部建在连上"原则，参与制定《三大纪律六项注意》。与毛泽东、朱德密切配合，是核心决策成员。同时也是一位革命诗人，在井冈山写下许多诗篇。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#1a1015"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">袁</text></svg>
-      <div class="hero-info"><div class="hero-name">袁文才</div><div class="hero-era">1898 — 1930 · 江西宁冈</div><div class="hero-role">红四军三十二团团长 · 原井冈山地方武装领袖</div><div class="hero-bio">井冈山客籍地方武装领袖。1927年9月毛泽东到达井冈山后，袁文才主动迎接配合，打开山门接纳工农革命军，为根据地的建立奠定最初基础。他的部队编入红四军三十二团，在保卫井冈山战斗中发挥重要作用。1930年被错杀，后平反。毛泽东痛惜："袁王二人是井冈山的功臣。"</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#151015"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">王</text></svg>
-      <div class="hero-info"><div class="hero-name">王 佐</div><div class="hero-era">1898 — 1930 · 江西遂川</div><div class="hero-role">红四军三十二团副团长 · 原井冈山地方武装首领</div><div class="hero-bio">井冈山土籍地方武装领袖，控制茨坪、大小五井等区域。毛泽东到井冈山后，王佐将根据地交给红军使用，使革命军获得稳固后方。熟悉井冈山地形，在防御作战中作用突出。1930年与袁文才一同被错杀，后平反昭雪。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#1a1810"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">何</text></svg>
-      <div class="hero-info"><div class="hero-name">何长工</div><div class="hero-era">1900 — 1987 · 湖南华容</div><div class="hero-role">红四军三十二团党代表 · 红军将领</div><div class="hero-bio">早年赴法国勤工俭学。秋收起义后随毛泽东上井冈山。1928年初受毛泽东委派下山联络南昌起义余部，历尽艰险找到朱德陈毅部队，为井冈山会师做出关键贡献。还受命改造袁文才、王佐的地方武装，成功编入红军，为根据地巩固做出不可替代的贡献。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-    <div class="hero-card">
-      <svg class="hero-portrait" viewBox="0 0 60 60"><rect width="60" height="60" fill="#101a10"/><circle cx="30" cy="22" r="10" fill="#c41e3a" opacity="0.6"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#8b0000" opacity="0.4"/><text x="30" y="28" text-anchor="middle" fill="#DAA520" font-size="18" font-weight="bold">滕</text></svg>
-      <div class="hero-info"><div class="hero-name">滕代远</div><div class="hero-era">1904 — 1974 · 湖南麻阳</div><div class="hero-role">红五军党代表 · 红三军团政委</div><div class="hero-bio">1928年与彭德怀一同领导平江起义，任红五军党代表，后率部上井冈山。在最艰难时期坚持政治工作，稳定部队士气。他是红军政治工作的先驱，建立了健全的政治工作制度，保证了党对军队的绝对领导。</div></div>
-      <div class="hero-expand">▼</div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<!-- ====== P6 Sanwan ====== -->
-<section class="page page-6">
-  <div class="page-title">三湾改编</div>
-  <div class="page-subtitle">1927年9月 · 永新县三湾村</div>
-  <svg width="3.2rem" height="2.2rem" viewBox="0 0 280 200" style="z-index:1">
-    <rect x="90" y="5" width="100" height="28" rx="5" fill="rgba(196,30,58,0.5)" stroke="#DAA520" stroke-width="1.5"/>
-    <text x="140" y="23" text-anchor="middle" fill="#e8d5c4" font-size="10">支部建在连上</text>
-    <line x1="140" y1="33" x2="140" y2="50" stroke="#DAA520" stroke-width="1.5"/>
-    <polygon points="140,55 134,48 146,48" fill="#DAA520"/>
-    <rect x="70" y="58" width="140" height="28" rx="5" fill="rgba(196,30,58,0.4)" stroke="#DAA520" stroke-width="1"/>
-    <text x="140" y="76" text-anchor="middle" fill="#e8d5c4" font-size="10">党代表制度</text>
-    <line x1="100" y1="86" x2="80" y2="105" stroke="#DAA520" stroke-width="1.2"/>
-    <line x1="180" y1="86" x2="200" y2="105" stroke="#DAA520" stroke-width="1.2"/>
-    <rect x="30" y="108" width="100" height="30" rx="5" fill="rgba(139,0,0,0.5)" stroke="#c41e3a" stroke-width="1"/>
-    <text x="80" y="127" text-anchor="middle" fill="#e8d5c4" font-size="10">士兵委员会</text>
-    <rect x="150" y="108" width="100" height="30" rx="5" fill="rgba(139,0,0,0.5)" stroke="#c41e3a" stroke-width="1"/>
-    <text x="200" y="127" text-anchor="middle" fill="#e8d5c4" font-size="10">官兵平等</text>
-    <line x1="80" y1="138" x2="80" y2="155" stroke="#c41e3a" stroke-width="1"/><line x1="200" y1="138" x2="200" y2="155" stroke="#c41e3a" stroke-width="1"/>
-    <line x1="80" y1="155" x2="200" y2="155" stroke="#c41e3a" stroke-width="1"/>
-    <rect x="80" y="155" width="120" height="28" rx="5" fill="rgba(218,165,32,0.2)" stroke="#DAA520" stroke-width="1.2" stroke-dasharray="3 2"/>
-    <text x="140" y="173" text-anchor="middle" fill="#DAA520" font-size="10">新型人民军队</text>
-  </svg>
-  <div class="page-text">三湾改编从组织上确立了<span class="danwei">党对军队的绝对领导</span>，是建设新型人民军队的重要开端。</div>
-</section>
-
-<!-- ====== P7 Spirit ====== -->
-<section class="page page-7">
-  <div class="page-title">井冈山精神</div>
-  <div class="page-subtitle">跨越时空的宝贵财富</div>
-  <svg width="0.8rem" height="0.8rem" viewBox="0 0 100 100" style="z-index:1;margin-bottom:0.08rem">
-    <polygon points="50,8 56,36 80,40 58,56 62,82 50,68 38,82 42,56 20,40 44,36" fill="#DAA520" opacity="0.9"><animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/></polygon>
-    <circle cx="50" cy="45" r="12" fill="#c41e3a" opacity="0.3"><animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite"/></circle>
-  </svg>
-  <div id="spiritBlock">
-    <div class="spirit-line" data-meaning="革命理想高于天，是井冈山精神的灵魂"><span class="spirit-char">坚</span><span class="spirit-char">定</span><span class="spirit-char">执</span><span class="spirit-char">着</span><span class="spirit-char">追</span><span class="spirit-char">理</span><span class="spirit-char">想</span></div>
-    <div class="spirit-line" data-meaning="把马克思主义与中国实际相结合，走自己的路"><span class="spirit-char">实</span><span class="spirit-char">事</span><span class="spirit-char">求</span><span class="spirit-char">是</span><span class="spirit-char">闯</span><span class="spirit-char">新</span><span class="spirit-char">路</span></div>
-    <div class="spirit-line" data-meaning="在极端困难条件下自力更生，战胜一切艰难险阻"><span class="spirit-char">艰</span><span class="spirit-char">苦</span><span class="spirit-char">奋</span><span class="spirit-char">斗</span><span class="spirit-char">攻</span><span class="spirit-char">难</span><span class="spirit-char">关</span></div>
-    <div class="spirit-line" data-meaning="真心实意为群众谋利益，得到人民群众的衷心拥护"><span class="spirit-char">依</span><span class="spirit-char">靠</span><span class="spirit-char">群</span><span class="spirit-char">众</span><span class="spirit-char">求</span><span class="spirit-char">胜</span><span class="spirit-char">利</span></div>
-  </div>
-  <div class="spirit-meaning" id="spiritMeaning" style="z-index:1"></div>
-</section>
-
-<!-- ====== P8 Flip Cards ====== -->
-<section class="page page-8">
-  <div class="page-title">⭐ 革命文物</div>
-  <div class="page-subtitle">交互组件 · 点击卡片翻转查看文物故事</div>
-  <div class="flip-grid" id="flipGrid">
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><rect x="35" y="42" width="30" height="6" rx="2" fill="#8B4513"/><path d="M38,42 L40,20 L60,20 L62,42" fill="#DAA520" opacity="0.4"/><ellipse cx="50" cy="17" rx="5" ry="10" fill="#ff8c00" opacity="0.7"><animate attributeName="ry" values="10;6;10" dur="0.5s" repeatCount="indefinite"/></ellipse></svg>
-      <div class="flip-name">油灯</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">毛泽东在八角楼油灯下写下《中国的红色政权为什么能够存在？》等光辉著作，一盏油灯照亮中国革命未来。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><line x1="5" y1="40" x2="95" y2="40" stroke="#8B4513" stroke-width="5"/><rect x="28" y="30" width="16" height="18" rx="2" fill="#A0522D"/><rect x="56" y="30" width="16" height="18" rx="2" fill="#A0522D"/></svg>
-      <div class="flip-name">扁担</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">朱德的扁担——军长和士兵一起挑粮上山，体现官兵平等、同甘共苦的革命传统。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><ellipse cx="33" cy="52" rx="20" ry="9" fill="#8B7355" stroke="#6B5335" stroke-width="0.8"/><ellipse cx="67" cy="52" rx="20" ry="9" fill="#8B7355" stroke="#6B5335" stroke-width="0.8"/></svg>
-      <div class="flip-name">草鞋</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">红军穿着自己编织的草鞋翻山越岭，一双草鞋踏出中国革命的胜利之路。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><path d="M8,40 Q8,25 30,24 L72,20 Q88,18 92,25 L92,55 Q88,62 72,60 L30,56 Q8,55 8,40Z" fill="#DAA520" opacity="0.6" stroke="#B8860B" stroke-width="1.2"/><circle cx="8" cy="40" r="7" fill="#c41e3a" opacity="0.3"/></svg>
-      <div class="flip-name">军号</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">冲锋号声划破井冈山晨雾，唤起无数热血青年投身革命洪流。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><rect x="12" y="6" width="66" height="48" rx="2" fill="#c41e3a" stroke="#DAA520" stroke-width="1"/><polygon points="45,18 41,42 49,42" fill="#DAA520"/><rect x="8" y="54" width="3" height="22" fill="#8B4513"/></svg>
-      <div class="flip-name">红旗</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">井冈山第一面工农革命军军旗，标志着党独立领导的武装力量正式诞生。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front">
-      <svg class="flip-ill" viewBox="0 0 100 80"><rect x="8" y="32" width="76" height="7" rx="3" fill="#5a3a1a"/><rect x="52" y="24" width="18" height="15" rx="2" fill="#3a2010"/><rect x="0" y="40" width="18" height="4" rx="1" fill="#8B4513"/></svg>
-      <div class="flip-name">步枪</div>
-    </div><div class="flip-face flip-back"><div class="flip-story">红军用简陋的步枪和梭镖对抗飞机大炮，用意志和信念写下不可战胜的传奇。</div></div></div>
-  </div>
-  <div class="flip-hint">👆 单击翻转 · 双击全部还原</div>
-</section>
-
-<!-- ====== P9 Battle ====== -->
-<section class="page page-9">
-  <div class="page-title">黄洋界保卫战</div>
-  <div class="page-subtitle">1928年8月30日 · 以少胜多的光辉战例</div>
-  <svg class="battle-ill" viewBox="0 0 300 180">
-    <rect width="300" height="180" fill="#1a0d0d"/>
-    <polygon points="0,130 50,70 120,120 180,50 240,110 300,60 300,180 0,180" fill="#2d1515"/>
-    <polygon points="0,155 70,90 140,145 200,100 260,135 300,85 300,180 0,180" fill="#1a2020"/>
-    <rect x="120" y="75" width="28" height="45" fill="#3a2020" stroke="#DAA520" stroke-width="1.5"/>
-    <rect x="125" y="65" width="18" height="12" fill="#4a2a2a" stroke="#DAA520" stroke-width="1"/>
-    <line x1="134" y1="65" x2="134" y2="45" stroke="#8B4513" stroke-width="1.5"/>
-    <rect x="134" y="32" width="22" height="15" rx="1" fill="#c41e3a" stroke="#DAA520" stroke-width="0.5"/>
-    <polygon points="145,35 141,48 149,48" fill="#DAA520"/>
-    <rect x="112" y="100" width="22" height="7" rx="2" fill="#5a3a1a"/>
-    <circle cx="108" cy="103" r="5" fill="#3a2010"/>
-    <circle cx="80" cy="80" r="12" fill="#ff8c00" opacity="0.5"><animate attributeName="opacity" values="0.5;0;0.5" dur="0.8s" repeatCount="indefinite"/></circle>
-    <circle cx="55" cy="65" r="18" fill="#ff4500" opacity="0.25"><animate attributeName="opacity" values="0.25;0;0.25" dur="1s" repeatCount="indefinite"/></circle>
-    <rect x="30" y="135" width="6" height="4" fill="#8b8b8b" opacity="0.4"/><rect x="55" y="138" width="6" height="4" fill="#8b8b8b" opacity="0.4"/>
-    <rect x="128" y="88" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/><rect x="138" y="85" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/><rect x="148" y="90" width="5" height="8" fill="#c41e3a" opacity="0.7" class="battle-hotspot" data-spot="红军战士" data-detail="红军第31团1营的战士们凭借天险顽强抵抗，以不足一个营的兵力击退敌军四个团。"/>
-  </svg>
-  <div class="battle-info" id="battleInfo"></div>
-  <div class="poem-text">"山下旌旗在望，山头鼓角相闻。<br>敌军围困万千重，<span class="danwei">我自岿然不动</span>。"</div>
-  <div class="page-text" style="font-size:0.18rem;margin-top:0.05rem">红军以不足一个营击退敌军四个团，毛泽东挥笔写下《西江月·井冈山》。</div>
-  <div class="page-text" style="font-size:0.16rem;color:rgba(205,179,139,0.5);margin-top:0.05rem">👆 点击战场中的红军战士和炮火查看细节</div>
-</section>
-
-<!-- ====== P10 Songs ====== -->
-<section class="page page-10">
-  <div class="page-title">红色歌谣</div>
-  <div class="page-subtitle">井冈山红色旋律传唱不息</div>
-  <svg width="2.2rem" height="0.7rem" viewBox="0 0 200 55" style="z-index:1;margin-bottom:0.1rem">
-    <circle cx="30" cy="38" r="8" fill="none" stroke="#DAA520" stroke-width="1.5"/><line x1="38" y1="38" x2="38" y2="10" stroke="#DAA520" stroke-width="1.5"/><line x1="38" y1="10" x2="55" y2="16" stroke="#DAA520" stroke-width="1.5"/>
-    <circle cx="100" cy="33" r="6" fill="none" stroke="#DAA520" stroke-width="1"/><line x1="106" y1="33" x2="106" y2="5" stroke="#DAA520" stroke-width="1"/>
-    <circle cx="160" cy="40" r="9" fill="none" stroke="#DAA520" stroke-width="1.5"/><line x1="169" y1="40" x2="169" y2="12" stroke="#DAA520" stroke-width="1.5"/>
-    <text x="18" y="28" fill="#c41e3a" font-size="14">♪</text><text x="85" y="22" fill="#c41e3a" font-size="11">♫</text><text x="145" y="30" fill="#c41e3a" font-size="13">♬</text>
-  </svg>
-  <div class="song-card" style="width:5rem;background:rgba(196,30,58,0.15);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.1rem;padding:0.15rem 0.2rem;text-align:center;cursor:pointer;margin:0.06rem 0;z-index:1;transition:all 0.3s" onclick="this.classList.toggle('open')">
-    <div style="font-size:0.26rem;color:#DAA520">🎵 映山红</div>
-    <div style="font-size:0.17rem;color:#cdb38b;max-height:0;overflow:hidden;transition:max-height 0.4s" class="slyric" style="font-size:0.2rem">夜半三更哟盼天明 · 寒冬腊月哟盼春风 · 若要盼得哟红军来 · 岭上开遍哟映山红</div>
-  </div>
-  <div class="song-card" style="width:5rem;background:rgba(196,30,58,0.15);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.1rem;padding:0.15rem 0.2rem;text-align:center;cursor:pointer;margin:0.06rem 0;z-index:1;transition:all 0.3s" onclick="this.classList.toggle('open')">
-    <div style="font-size:0.26rem;color:#DAA520">🎵 十送红军</div>
-    <div style="font-size:0.17rem;color:#cdb38b;max-height:0;overflow:hidden;transition:max-height 0.4s" class="slyric" style="font-size:0.2rem">一送里格红军 介支个下了山 · 秋风里格细雨 介支个缠绵绵</div>
-  </div>
-  <div class="song-card" style="width:5rem;background:rgba(196,30,58,0.15);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.1rem;padding:0.15rem 0.2rem;text-align:center;cursor:pointer;margin:0.06rem 0;z-index:1;transition:all 0.3s" onclick="this.classList.toggle('open')">
-    <div style="font-size:0.26rem;color:#DAA520">🎵 西江月·井冈山</div>
-    <div style="font-size:0.17rem;color:#cdb38b;max-height:0;overflow:hidden;transition:max-height 0.4s" class="slyric" style="font-size:0.2rem">山下旌旗在望 · 山头鼓角相闻 · 敌军围困万千重 · 我自岿然不动</div>
-  </div>
-  <style>.song-card.open .slyric{max-height:2rem!important}</style>
-</section>
-
-<!-- ====== P11 Quiz ====== -->
-<section class="page page-11">
-  <div class="page-title">⭐ 红色知识挑战</div>
-  <div class="page-subtitle">交互组件 · 答题测试你的了解</div>
-  <div class="quiz-box" id="quizBox">
-    <div class="quiz-q" id="quizQ"></div>
-    <div class="quiz-opts" id="quizOpts"></div>
-    <div class="quiz-result" id="quizResult">
-      <div style="font-size:0.2rem;color:#cdb38b">你的得分</div>
-      <div class="quiz-score" id="quizScore"></div>
-      <div class="quiz-comment" id="quizComment"></div>
-      <div class="quiz-retry" onclick="resetQuiz()">再来一次</div>
-    </div>
-  </div>
-</section>
-
-<!-- ====== P12 Legacy ====== -->
-<section class="page page-12">
-  <div class="page-title">薪火相传</div>
-  <div class="page-subtitle">井冈山精神在新时代绽放光芒</div>
-  <div class="legacy-grid" id="legacyGrid">
-    <div class="legacy-card">
-      <div class="legacy-front">
-        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a0d0d" rx="5"/><polygon points="50,5 65,25 60,45 40,45 35,25" fill="#c41e3a" opacity="0.5" stroke="#DAA520" stroke-width="1"/><rect x="30" y="45" width="40" height="15" rx="2" fill="#8b0000" opacity="0.4"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">🏫</text></svg>
-        <div class="legacy-title">红色教育基地</div><div class="legacy-desc">井冈山是全国爱国主义教育示范基地，每年数百万人接受精神洗礼</div>
+  <!-- ===== Page 2: Revolution Cradle ===== -->
+  <section class="page page-2">
+    <div class="page-title">革命摇篮 · 井冈山</div>
+    <div class="page-subtitle">中国第一个农村革命根据地</div>
+    <div class="map-container">
+      <div class="map-outline">
+        <svg class="map-svg" viewBox="0 0 200 120"><polygon points="70,20 160,30 180,80 150,110 50,100 20,60" fill="none" stroke="rgba(218,165,32,0.6)" stroke-width="1.5" stroke-dasharray="4 2"><animate attributeName="stroke-dashoffset" from="0" to="-12" dur="1.5s" repeatCount="indefinite"/></polygon><circle cx="100" cy="62" r="12" fill="rgba(196,30,58,0.3)" stroke="#DAA520" stroke-width="1"><animate attributeName="r" values="10;15;10" dur="2s" repeatCount="indefinite"/></circle><text x="100" y="66" text-anchor="middle" fill="#DAA520" font-size="8">★</text></svg>
+        <div class="map-dot map-dot-1"></div><div class="map-dot map-dot-2"></div><div class="map-dot map-dot-3"></div><div class="map-dot map-dot-4"></div><div class="map-dot map-dot-5"></div>
       </div>
-      <div class="legacy-back"><div class="legacy-back-title">🏫 红色教育基地</div><div class="legacy-back-desc">井冈山革命博物馆、烈士陵园、黄洋界哨口等100多处革命旧址，每年接待游客超千万人次，是全国最著名的红色旅游目的地之一。</div></div>
     </div>
-    <div class="legacy-card">
-      <div class="legacy-front">
-        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#0d1a0d" rx="5"/><path d="M20,55 L30,25 L70,25 L80,55Z" fill="none" stroke="#DAA520" stroke-width="1.5"/><rect x="35" y="40" width="30" height="15" rx="2" fill="#8b0000" opacity="0.3"/><text x="50" y="35" text-anchor="middle" fill="#DAA520" font-size="16">📖</text></svg>
-        <div class="legacy-title">干部学院</div><div class="legacy-desc">井冈山干部学院传承红色基因，培养新时代的优秀干部</div>
-      </div>
-      <div class="legacy-back"><div class="legacy-back-title">📖 干部学院</div><div class="legacy-back-desc">中国井冈山干部学院是国家级干部培训基地，开设"重走红军路""体验红军餐"等特色课程，让红色基因代代相传。</div></div>
+    <div class="page-body">
+      <p>井冈山革命根据地是<span class="danwei">毛泽东、朱德</span>等老一辈无产阶级革命家创建的中国第一个农村革命根据地，开辟了<span class="danwei">"农村包围城市、武装夺取政权"</span>的正确道路。</p>
     </div>
-    <div class="legacy-card">
-      <div class="legacy-front">
-        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#1a1010" rx="5"/><circle cx="50" cy="35" r="20" fill="none" stroke="#DAA520" stroke-width="1"/><circle cx="50" cy="35" r="8" fill="#c41e3a" opacity="0.4"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🌿</text></svg>
-        <div class="legacy-title">绿色发展</div><div class="legacy-desc">井冈山已实现整体脱贫，红色旅游与绿色生态交相辉映</div>
-      </div>
-      <div class="legacy-back"><div class="legacy-back-title">🌿 绿色发展</div><div class="legacy-back-desc">2017年井冈山在全国率先脱贫摘帽，森林覆盖率达86%以上，"红绿相映"的发展模式成为革命老区振兴的典范。</div></div>
-    </div>
-    <div class="legacy-card">
-      <div class="legacy-front">
-        <svg class="legacy-ill" viewBox="0 0 100 70"><rect width="100" height="70" fill="#101a1a" rx="5"/><polygon points="50,10 35,30 25,55 75,55 65,30" fill="none" stroke="#DAA520" stroke-width="1.5"/><circle cx="50" cy="35" r="5" fill="#DAA520" opacity="0.6"/><text x="50" y="40" text-anchor="middle" fill="#DAA520" font-size="16">🚀</text></svg>
-        <div class="legacy-title">精神永存</div><div class="legacy-desc">井冈山精神在中华民族伟大复兴的征程中持续闪耀</div>
-      </div>
-      <div class="legacy-back"><div class="legacy-back-title">🚀 精神永存</div><div class="legacy-back-desc">从井冈山到延安，从西柏坡到北京，井冈山精神作为中国革命精神的源头，始终激励着中华民族在伟大复兴道路上奋勇前进。</div></div>
-    </div>
-  </div>
-  <div class="legacy-hint">👆 点击卡片翻转查看详情 · 双击全部还原</div>
-</section>
+  </section>
 
-<!-- ====== P13 Message ====== -->
-<section class="page page-13">
-  <div class="page-title">致敬先烈</div>
-  <div class="page-subtitle">写下你想说的话，向革命先辈致敬</div>
-  <svg width="0.6rem" height="0.6rem" viewBox="0 0 80 80" style="z-index:1;margin-bottom:0.06rem">
-    <path d="M40,65 L15,40 Q5,28 15,18 Q28,5 40,20 Q52,5 65,18 Q75,28 65,40Z" fill="#c41e3a" opacity="0.6" stroke="#DAA520" stroke-width="1.5"/>
-    <text x="40" y="40" text-anchor="middle" fill="#DAA520" font-size="20">★</text>
-  </svg>
-  <div class="msg-box">
-    <textarea class="msg-input" id="msgInput" placeholder="写下你对先烈的致敬..." maxlength="80"></textarea>
-    <button class="msg-submit" onclick="addMsg()">🇨🇳 致敬</button>
-    <div class="msg-wall" id="msgWall"></div>
-  </div>
-</section>
+  <!-- ===== Page 3: Historical Background ===== -->
+  <section class="page page-3">
+    <div class="page-title">历史背景</div>
+    <div class="page-subtitle">1927年 · 革命的关键转折</div>
+    <div class="page-body">
+      <p class="stagger-text">◆ <span class="danwei">1927年8月1日</span> — 南昌起义，打响了武装反抗国民党反动派的第一枪。</p>
+      <p class="stagger-text" style="margin-top:0.15rem">◆ <span class="danwei">1927年9月9日</span> — 毛泽东领导的湘赣边秋收起义爆发。</p>
+      <p class="stagger-text" style="margin-top:0.15rem">◆ <span class="danwei">1927年10月</span> — 毛泽东率部队到达井冈山，建立了中国第一个农村革命根据地。</p>
+      <p class="stagger-text" style="margin-top:0.15rem">◆ <span class="danwei">1928年4月</span> — 朱德、陈毅率南昌起义余部与毛泽东在井冈山会师，合编为红四军。</p>
+    </div>
+  </section>
 
-<!-- ====== P14 End ====== -->
-<section class="page page-14" id="page14">
-  <div class="end-title">星星之火<br>可以燎原</div>
-  <svg width="0.9rem" height="1.1rem" viewBox="0 0 80 110" style="z-index:1;margin:0.12rem 0">
-    <defs><radialGradient id="fg"><stop offset="0%" stop-color="#fff8dc"/><stop offset="25%" stop-color="#DAA520"/><stop offset="55%" stop-color="#c41e3a"/><stop offset="100%" stop-color="#8b0000" stop-opacity="0"/></radialGradient></defs>
-    <rect x="30" y="70" width="20" height="35" rx="3" fill="#8B4513"/><rect x="26" y="65" width="28" height="8" rx="2" fill="#A0522D"/>
-    <ellipse cx="40" cy="35" rx="20" ry="35" fill="url(#fg)"><animate attributeName="ry" values="35;30;38;35" dur="0.25s" repeatCount="indefinite"/></ellipse>
-  </svg>
-  <div class="end-stats">
-    <div class="end-stat"><div class="end-num">14</div><div class="end-label">页面</div></div>
-    <div class="end-stat"><div class="end-num">3</div><div class="end-label">高级组件</div></div>
-    <div class="end-stat"><div class="end-num">8</div><div class="end-label">革命先驱</div></div>
-  </div>
-  <div class="end-share" onclick="shareH5()">📤 分享给朋友</div>
-  <div style="font-size:0.14rem;color:rgba(205,179,139,0.4);margin-top:0.15rem;z-index:1">井冈山红色文化主题展 · 2024</div>
-</section>
+  <!-- ===== Page 4: Timeline (Advanced Component 1) ===== -->
+  <section class="page page-4">
+    <div class="page-title">⭐ 井冈山时间轴</div>
+    <div class="page-subtitle">交互组件 · 左右滑动查看历史事件</div>
+    <div class="timeline-container" id="timelineContainer">
+      <div class="timeline-track" id="timelineTrack">
+        <div class="timeline-item" data-idx="0"><div class="timeline-year">1927.09</div><div class="timeline-dot"></div><div class="timeline-title">秋收起义</div><div class="timeline-desc">毛泽东领导湘赣边秋收起义，受挫后决定转向井冈山。</div></div>
+        <div class="timeline-item" data-idx="1"><div class="timeline-year">1927.10</div><div class="timeline-dot"></div><div class="timeline-title">进军井冈山</div><div class="timeline-desc">毛泽东率领工农革命军到达井冈山茨坪，开始创建革命根据地。</div></div>
+        <div class="timeline-item" data-idx="2"><div class="timeline-year">1927.11</div><div class="timeline-dot"></div><div class="timeline-title">三湾改编</div><div class="timeline-desc">支部建在连上，确立党对军队的绝对领导，奠定新型人民军队基础。</div></div>
+        <div class="timeline-item" data-idx="3"><div class="timeline-year">1928.04</div><div class="timeline-dot"></div><div class="timeline-title">井冈山会师</div><div class="timeline-desc">朱德、陈毅率部与毛泽东会师，合编为红四军，兵力达一万余人。</div></div>
+        <div class="timeline-item" data-idx="4"><div class="timeline-year">1928.08</div><div class="timeline-dot"></div><div class="timeline-title">黄洋界保卫战</div><div class="timeline-desc">红军以不足一营兵力击退敌军四个团，毛泽东写下《西江月·井冈山》。</div></div>
+        <div class="timeline-item" data-idx="5"><div class="timeline-year">1928.12</div><div class="timeline-dot"></div><div class="timeline-title">彭德怀上山</div><div class="timeline-desc">彭德怀、滕代远率红五军主力到达井冈山，进一步壮大了红军力量。</div></div>
+        <div class="timeline-item" data-idx="6"><div class="timeline-year">1930.02</div><div class="timeline-dot"></div><div class="timeline-title">二七会议</div><div class="timeline-desc">在江西吉安陂头召开，确定了扩大红色区域、深入土地革命的方针。</div></div>
+        <div class="timeline-item" data-idx="7"><div class="timeline-year">1930.10</div><div class="timeline-dot"></div><div class="timeline-title">星星之火</div><div class="timeline-desc">毛泽东发表《星星之火，可以燎原》，为中国革命指明方向。</div></div>
+      </div>
+    </div>
+    <div class="timeline-hint">← 左右滑动浏览历史节点，点击查看详情 →</div>
+  </section>
 
-<!-- ======== SCRIPTS ======== -->
+  <!-- ===== Page 5: Heroes ===== -->
+  <section class="page page-5">
+    <div class="page-title">革命先驱</div>
+    <div class="page-subtitle">井冈山时期的卓越领袖</div>
+    <div class="hero-grid">
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">毛泽东</div><div class="hero-role">前委书记</div></div>
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">朱 德</div><div class="hero-role">红四军军长</div></div>
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">彭德怀</div><div class="hero-role">红五军军长</div></div>
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">陈 毅</div><div class="hero-role">政治部主任</div></div>
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">滕代远</div><div class="hero-role">红五军党代表</div></div>
+      <div class="hero-card"><div class="hero-avatar">👤</div><div class="hero-name">何长工</div><div class="hero-role">红军将领</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Page 6: Sanwan Reform ===== -->
+  <section class="page page-6">
+    <div class="page-title">三湾改编</div>
+    <div class="page-subtitle">1927年9月29日—10月3日 · 永新县三湾村</div>
+    <div class="org-chart">
+      <div class="org-node">支部建在连上</div>
+      <div class="org-line"></div>
+      <div class="org-node">党代表制度</div>
+      <div class="org-line"></div>
+      <div class="org-sub">
+        <div class="org-node">士兵委员会</div>
+        <div class="org-node">官兵平等</div>
+      </div>
+    </div>
+    <div class="page-body" style="text-align:center;margin-top:0.2rem">
+      <p>三湾改编从组织上确立了<span class="danwei">党对军队的绝对领导</span>，<br>是把工农革命军建设成为新型人民军队的重要开端。</p>
+    </div>
+  </section>
+
+  <!-- ===== Page 7: Spirit ===== -->
+  <section class="page page-7">
+    <div class="page-title">井冈山精神</div>
+    <div class="page-subtitle">跨越时空的宝贵财富</div>
+    <div class="spirit-block" id="spiritBlock">
+      <div style="text-align:center">
+        <span class="spirit-char">坚</span><span class="spirit-char">定</span><span class="spirit-char">执</span><span class="spirit-char">着</span><span class="spirit-char">追</span><span class="spirit-char">理</span><span class="spirit-char">想</span>
+      </div>
+      <div style="text-align:center;margin-top:0.15rem">
+        <span class="spirit-char">实</span><span class="spirit-char">事</span><span class="spirit-char">求</span><span class="spirit-char">是</span><span class="spirit-char">闯</span><span class="spirit-char">新</span><span class="spirit-char">路</span>
+      </div>
+      <div style="text-align:center;margin-top:0.15rem">
+        <span class="spirit-char">艰</span><span class="spirit-char">苦</span><span class="spirit-char">奋</span><span class="spirit-char">斗</span><span class="spirit-char">攻</span><span class="spirit-char">难</span><span class="spirit-char">关</span>
+      </div>
+      <div style="text-align:center;margin-top:0.15rem">
+        <span class="spirit-char">依</span><span class="spirit-char">靠</span><span class="spirit-char">群</span><span class="spirit-char">众</span><span class="spirit-char">求</span><span class="spirit-char">胜</span><span class="spirit-char">利</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Page 8: 3D Flip Cards (Advanced Component 2) ===== -->
+  <section class="page page-8">
+    <div class="page-title">⭐ 革命文物</div>
+    <div class="page-subtitle">交互组件 · 点击卡片查看文物背后的故事</div>
+    <div class="flip-grid" id="flipGrid">
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🪔</div><div class="flip-name">油灯</div></div><div class="flip-face flip-back"><div class="flip-story">毛泽东在八角楼油灯下写下《中国的红色政权为什么能够存在？》等光辉著作，一盏油灯照亮中国革命的未来。</div></div></div>
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🎋</div><div class="flip-name">扁担</div></div><div class="flip-face flip-back"><div class="flip-story">朱德的扁担——军长和士兵一起挑粮上山，体现了官兵平等、同甘共苦的革命传统。</div></div></div>
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👞</div><div class="flip-name">草鞋</div></div><div class="flip-face flip-back"><div class="flip-story">红军穿着自己编织的草鞋翻山越岭，一双草鞋踏出中国革命的胜利之路。</div></div></div>
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">📯</div><div class="flip-name">军号</div></div><div class="flip-face flip-back"><div class="flip-story">冲锋号声划破井冈山的晨雾，唤起无数热血青年投身革命的洪流。</div></div></div>
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🚩</div><div class="flip-name">红旗</div></div><div class="flip-face flip-back"><div class="flip-story">井冈山第一面工农革命军军旗，标志着中国共产党独立领导的武装力量正式诞生。</div></div></div>
+      <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🔫</div><div class="flip-name">步枪</div></div><div class="flip-face flip-back"><div class="flip-story">红军用简陋的步枪和梭镖对抗敌人的飞机大炮，用意志和信念写下不可战胜的传奇。</div></div></div>
+    </div>
+    <div class="flip-hint">👆 点击卡片翻转查看文物故事 · 双击任意卡片全部还原</div>
+  </section>
+
+  <!-- ===== Page 9: Battle ===== -->
+  <section class="page page-9">
+    <div class="battle-bg">⚔️</div>
+    <div class="page-title" style="z-index:1">黄洋界保卫战</div>
+    <div class="page-subtitle" style="z-index:1">1928年8月30日</div>
+    <div class="page-body" style="z-index:1;text-align:center">
+      <p style="font-size:0.24rem;color:#DAA520;line-height:2">"山下旌旗在望，<br>山头鼓角相闻。<br>敌军围困万千重，<br><span class="danwei">我自岿然不动</span>。"</p>
+      <p style="margin-top:0.2rem;color:#cdb38b">红军以不足一个营的兵力<br>凭借<span class="danwei">黄洋界天险</span>和<span class="danwei">群众支援</span><br>击退敌军四个团的进攻<br>创造了土地革命战争中<br>以少胜多的光辉战例</p>
+    </div>
+  </section>
+
+  <!-- ===== Page 10: Red Songs ===== -->
+  <section class="page page-10">
+    <div class="page-title">红色歌谣</div>
+    <div class="page-subtitle">传唱不息的井冈山红色旋律</div>
+    <div class="song-player" id="song1">
+      <div class="song-name">🎵 映山红</div>
+      <div class="song-lyric">夜半三更哟盼天明<br>寒冬腊月哟盼春风<br>若要盼得哟红军来<br>岭上开遍哟映山红</div>
+    </div>
+    <div class="song-player" id="song2">
+      <div class="song-name">🎵 十送红军</div>
+      <div class="song-lyric">一送里格红军 介支个下了山<br>秋风里格细雨 介支个缠绵绵<br>山上里格野鹿 声声哀号<br>树树里格梧桐 叶呀叶落光</div>
+    </div>
+    <div class="song-player" id="song3">
+      <div class="song-name">🎵 西江月·井冈山</div>
+      <div class="song-lyric">山下旌旗在望 山头鼓角相闻<br>敌军围困万千重 我自岿然不动<br>早已森严壁垒 更加众志成城<br>黄洋界上炮声隆 报道敌军宵遁</div>
+    </div>
+  </section>
+
+  <!-- ===== Page 11: Quiz (Advanced Component 3) ===== -->
+  <section class="page page-11">
+    <div class="page-title">⭐ 红色知识挑战</div>
+    <div class="page-subtitle">交互组件 · 答题测试你对井冈山历史的了解</div>
+    <div class="quiz-container" id="quizContainer">
+      <div class="quiz-question" id="quizQ"></div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-result" id="quizResult">
+        <div>你的得分</div>
+        <div class="quiz-score" id="quizScore"></div>
+        <div class="quiz-comment" id="quizComment"></div>
+        <div class="quiz-retry" onclick="resetQuiz()">再来一次</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Page 12: Legacy ===== -->
+  <section class="page page-12">
+    <div class="page-title">薪火相传</div>
+    <div class="page-subtitle">井冈山精神在新时代</div>
+    <div class="legacy-cards">
+      <div class="legacy-card"><div class="legacy-icon">🏫</div><div class="legacy-title">红色教育基地</div><div class="legacy-desc">井冈山是全国爱国主义教育示范基地，每年数百万人在此接受精神洗礼</div></div>
+      <div class="legacy-card"><div class="legacy-icon">📖</div><div class="legacy-title">干部学院</div><div class="legacy-desc">井冈山干部学院传承红色基因，培养新时代的优秀干部队伍</div></div>
+      <div class="legacy-card"><div class="legacy-icon">🌿</div><div class="legacy-title">绿色发展</div><div class="legacy-desc">井冈山已实现整体脱贫，红色旅游与绿色生态交相辉映</div></div>
+      <div class="legacy-card"><div class="legacy-icon">🚀</div><div class="legacy-title">精神永存</div><div class="legacy-desc">坚定信念、艰苦奋斗的精神在实现中华民族伟大复兴的征程中持续闪耀</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Page 13: Message Wall ===== -->
+  <section class="page page-13">
+    <div class="page-title">致敬先烈</div>
+    <div class="page-subtitle">写下你想说的话，向革命先辈致敬</div>
+    <div class="msg-area">
+      <textarea class="msg-input" id="msgInput" placeholder="写下你的致敬留言..." maxlength="80"></textarea>
+      <button class="msg-submit" onclick="addMessage()">🇨🇳 致敬</button>
+      <div class="msg-wall" id="msgWall"></div>
+    </div>
+  </section>
+
+  <!-- ===== Page 14: Ending ===== -->
+  <section class="page page-14" id="page14">
+    <div class="end-title">星星之火<br>可以燎原</div>
+    <div class="end-stats">
+      <div class="end-stat"><div class="end-num" id="statPages">14</div><div class="end-label">页面</div></div>
+      <div class="end-stat"><div class="end-num">3</div><div class="end-label">高级组件</div></div>
+      <div class="end-stat"><div class="end-num">28</div><div class="end-label">历史事件</div></div>
+    </div>
+    <div class="end-share" onclick="shareH5()">📤 分享给朋友</div>
+    <div style="font-size:0.16rem;color:rgba(205,179,139,0.5);margin-top:0.2rem;z-index:1">井冈山红色文化主题展 · 2024</div>
+  </section>
+
+</div>
+
+<!-- ======== Scripts ======== -->
 <script>
 'use strict';
 
-// Stars
-(function(){const el=document.getElementById('particles1');if(!el)return;let h='';for(let i=0;i<70;i++){const x=Math.random()*100,y=Math.random()*100,d=Math.random()*3,s=Math.random()*0.04+0.015;h+='<div class="star" style="left:'+x+'%;top:'+y+'%;width:'+s+'rem;height:'+s+'rem;animation-delay:'+d+'s;animation-duration:'+(1.5+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.5)+'"></div>';}el.innerHTML=h;})();
-
-// Page Indicator
-const pages=document.querySelectorAll('.page'),indicator=document.getElementById('indicator'),totalPages=pages.length;
-for(let i=0;i<totalPages;i++){const d=document.createElement('div');d.className='indicator-dot';d.title='第'+(i+1)+'页';d.addEventListener('click',function(){pages[i].scrollIntoView({behavior:'smooth'})});indicator.appendChild(d);}
-const dots=document.querySelectorAll('.indicator-dot');dots[0].classList.add('active');
-const pageObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){const i=Array.from(pages).indexOf(e.target);dots.forEach(function(d,j){d.classList.toggle('active',j===i)})}})},{threshold:0.6});
-pages.forEach(function(p){pageObs.observe(p)});
-
-// Timeline
-document.querySelectorAll('.tl-item').forEach(function(item){item.addEventListener('click',function(){const was=this.classList.contains('on');document.querySelectorAll('.tl-item').forEach(function(i){i.classList.remove('on')});if(!was){this.classList.add('on');this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}})})});
-
-// Hero expand
-document.querySelectorAll('.hero-card').forEach(function(card){card.addEventListener('click',function(){const was=this.classList.contains('expanded');document.querySelectorAll('.hero-card').forEach(function(c){c.classList.remove('expanded')});if(!was){this.classList.add('expanded');setTimeout(function(){this.scrollIntoView({behavior:'smooth',block:'nearest'})}.bind(this),200)}})})});
-
-// Flip cards
-document.querySelectorAll('.flip-card').forEach(function(card){card.addEventListener('click',function(){card.classList.toggle('flipped')});card.addEventListener('dblclick',function(){document.querySelectorAll('.flip-card').forEach(function(c){c.classList.remove('flipped')})})});
-
-// Quiz
-const quizData=[{q:'井冈山革命根据地创建于哪一年？',o:['1921年','1925年','1927年','1930年'],a:2},{q:'井冈山会师是在哪一年？',o:['1926年','1928年','1929年','1931年'],a:1},{q:'井冈山会师的两位主要领导人是谁？',o:['毛泽东和周恩来','毛泽东和朱德','朱德和彭德怀','毛泽东和刘少奇'],a:1},{q:'三湾改编确立了哪项重要原则？',o:['枪杆子里出政权','支部建在连上','农村包围城市','土地革命'],a:1},{q:'黄洋界保卫战发生在哪一年？',o:['1927年','1928年','1929年','1930年'],a:1}];
-let qIdx=0,qScore=0;
-function renderQuiz(){const qEl=document.getElementById('quizQ'),oEl=document.getElementById('quizOpts'),rEl=document.getElementById('quizResult');rEl.classList.remove('show');oEl.style.display='flex';if(qIdx>=quizData.length){showResult();return}const d=quizData[qIdx];qEl.textContent='Q'+(qIdx+1)+'. '+d.q;oEl.innerHTML=d.o.map(function(o,i){return '<div class="quiz-opt" data-i="'+i+'">'+o+'</div>'}).join('');oEl.querySelectorAll('.quiz-opt').forEach(function(opt){opt.addEventListener('click',handleAnswer)})}
-function handleAnswer(e){const sel=parseInt(e.target.dataset.i),cor=quizData[qIdx].a;document.querySelectorAll('#quizOpts .quiz-opt').forEach(function(o,i){o.style.pointerEvents='none';if(i===cor)o.classList.add('ok');else if(i===sel&&sel!==cor)o.classList.add('no')});if(sel===cor)qScore++;setTimeout(function(){qIdx++;renderQuiz()},1200)}
-function showResult(){document.getElementById('quizOpts').style.display='none';document.getElementById('quizQ').textContent='';const rEl=document.getElementById('quizResult'),t=quizData.length;let c=qScore===t?'🏆 太棒了！你是井冈山历史专家！':qScore>=t-1?'👍 非常优秀！':qScore>=t-2?'📖 不错！再了解一些~':'💪 继续学习红色历史！';document.getElementById('quizScore').textContent=qScore+'/'+t;document.getElementById('quizComment').textContent=c;rEl.classList.add('show')}
-function resetQuiz(){qIdx=0;qScore=0;renderQuiz()}
-renderQuiz();
-
-// Messages
-const defMsgs=['向井冈山革命先烈致以最崇高的敬意！🇨🇳','星星之火，可以燎原。不忘初心，继续前进！','井冈山精神永远激励着我们！'];
-(function(){const w=document.getElementById('msgWall');defMsgs.forEach(function(m){w.innerHTML+='<div class="msg-item">📝 '+m+'</div>'})})();
-function addMsg(){const i=document.getElementById('msgInput'),t=i.value.trim();if(!t)return;i.value='';const w=document.getElementById('msgWall');w.innerHTML+='<div class="msg-item">📝 '+t+'</div>';w.scrollTop=w.scrollHeight}
-
-// Spirit animation
-const spiritEl=document.querySelector('.spirit-line');if(spiritEl){new IntersectionObserver(function(e){if(e[0].isIntersecting){document.querySelectorAll('.spirit-char').forEach(function(c,i){c.style.animation='charIn 0.2s '+(i*0.08)+'s forwards';c.style.opacity='0'})}}).observe(spiritEl)}
-const st=document.createElement('style');st.textContent='@keyframes charIn{to{opacity:1;transform:translateY(0)}}';document.head.appendChild(st);
-
-// Fireworks
-const page14=document.getElementById('page14');if(page14){new IntersectionObserver(function(e){if(e[0].isIntersecting)spawnFW()}).observe(page14)}
-function spawnFW(){const colors=['#DAA520','#c41e3a','#ff6b6b','#ffd700','#ff4500'];for(let i=0;i<50;i++){setTimeout(function(){const f=document.createElement('div');f.className='firework';f.style.cssText='left:'+(20+Math.random()*60)+'%;top:'+(20+Math.random()*40)+'%;width:'+(0.025+Math.random()*0.04)+'rem;height:'+(0.025+Math.random()*0.04)+'rem;background:'+colors[Math.floor(Math.random()*colors.length)]+';--dx:'+((Math.random()-0.5)*2)+'rem;--dy:'+((Math.random()-0.5)*2)+'rem;animation-duration:'+(0.7+Math.random()*1.3)+'s';page14.appendChild(f);setTimeout(function(){f.remove()},2000)},i*70)}}
-
-// Share
-function shareH5(){if(navigator.share)navigator.share({title:'星火燎原·井冈山红色文化主题展',text:'快来了解井冈山红色文化！',url:location.href}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(location.href).then(function(){alert('链接已复制！')}).catch(function(){})}
-
-// Audio
-let ap=false;document.getElementById('audioBtn').addEventListener('click',function(){ap=!ap;this.textContent=ap?'🔊':'🔇'});
-
-// ======== Map Popups ========
+// ======== Star Particles (Page 1) ========
 (function(){
-  const dots=document.querySelectorAll('.map-dot-interactive');
-  const popup=document.getElementById('mapPopup');
-  if(!dots.length||!popup)return;
-  dots.forEach(function(d){
-    d.addEventListener('click',function(e){
-      e.stopPropagation();
-      const loc=this.dataset.loc,info=this.dataset.info;
-      popup.innerHTML='<strong style="color:#DAA520">'+loc+'</strong><br>'+info;
-      const rect=this.getBoundingClientRect();
-      const container=this.closest('.page').getBoundingClientRect();
-      popup.style.left=(rect.left-container.left+12)+'px';
-      popup.style.top=(rect.top-container.top-50)+'px';
-      popup.classList.add('show');
-      setTimeout(function(){popup.classList.remove('show')},3000);
-    });
-  });
-  document.querySelector('.page-2').addEventListener('click',function(){popup.classList.remove('show')});
+  const el = document.getElementById('particles1');
+  if(!el) return;
+  let html = '';
+  for(let i=0;i<60;i++){
+    const x = Math.random()*100, y = Math.random()*100;
+    const delay = Math.random()*3;
+    const size = Math.random()*0.05+0.02;
+    html += `<div style="position:absolute;left:${x}%;top:${y}%;width:${size}rem;height:${size}rem;background:#DAA520;border-radius:50%;animation:twinkle ${1.5+Math.random()*2}s ${delay}s infinite alternate;opacity:${0.2+Math.random()*0.5}"></div>`;
+  }
+  el.innerHTML = html;
+  el.style.cssText = 'position:absolute;width:100%;height:100%;pointer-events:none;z-index:0';
 })();
 
-// ======== Event Cards (P3) ========
-document.querySelectorAll('.event-card').forEach(function(card){
-  card.addEventListener('click',function(){this.classList.toggle('open')});
-});
+// ======== Page Indicator ========
+const container = document.getElementById('container');
+const indicator = document.getElementById('indicator');
+const pages = document.querySelectorAll('.page');
+const totalPages = pages.length;
 
-// ======== Spirit Tap (P7) ========
-document.querySelectorAll('.spirit-line').forEach(function(line){
-  line.addEventListener('click',function(){
-    const meaning=this.dataset.meaning;
-    document.getElementById('spiritMeaning').textContent=meaning||'';
-    this.querySelectorAll('.spirit-char').forEach(function(c,i){
-      c.classList.remove('pulse');void c.offsetWidth;c.classList.add('pulse');
+for(let i=0;i<totalPages;i++){
+  const dot = document.createElement('div');
+  dot.className = 'indicator-dot';
+  dot.title = '第'+(i+1)+'页';
+  dot.addEventListener('click',()=>{ pages[i].scrollIntoView({behavior:'smooth'}); });
+  indicator.appendChild(dot);
+}
+const dots = document.querySelectorAll('.indicator-dot');
+dots[0].classList.add('active');
+
+// Scroll observer for indicator
+const pageObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx = Array.from(pages).indexOf(e.target);
+      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    }
+  });
+},{threshold:0.6});
+pages.forEach(p=>pageObserver.observe(p));
+
+// ======== Timeline Component (Advanced 1) ========
+(function(){
+  const track = document.getElementById('timelineTrack');
+  const items = track.querySelectorAll('.timeline-item');
+
+  items.forEach(item=>{
+    item.addEventListener('click',()=>{
+      // If already expanded, collapse; otherwise expand
+      const wasExpanded = item.classList.contains('expanded');
+      items.forEach(i=>i.classList.remove('expanded'));
+      if(!wasExpanded) item.classList.add('expanded');
+      // Center the item
+      item.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
     });
   });
-});
 
-// ======== Battle Hotspots (P9) ========
-document.querySelectorAll('.battle-hotspot').forEach(function(hs){
-  hs.addEventListener('click',function(e){
-    e.stopPropagation();
-    const info=document.getElementById('battleInfo');
-    info.innerHTML='<strong style="color:#DAA520">'+this.dataset.spot+'</strong>：'+this.dataset.detail;
-    info.classList.add('show');
-    setTimeout(function(){info.classList.remove('show')},3500);
+  // Touch swipe tracking
+  let touchStartX = 0, touchStartY = 0;
+  const timelineContainer = document.getElementById('timelineContainer');
+  timelineContainer.addEventListener('touchstart',e=>{
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  },{passive:true});
+  timelineContainer.addEventListener('touchend',e=>{
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+      timelineContainer.scrollBy({left:-dx*2,behavior:'smooth'});
+    }
+  },{passive:true});
+})();
+
+// ======== 3D Flip Cards (Advanced 2) ========
+(function(){
+  const cards = document.querySelectorAll('.flip-card');
+  cards.forEach(card=>{
+    card.addEventListener('click',()=>{
+      card.classList.toggle('flipped');
+    });
+    card.addEventListener('dblclick',()=>{
+      cards.forEach(c=>c.classList.remove('flipped'));
+    });
+  });
+})();
+
+// ======== Quiz Component (Advanced 3) ========
+const quizData = [
+  {q:'井冈山革命根据地创建于哪一年？',opts:['1921年','1925年','1927年','1930年'],ans:2},
+  {q:'井冈山会师是在哪一年？',opts:['1926年','1928年','1929年','1931年'],ans:1},
+  {q:'井冈山会师的两位主要领导人是谁？',opts:['毛泽东和周恩来','毛泽东和朱德','朱德和彭德怀','毛泽东和刘少奇'],ans:1},
+  {q:'三湾改编确立了哪项重要原则？',opts:['枪杆子里出政权','支部建在连上','农村包围城市','土地革命'],ans:1},
+  {q:'黄洋界保卫战发生在哪一年？',opts:['1927年','1928年','1929年','1930年'],ans:1}
+];
+
+let quizIdx = 0, quizScore = 0;
+
+function renderQuiz(){
+  const qEl = document.getElementById('quizQ');
+  const optsEl = document.getElementById('quizOpts');
+  const resultEl = document.getElementById('quizResult');
+
+  resultEl.classList.remove('show');
+  optsEl.style.display = 'flex';
+
+  if(quizIdx >= quizData.length){
+    showResult();
+    return;
+  }
+
+  const data = quizData[quizIdx];
+  qEl.textContent = `Q${quizIdx+1}. ${data.q}`;
+  optsEl.innerHTML = data.opts.map((o,i)=>`<div class="quiz-option" data-idx="${i}">${o}</div>`).join('');
+
+  optsEl.querySelectorAll('.quiz-option').forEach(opt=>{
+    opt.addEventListener('click',handleAnswer);
+  });
+}
+
+function handleAnswer(e){
+  const selected = parseInt(e.target.dataset.idx);
+  const correct = quizData[quizIdx].ans;
+  const allOpts = document.querySelectorAll('#quizOpts .quiz-option');
+
+  allOpts.forEach((o,i)=>{
+    o.style.pointerEvents = 'none';
+    if(i===correct) o.classList.add('correct');
+    else if(i===selected && selected!==correct) o.classList.add('wrong');
+  });
+
+  if(selected === correct) quizScore++;
+
+  setTimeout(()=>{
+    quizIdx++;
+    renderQuiz();
+  },1200);
+}
+
+function showResult(){
+  const resultEl = document.getElementById('quizResult');
+  document.getElementById('quizOpts').style.display = 'none';
+  document.getElementById('quizQ').textContent = '';
+
+  const total = quizData.length;
+  const score = quizScore;
+  let comment = '';
+  if(score===total) comment = '🏆 太棒了！你是井冈山历史专家！';
+  else if(score>=total-1) comment = '👍 非常优秀！对井冈山历史有深入了解！';
+  else if(score>=total-2) comment = '📖 不错！再多了解一些会更好哦！';
+  else comment = '💪 继续学习，了解更多的红色历史吧！';
+
+  document.getElementById('quizScore').textContent = score+'/'+total;
+  document.getElementById('quizComment').textContent = comment;
+  resultEl.classList.add('show');
+}
+
+function resetQuiz(){
+  quizIdx = 0;
+  quizScore = 0;
+  renderQuiz();
+}
+
+renderQuiz();
+
+// ======== Song Player ========
+document.querySelectorAll('.song-player').forEach(player=>{
+  player.addEventListener('click',()=>{
+    player.classList.toggle('playing');
   });
 });
-document.querySelector('.page-9')&&document.querySelector('.page-9').addEventListener('click',function(){document.getElementById('battleInfo').classList.remove('show')});
 
-// ======== Legacy Flip (P12) ========
-document.querySelectorAll('.legacy-card').forEach(function(card){
-  card.addEventListener('click',function(){this.classList.toggle('flipped')});
-  card.addEventListener('dblclick',function(){document.querySelectorAll('.legacy-card').forEach(function(c){c.classList.remove('flipped')})});
+// ======== Message Wall ========
+const defaultMsgs = [
+  '向井冈山革命先烈致以最崇高的敬意！🇨🇳',
+  '星星之火，可以燎原。不忘初心，继续前进！',
+  '井冈山精神永远激励着我们！',
+];
+
+function initMsgWall(){
+  const wall = document.getElementById('msgWall');
+  defaultMsgs.forEach(m=>{
+    wall.innerHTML += `<div class="msg-item">📝 ${m}</div>`;
+  });
+}
+initMsgWall();
+
+function addMessage(){
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if(!text){ alert('请输入留言内容'); return; }
+  const wall = document.getElementById('msgWall');
+  wall.innerHTML += `<div class="msg-item">📝 ${text}</div>`;
+  input.value = '';
+  wall.scrollTop = wall.scrollHeight;
+}
+
+// ======== Audio Button ========
+const audioBtn = document.getElementById('audioBtn');
+let audioPlaying = false;
+audioBtn.addEventListener('click',()=>{
+  audioPlaying = !audioPlaying;
+  audioBtn.textContent = audioPlaying ? '🔊' : '🔇';
+  audioBtn.style.background = audioPlaying ? 'rgba(196,30,58,0.6)' : 'rgba(0,0,0,0.5)';
+  // Play/pause background audio if implemented
 });
 
-// Keyboard nav
-let cp=0;
-document.addEventListener('keydown',function(e){if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();cp=Math.min(totalPages-1,cp+1);pages[cp].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();cp=Math.max(0,cp-1);pages[cp].scrollIntoView({behavior:'smooth'})}});
-const kObs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)cp=Array.from(pages).indexOf(x.target)})},{threshold:0.6});
-pages.forEach(function(p){kObs.observe(p)});
+// ======== Fireworks (Page 14) ========
+(function(){
+  const page14 = document.getElementById('page14');
+  if(!page14) return;
 
-console.log('🔥 星火燎原·井冈山红色文化主题展 H5 已就绪');
-console.log('📱 建议手机模式浏览 | 14页 | 3组高级组件 | SVG插画视觉');
+  const observer = new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){
+      spawnFireworks();
+    }
+  },{threshold:0.5});
+  observer.observe(page14);
+
+  function spawnFireworks(){
+    const colors = ['#DAA520','#c41e3a','#ff6b6b','#ffd700','#ff4500','#ff6347'];
+    for(let i=0;i<40;i++){
+      setTimeout(()=>{
+        const fw = document.createElement('div');
+        fw.className = 'firework';
+        const cx = 20 + Math.random()*60;
+        const cy = 20 + Math.random()*40;
+        fw.style.cssText = `
+          left:${cx}%;top:${cy}%;
+          width:${0.03+Math.random()*0.04}rem;
+          height:${0.03+Math.random()*0.04}rem;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          --dx:${(Math.random()-0.5)*2}rem;
+          --dy:${(Math.random()-0.5)*2}rem;
+          animation-duration:${0.8+Math.random()*1.2}s;
+        `;
+        page14.appendChild(fw);
+        setTimeout(()=>fw.remove(),2000);
+      },i*80);
+    }
+  }
+})();
+
+// ======== Spirit Characters Animation ========
+const spiritObserver = new IntersectionObserver((entries)=>{
+  if(entries[0].isIntersecting){
+    const chars = document.querySelectorAll('#spiritBlock .spirit-char');
+    chars.forEach((c,i)=>{
+      c.style.animationDelay = (i*0.1)+'s';
+    });
+  }
+},{threshold:0.5});
+const spiritBlock = document.getElementById('spiritBlock');
+if(spiritBlock) spiritObserver.observe(spiritBlock);
+
+// ======== Share ========
+function shareH5(){
+  if(navigator.share){
+    navigator.share({title:'星火燎原·井冈山红色文化主题展',text:'快来了解井冈山红色文化！',url:location.href}).catch(()=>{});
+  }else{
+    const url = location.href;
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(url).then(()=>alert('链接已复制！粘贴分享给朋友')).catch(()=>alert('分享链接：'+url));
+    }else{
+      alert('分享链接：'+url);
+    }
+  }
+}
+
+// ======== Keyboard Navigation ========
+let currentPageIdx = 0;
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowRight'){
+    e.preventDefault();
+    currentPageIdx = Math.min(totalPages-1,currentPageIdx+1);
+    pages[currentPageIdx].scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){
+    e.preventDefault();
+    currentPageIdx = Math.max(0,currentPageIdx-1);
+    pages[currentPageIdx].scrollIntoView({behavior:'smooth'});
+  }
+});
+
+// Update currentPageIdx on scroll
+const scrollObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      currentPageIdx = Array.from(pages).indexOf(e.target);
+    }
+  });
+},{threshold:0.6});
+pages.forEach(p=>scrollObserver.observe(p));
+
+// ======== Touch Gestures for Page Navigation ========
+let touchStartPageY = 0;
+container.addEventListener('touchstart',e=>{
+  touchStartPageY = e.touches[0].clientY;
+},{passive:true});
+
+console.log('🔥 星火燎原 · 井冈山红色文化主题展 H5 已就绪');
+console.log('📱 建议在手机模式下浏览 (F12 → 375×812)');
+console.log('📄 共 '+totalPages+' 页 | ⭐ 3个高级组件：时间轴 · 3D翻转卡片 · 知识问答');
 </script>
 </body>
 </html>
