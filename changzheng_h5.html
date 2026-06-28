@@ -144,9 +144,41 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
 .msg-item{font-size:0.18rem;color:#e8d5c4;padding:0.08rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.08);animation:msgIn 0.3s}
 @keyframes msgIn{0%{opacity:0;transform:translateX(0.2rem)}100%{opacity:1;transform:translateX(0)}}
 
+/* ====== NEW COMPONENT 1: Interactive Route Map ====== */
+.route-map{width:6rem;height:3.5rem;position:relative;z-index:1;cursor:default}
+.route-map svg{width:100%;height:100%}
+.route-waypoint{cursor:pointer;transition:all 0.3s}
+.route-waypoint:hover,.route-waypoint:active{filter:drop-shadow(0 0 6px #DAA520)}
+.route-popup{position:absolute;bottom:0.1rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.15rem 0.2rem;font-size:0.2rem;color:#e8d5c4;text-align:center;z-index:5;opacity:0;transition:opacity 0.3s;width:5.5rem;pointer-events:none}
+.route-popup.show{opacity:1}
+.route-path{stroke-dasharray:1000;stroke-dashoffset:1000;animation:drawPath 3s ease-out forwards}
+@keyframes drawPath{to{stroke-dashoffset:0}}
+
+/* ====== NEW COMPONENT 2: Scratch Card ====== */
+.scratch-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:5.8rem;z-index:1}
+.scratch-card{width:2.6rem;height:3.2rem;position:relative;border-radius:0.12rem;overflow:hidden;cursor:pointer;border:0.01rem solid rgba(218,165,32,0.3)}
+.scratch-bg{width:100%;height:100%;background:linear-gradient(135deg,#5a3a1a,#4a2a0a);display:flex;flex-direction:column;align-items:center;justify-content:center;position:absolute;inset:0;z-index:2;transition:opacity 0.1s}
+.scratch-icon{font-size:0.5rem;margin-bottom:0.08rem}
+.scratch-label{font-size:0.18rem;color:#cdb38b}
+.scratch-content{width:100%;height:100%;background:linear-gradient(180deg,rgba(139,0,0,0.7),rgba(0,0,0,0.8));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.2rem;position:absolute;inset:0;z-index:1}
+.scratch-story{font-size:0.2rem;color:#e8d5c4;line-height:1.6;text-align:center}
+.scratch-hint{font-size:0.14rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.15rem;z-index:1}
+
+/* ====== NEW COMPONENT 3: Memory Match Game ====== */
+.memory-grid{display:flex;flex-wrap:wrap;gap:0.1rem;justify-content:center;max-width:5rem;z-index:1}
+.memory-card{width:1.5rem;height:1.5rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.5s;border-radius:0.1rem}
+.memory-card.flipped{transform:rotateY(180deg)}
+.memory-card.matched{opacity:0.6;pointer-events:none}
+.memory-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.1rem;display:flex;align-items:center;justify-content:center;font-size:0.4rem}
+.memory-front{background:linear-gradient(135deg,#c41e3a,#8b0000);border:0.01rem solid rgba(218,165,32,0.4);z-index:2}
+.memory-back{background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(0,0,0,0.6));border:0.01rem solid #DAA520;transform:rotateY(180deg)}
+.memory-score{font-size:0.24rem;color:#DAA520;text-align:center;margin-bottom:0.15rem;z-index:1}
+.memory-reset{display:inline-block;padding:0.1rem 0.3rem;background:#c41e3a;color:#fff;border-radius:0.2rem;font-size:0.18rem;cursor:pointer;margin-top:0.1rem;z-index:1}
+
 @media(max-width:375px){
-  .flip-card{width:1.4rem;height:2rem}
-  .legacy-card{width:45%}
+  .scratch-card{width:45%}
+  .memory-card{width:1.3rem;height:1.3rem}
+  .route-map{width:5rem;height:3rem}
 }
 </style>
 </head>
@@ -182,25 +214,26 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
   <div class="page-text">8.6万余名红军将士从江西于都集结出发，夜渡于都河，踏上战略转移的征途。于都人民拆门板、架浮桥，全力支援红军过河。当时谁也没有想到，这一去就是两万五千里。</div>
 </section>
 
-<!-- ====== P4 Zunyi Conference (Advanced 1: Timeline) ====== -->
+<!-- ====== P4 Route Map (Advanced 1: Interactive Route) ====== -->
 <section class="page page-4">
-  <div class="page-title">⭐ 长征时间轴</div>
-  <div class="page-subtitle">交互组件 · 左右滑动浏览重大事件</div>
-  <div class="tl-box">
-    <div class="tl-track" id="tlTrack">
-      <div class="tl-item"><div class="tl-year">1934.10</div><div class="tl-dot"></div><div class="tl-title">于都出发</div><div class="tl-desc">8.6万红军从江西于都集结出发，夜渡于都河。</div></div>
-      <div class="tl-item"><div class="tl-year">1934.11</div><div class="tl-dot"></div><div class="tl-title">血战湘江</div><div class="tl-desc">红军突破第四道封锁线，从8.6万锐减至3万余人。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.01</div><div class="tl-dot"></div><div class="tl-title">遵义会议</div><div class="tl-desc">确立毛泽东的领导地位，挽救了党和红军。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.01</div><div class="tl-dot"></div><div class="tl-title">四渡赤水</div><div class="tl-desc">毛泽东军事生涯的得意之笔，跳出包围圈。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.05</div><div class="tl-dot"></div><div class="tl-title">巧渡金沙江</div><div class="tl-desc">七天七夜，3万红军渡过金沙江。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.05</div><div class="tl-dot"></div><div class="tl-title">飞夺泸定桥</div><div class="tl-desc">22勇士冒着弹雨攀铁索，一举夺桥。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.06</div><div class="tl-dot"></div><div class="tl-title">翻越大雪山</div><div class="tl-desc">翻越海拔4000多米的夹金山等雪山。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.08</div><div class="tl-dot"></div><div class="tl-title">过草地</div><div class="tl-desc">穿越松潘草地，牺牲万余人。</div></div>
-      <div class="tl-item"><div class="tl-year">1935.10</div><div class="tl-dot"></div><div class="tl-title">到达陕北</div><div class="tl-desc">中央红军到达吴起镇，长征胜利结束。</div></div>
-      <div class="tl-item"><div class="tl-year">1936.10</div><div class="tl-dot"></div><div class="tl-title">三大主力会师</div><div class="tl-desc">红一二四方面军在会宁会师。</div></div>
-    </div>
+  <div class="page-title">⭐ 长征路线追踪</div>
+  <div class="page-subtitle">交互组件 · 点击路线节点解锁历史事件</div>
+  <div class="route-map" id="routeMap">
+    <svg viewBox="0 0 600 350">
+      <rect width="600" height="350" fill="#1a0d0d" rx="8"/>
+      <path d="M30,300 Q80,280 120,290 Q160,300 180,240 Q200,180 240,170 Q280,160 300,120 Q320,80 360,90 Q400,100 420,160 Q440,220 480,180 Q520,140 560,100" fill="none" stroke="#DAA520" stroke-width="2.5" opacity="0.6" id="routePath"/>
+      <g class="route-waypoint" data-title="于都出发" data-info="1934年10月 · 8.6万红军集结于都，夜渡于都河，踏上长征路。"><circle cx="30" cy="300" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="30" y="320" text-anchor="middle" fill="#cdb38b" font-size="9">于都</text></g>
+      <g class="route-waypoint" data-title="血战湘江" data-info="1934年11-12月 · 突破第四道封锁线，红军从8.6万锐减至3万余人，鲜血染红湘江。"><circle cx="140" cy="285" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="140" y="305" text-anchor="middle" fill="#cdb38b" font-size="9">湘江</text></g>
+      <g class="route-waypoint" data-title="遵义会议" data-info="1935年1月15-17日 · 生死攸关的转折点，事实上确立了毛泽东在党中央和红军的领导地位。"><circle cx="200" cy="235" r="10" fill="#DAA520" stroke="#fff" stroke-width="2"/><text x="200" y="220" text-anchor="middle" fill="#DAA520" font-size="10" font-weight="bold">★ 遵义</text></g>
+      <g class="route-waypoint" data-title="四渡赤水" data-info="1935年1-3月 · 毛泽东指挥3万红军对40万敌军，大迂回运动战，跳出包围圈。"><circle cx="260" cy="165" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="260" y="152" text-anchor="middle" fill="#cdb38b" font-size="9">赤水</text></g>
+      <g class="route-waypoint" data-title="飞夺泸定桥" data-info="1935年5月29日 · 22名突击队员攀着13根铁索冲向对岸，一举夺取泸定桥。"><circle cx="320" cy="85" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="340" y="82" fill="#cdb38b" font-size="9">泸定</text></g>
+      <g class="route-waypoint" data-title="翻越大雪山" data-info="1935年6月 · 翻越海拔4114米的夹金山等多座大雪山，缺衣少食，许多人永远长眠雪山。"><circle cx="380" cy="95" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="380" y="115" text-anchor="middle" fill="#cdb38b" font-size="9">夹金山</text></g>
+      <g class="route-waypoint" data-title="过松潘草地" data-info="1935年8月 · 穿越'死亡陷阱'松潘草地，泥泞沼泽吞噬万余名红军战士。"><circle cx="440" cy="165" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="460" y="168" fill="#cdb38b" font-size="9">松潘</text></g>
+      <g class="route-waypoint" data-title="胜利会师" data-info="1936年10月 · 红一二四方面军在甘肃会宁会师，伟大的长征胜利结束。"><circle cx="560" cy="100" r="10" fill="#DAA520" stroke="#fff" stroke-width="2"/><text x="560" y="85" text-anchor="middle" fill="#DAA520" font-size="10" font-weight="bold">★ 会宁</text></g>
+    </svg>
+    <div class="route-popup" id="routePopup"></div>
   </div>
-  <div class="tl-hint">← 左右滑动浏览 → 点击节点展开详情</div>
+  <div class="page-text" style="font-size:0.18rem;color:rgba(205,179,139,0.5);margin-top:0.15rem">👆 点击路线上的圆点查看该地历史事件</div>
 </section>
 
 <!-- ====== P5 Zunyi Conference ====== -->
@@ -235,19 +268,19 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
   <div class="page-text" style="color:#333;z-index:1">红军翻越了<span class="danwei" style="color:#B22222">海拔4000米以上</span>的夹金山等多座大雪山，又穿越了被称为"死亡陷阱"的<span class="danwei" style="color:#B22222">松潘草地</span>。缺衣少食、高原缺氧，许多战士永远长眠在了雪山草地上。红军以惊人的意志力战胜了极端自然环境。</div>
 </section>
 
-<!-- ====== P9 Artifacts (Advanced 2: Flip Cards) ====== -->
-<section class="page page-9">
-  <div class="page-title">⭐ 长征文物</div>
-  <div class="page-subtitle">交互组件 · 点击卡片翻转查看故事</div>
-  <div class="flip-grid" id="flipGrid">
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🥾</div><div class="flip-name">草鞋</div></div><div class="flip-face flip-back"><div class="flip-story">红军脚穿草鞋走完两万五千里，许多战士到达陕北时双脚已磨烂见骨。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🧥</div><div class="flip-name">半条棉被</div></div><div class="flip-face flip-back"><div class="flip-story">三名女红军借宿老乡家，临走把仅有的一条棉被剪下半条留给老人——"什么是共产党？共产党就是自己有一条被子，也要剪下半条给老百姓的人。"</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">📜</div><div class="flip-name">七根火柴</div></div><div class="flip-face flip-back"><div class="flip-story">草地行军，无名战士用生命守护七根干燥火柴交给组织。每一根火柴在草地中都是生与死的距离。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🏅</div><div class="flip-name">金色鱼钩</div></div><div class="flip-face flip-back"><div class="flip-story">老班长用缝衣针做成鱼钩钓鱼给伤员吃，自己却只啃鱼骨头，最终饿死在草地边缘。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🔗</div><div class="flip-name">铁索链</div></div><div class="flip-face flip-back"><div class="flip-story">泸定桥13根铁索见证22勇士飞夺天险——桥上木板被敌军抽走，红军攀着滚烫铁索冒弹雨冲锋。</div></div></div>
-    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🪖</div><div class="flip-name">红军帽</div></div><div class="flip-face flip-back"><div class="flip-story">一顶缀着红星的八角帽，是红军的标志。长征途中多少战士牺牲时仍紧握着这顶帽子面向北方。</div></div></div>
+<!-- ====== P9 Scratch Cards (Advanced 2: Scratch Reveal) ====== -->
+<section class="page page-9" style="overflow-y:auto">
+  <div class="page-title">⭐ 擦开历史</div>
+  <div class="page-subtitle">交互组件 · 用手指擦除涂层揭示长征故事</div>
+  <div class="scratch-grid" id="scratchGrid">
+    <div class="scratch-card" data-story="红军脚穿草鞋走完两万五千里，许多战士到达陕北时双脚已磨烂见骨。"><div class="scratch-content"><span style="font-size:0.3rem">🥾</span><div class="scratch-story" style="margin-top:0.1rem">红军脚穿草鞋走完两万五千里，许多战士到达陕北时双脚已磨烂见骨。</div></div><canvas class="scratch-bg"><div class="scratch-icon">🥾</div><div class="scratch-label">草鞋的故事</div></canvas></div>
+    <div class="scratch-card" data-story="三名女红军临走把仅有的一条棉被剪下半条留给老人。'什么是共产党？共产党就是自己有一条被子，也要剪下半条给老百姓的人。'"><div class="scratch-content"><span style="font-size:0.3rem">🧥</span><div class="scratch-story" style="margin-top:0.1rem">三名女红军临走把仅有的一条棉被剪下半条留给老人。共产党就是自己有一条被子，也要剪下半条给老百姓的人。</div></div><canvas class="scratch-bg"><div class="scratch-icon">🧥</div><div class="scratch-label">半条棉被</div></canvas></div>
+    <div class="scratch-card" data-story="草地行军，无名战士用生命守护七根干燥火柴交给组织。每一根火柴在草地中都是生与死的距离。"><div class="scratch-content"><span style="font-size:0.3rem">📜</span><div class="scratch-story" style="margin-top:0.1rem">无名战士用生命守护七根干燥火柴交给组织。在草地，一根火柴就是一次生的希望。</div></div><canvas class="scratch-bg"><div class="scratch-icon">📜</div><div class="scratch-label">七根火柴</div></canvas></div>
+    <div class="scratch-card" data-story="老班长用缝衣针做成鱼钩钓鱼给伤员吃，自己却只啃鱼骨头，最终饿死在草地边缘。"><div class="scratch-content"><span style="font-size:0.3rem">🏅</span><div class="scratch-story" style="margin-top:0.1rem">老班长用缝衣针做成鱼钩钓鱼给伤员吃，自己却只啃鱼骨头，最终饿死在草地边缘。</div></div><canvas class="scratch-bg"><div class="scratch-icon">🏅</div><div class="scratch-label">金色鱼钩</div></canvas></div>
+    <div class="scratch-card" data-story="泸定桥13根铁索，22名勇士冒着弹雨攀索冲锋，木板被敌军抽走，铁索滚烫如烙铁。"><div class="scratch-content"><span style="font-size:0.3rem">🔗</span><div class="scratch-story" style="margin-top:0.1rem">泸定桥13根铁索见证22勇士飞夺天险——桥上木板被敌军抽走，红军攀着滚烫铁索冲锋。</div></div><canvas class="scratch-bg"><div class="scratch-icon">🔗</div><div class="scratch-label">铁索链</div></canvas></div>
+    <div class="scratch-card" data-story="一顶缀着红星的八角帽，是红军的标志。长征途中多少战士牺牲时仍紧握着帽子面向北方。"><div class="scratch-content"><span style="font-size:0.3rem">🪖</span><div class="scratch-story" style="margin-top:0.1rem">一顶缀着红星的八角帽，是红军的标志。多少战士牺牲时仍紧握着这顶帽子面向北方。</div></div><canvas class="scratch-bg"><div class="scratch-icon">🪖</div><div class="scratch-label">红军帽</div></canvas></div>
   </div>
-  <div class="flip-hint">👆 单击翻转 · 双击全部还原</div>
+  <div class="scratch-hint">👆 用手指在卡片上涂抹擦除涂层 · 全部擦开查看完整故事</div>
 </section>
 
 <!-- ====== P10 Spirit ====== -->
@@ -262,20 +295,14 @@ body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;b
   </div>
 </section>
 
-<!-- ====== P11 Quiz (Advanced 3) ====== -->
-<section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.5rem">
-  <div class="page-title">⭐ 长征知识挑战</div>
-  <div class="page-subtitle">交互组件 · 答题测试你对长征的了解</div>
-  <div class="quiz-container" id="quizContainer">
-    <div class="quiz-question" id="quizQ"></div>
-    <div class="quiz-options" id="quizOpts"></div>
-    <div class="quiz-result" id="quizResult">
-      <div style="font-size:0.2rem;color:#cdb38b">你的得分</div>
-      <div class="quiz-score" id="quizScore"></div>
-      <div class="quiz-comment" id="quizComment"></div>
-      <div class="quiz-retry" onclick="resetQuiz()">再来一次</div>
-    </div>
-  </div>
+<!-- ====== P11 Memory Game (Advanced 3: Memory Match) ====== -->
+<section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.3rem">
+  <div class="page-title">⭐ 长征记忆配对</div>
+  <div class="page-subtitle">交互组件 · 翻牌配对长征文物，测测你的记忆力</div>
+  <div class="memory-score" id="memScore">已配对: 0 / 6 对</div>
+  <div class="memory-grid" id="memoryGrid"></div>
+  <button class="memory-reset" onclick="resetMemory()">🔄 重新开始</button>
+  <div class="scratch-hint">👆 点击翻开两张牌，找到相同的长征文物配对</div>
 </section>
 
 <!-- ====== P12 Legacy ====== -->
@@ -328,23 +355,128 @@ const dots=document.querySelectorAll('.indicator-dot');dots[0].classList.add('ac
 const po=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=Array.from(pages).indexOf(x.target);dots.forEach((d,j)=>d.classList.toggle('active',j===i))}})},{threshold:0.6});
 pages.forEach(p=>po.observe(p));
 
-// Timeline
-document.querySelectorAll('.tl-item').forEach(item=>{item.addEventListener('click',function(){const was=this.classList.contains('on');document.querySelectorAll('.tl-item').forEach(i=>i.classList.remove('on'));if(!was){this.classList.add('on');this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}})});
+// ======== COMPONENT 1: Route Map Waypoints ========
+(function(){
+  const waypoints=document.querySelectorAll('.route-waypoint');
+  const popup=document.getElementById('routePopup');
+  waypoints.forEach(wp=>{
+    wp.addEventListener('click',function(e){
+      e.stopPropagation();
+      const title=this.dataset.title;
+      const info=this.dataset.info;
+      popup.innerHTML='<strong style="color:#DAA520">'+title+'</strong><br>'+info;
+      popup.classList.add('show');
+      // Pulse the waypoint
+      const circle=this.querySelector('circle');
+      if(circle){circle.setAttribute('r','14');setTimeout(()=>circle.setAttribute('r','8'),300)}
+      setTimeout(()=>popup.classList.remove('show'),4000);
+    });
+  });
+})();
 
-// Flip cards
-(function(){const cards=document.querySelectorAll('.flip-card');const taps={};cards.forEach((card,idx)=>{card.addEventListener('click',function(e){e.stopPropagation();const now=Date.now(),last=taps[idx]||0;if(now-last<350){cards.forEach(c=>c.classList.remove('flipped'));taps[idx]=0}else{this.classList.toggle('flipped');taps[idx]=now}})})})();
+// ======== COMPONENT 2: Scratch Cards ========
+(function(){
+  const cards=document.querySelectorAll('.scratch-card');
+  cards.forEach(card=>{
+    const canvas=card.querySelector('canvas');
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    const w=canvas.parentElement.clientWidth;
+    const h=canvas.parentElement.clientHeight;
+    canvas.width=w; canvas.height=h;
+    canvas.style.width=w+'px'; canvas.style.height=h+'px';
 
-// Legacy flip
+    // Draw scratch layer
+    ctx.fillStyle='#5a3a1a';
+    ctx.fillRect(0,0,w,h);
+    // Draw decorative pattern
+    for(let i=0;i<30;i++){
+      ctx.fillStyle='rgba(74,42,10,'+(0.4+Math.random()*0.4)+')';
+      ctx.beginPath();
+      ctx.arc(Math.random()*w,Math.random()*h,Math.random()*15+3,0,Math.PI*2);
+      ctx.fill();
+    }
+    // Draw icon and label
+    const icon=card.querySelector('.scratch-icon');
+    const label=card.querySelector('.scratch-label');
+    ctx.fillStyle='#DAA520';
+    ctx.font='bold '+Math.floor(w*0.12)+'px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText(icon?icon.textContent:'',w/2,h/2-5);
+    ctx.fillStyle='#cdb38b';
+    ctx.font=Math.floor(w*0.07)+'px sans-serif';
+    ctx.fillText(label?label.textContent:'刮开查看',w/2,h/2+25);
+
+    let scratching=false;
+    canvas.addEventListener('mousedown',()=>{scratching=true});
+    canvas.addEventListener('mouseup',()=>{scratching=false});
+    canvas.addEventListener('mouseleave',()=>{scratching=false});
+    canvas.addEventListener('mousemove',e=>{if(scratching)scratch(e,canvas,ctx)});
+    canvas.addEventListener('touchstart',e=>{e.preventDefault();scratching=true;scratchTouch(e,canvas,ctx)});
+    canvas.addEventListener('touchmove',e=>{e.preventDefault();if(scratching)scratchTouch(e,canvas,ctx)});
+    canvas.addEventListener('touchend',()=>{scratching=false});
+  });
+
+  function scratch(e,canvas,ctx){
+    const rect=canvas.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath();
+    ctx.arc(x,y,25,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  function scratchTouch(e,canvas,ctx){
+    const rect=canvas.getBoundingClientRect();
+    Array.from(e.touches).forEach(t=>{
+      const x=t.clientX-rect.left;
+      const y=t.clientY-rect.top;
+      ctx.globalCompositeOperation='destination-out';
+      ctx.beginPath();
+      ctx.arc(x,y,28,0,Math.PI*2);
+      ctx.fill();
+    });
+  }
+})();
+
+// ======== COMPONENT 3: Memory Match Game ========
+(function(){
+  const emojis=['🥾','🧥','📜','🏅','🔗','🪖','🥾','🧥','📜','🏅','🔗','🪖'];
+  let cards=[],flipped=[],matched=[],lock=false,pairs=0;
+
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  const shuffled=shuffle(emojis.map((e,i)=>({emoji:e,id:i})));
+
+  const grid=document.getElementById('memoryGrid');
+  grid.innerHTML=shuffled.map((s,i)=>'<div class="memory-card" data-idx="'+i+'" data-emoji="'+s.emoji+'" data-pair="'+Math.floor(s.id/6)+'"><div class="memory-face memory-front">⭐</div><div class="memory-face memory-back">'+s.emoji+'</div></div>').join('');
+  cards=document.querySelectorAll('.memory-card');
+
+  cards.forEach(card=>{
+    card.addEventListener('click',function(){
+      if(lock||this.classList.contains('flipped')||this.classList.contains('matched'))return;
+      this.classList.add('flipped');
+      flipped.push(this);
+      if(flipped.length===2){
+        lock=true;
+        const [a,b]=flipped;
+        if(a.dataset.pair===b.dataset.pair){
+          a.classList.add('matched');b.classList.add('matched');
+          pairs++;
+          document.getElementById('memScore').textContent='已配对: '+pairs+' / 6 对';
+          if(pairs===6)setTimeout(()=>alert('🎉 恭喜！你完成了所有配对！'),300);
+          flipped=[];lock=false;
+        }else{
+          setTimeout(()=>{a.classList.remove('flipped');b.classList.remove('flipped');flipped=[];lock=false},800);
+        }
+      }
+    });
+  });
+})();
+function resetMemory(){location.reload()}
+
+// Legacy flip cards
 document.querySelectorAll('.legacy-card').forEach(card=>{let tap=0;card.addEventListener('click',function(){const now=Date.now();if(now-tap<350){document.querySelectorAll('.legacy-card').forEach(c=>c.classList.remove('flipped'));tap=0}else{this.classList.toggle('flipped');tap=now}})});
-
-// Quiz
-const quizData=[{q:'红军长征开始于哪一年？',o:['1933年','1934年','1935年','1936年'],a:1},{q:'遵义会议召开于哪一年？',o:['1934年','1935年','1936年','1937年'],a:1},{q:'长征中的"湘江战役"发生在哪条江边？',o:['赣江','乌江','湘江','赤水'],a:2},{q:'红军翻越的第一座大雪山叫什么？',o:['玉龙雪山','夹金山','梅里雪山','贡嘎山'],a:1},{q:'长征的最后一站是哪里？',o:['延安','遵义','会宁','吴起镇'],a:3},{q:'红军长征共走了大约多少里？',o:['一万','一万五','两万五','三万'],a:2}];
-let qIdx=0,qScore=0;
-function renderQuiz(){const qE=document.getElementById('quizQ'),oE=document.getElementById('quizOpts'),rE=document.getElementById('quizResult');rE.classList.remove('show');oE.style.display='flex';if(qIdx>=quizData.length){showResult();return}const d=quizData[qIdx];qE.textContent='Q'+(qIdx+1)+'. '+d.q;oE.innerHTML=d.o.map((o,i)=>'<div class="quiz-option" data-i="'+i+'">'+o+'</div>').join('');oE.querySelectorAll('.quiz-option').forEach(o=>o.addEventListener('click',handleAnswer))}
-function handleAnswer(e){const sel=parseInt(e.target.dataset.i),cor=quizData[qIdx].a;document.querySelectorAll('#quizOpts .quiz-option').forEach((o,i)=>{o.style.pointerEvents='none';if(i===cor)o.classList.add('correct');else if(i===sel&&sel!==cor)o.classList.add('wrong')});if(sel===cor)qScore++;setTimeout(()=>{qIdx++;renderQuiz()},1200)}
-function showResult(){document.getElementById('quizOpts').style.display='none';document.getElementById('quizQ').textContent='';const rE=document.getElementById('quizResult'),t=quizData.length;let c=qScore===t?'🏆 太棒了！你是长征历史专家！':qScore>=t-1?'👍 非常优秀！':qScore>=t-2?'📖 不错！再了解一些~':'💪 继续学习长征历史！';document.getElementById('quizScore').textContent=qScore+'/'+t;document.getElementById('quizComment').textContent=c;rE.classList.add('show')}
-function resetQuiz(){qIdx=0;qScore=0;renderQuiz()}
-renderQuiz();
 
 // Messages
 const defMsgs=['向长征英烈致以最崇高的敬意！🇨🇳','万水千山不忘来时路，长征精神永放光芒！','每一代人都要走好自己的长征路！'];
