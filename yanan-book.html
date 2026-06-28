@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta property="og:title" content="互动学习H5 | 延安革命旧址是一本永远读不完的书">
+<meta property="og:description" content="红色文化互动学习">
+<title>延安革命旧址是一本永远读不完的书</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:calc(100vw/7.5);scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+
+/* Full-page scroll container */
+.container{width:100vw;height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.container::-webkit-scrollbar{display:none}
+
+/* Each page */
+.page{width:100vw;height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+/* ======== COVER with Video Background ======== */
+.cover-bg{position:absolute;inset:0;z-index:0}
+.cover-bg video,.cover-bg img{width:100%;height:100%;object-fit:cover}
+.cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.7) 100%);z-index:1}
+.cover-content{z-index:2;text-align:center;padding:1rem}
+.cover-logo{width:1.5rem;height:1.5rem;border-radius:0.2rem;background:rgba(218,165,32,0.2);border:0.02rem solid #DAA520;margin:0 auto 0.3rem;display:flex;align-items:center;justify-content:center;font-size:0.6rem}
+.cover-title{font-size:0.52rem;color:#fff;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;text-shadow:0 0 0.2rem rgba(0,0,0,0.5)}
+.cover-sub{font-size:0.24rem;color:#DAA520;margin-top:0.15rem;letter-spacing:0.04rem}
+.cover-hint{position:absolute;bottom:0.5rem;z-index:2;color:rgba(255,255,255,0.6);font-size:0.2rem;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(0.08rem)}}
+
+/* ======== Content Pages ======== */
+.page-dark{background:#1a1010}
+.page-red{background:linear-gradient(180deg,#2a1515,#1a0a0a)}
+.page-earth{background:linear-gradient(180deg,#2a1a10,#1a1010)}
+.page-gold{background:radial-gradient(ellipse at 50% 30%,#8B4513,#1a0000)}
+
+/* Image card */
+.image-card{width:6rem;height:3.5rem;border-radius:0.15rem;overflow:hidden;position:relative;z-index:1;margin:0.2rem 0;border:0.01rem solid rgba(218,165,32,0.3);box-shadow:0 0.2rem 0.5rem rgba(0,0,0,0.5)}
+.image-card img,.image-card video{width:100%;height:100%;object-fit:cover}
+.image-card.placeholder{background:linear-gradient(135deg,rgba(139,69,19,0.3),rgba(0,0,0,0.5));display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(218,165,32,0.3)}
+.image-label{position:absolute;bottom:0;left:0;right:0;padding:0.2rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.8));color:#fff;font-size:0.22rem;text-align:center;z-index:2}
+
+/* Page titles */
+.page-ttl{font-size:0.44rem;color:#DAA520;font-weight:bold;text-align:center;z-index:1;font-family:"STKaiti","KaiTi","楷体",serif;margin-bottom:0.1rem}
+.page-sttl{font-size:0.22rem;color:#cdb38b;text-align:center;z-index:1;margin-bottom:0.15rem}
+.page-txt{font-size:0.24rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
+.danwei{color:#c41e3a;font-weight:bold}
+
+/* Card grid */
+.card-row{display:flex;gap:0.15rem;z-index:1;flex-wrap:wrap;justify-content:center;max-width:6rem}
+.card-item{width:2.8rem;padding:0.2rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.12rem;text-align:center;transition:all 0.3s;cursor:pointer}
+.card-item:active{background:rgba(196,30,58,0.3);border-color:#DAA520}
+.card-icon{font-size:0.5rem;margin-bottom:0.08rem}
+.card-title{font-size:0.22rem;color:#DAA520;font-weight:bold}
+.card-desc{font-size:0.18rem;color:#cdb38b;margin-top:0.05rem;line-height:1.5}
+
+/* Indicators */
+.dots{position:fixed;right:0.1rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:0.06rem}
+.dots span{width:0.06rem;height:0.06rem;border-radius:50%;background:rgba(255,255,255,0.3);transition:all 0.3s;cursor:pointer}
+.dots span.on{background:#DAA520;height:0.22rem;border-radius:0.03rem}
+
+/* Audio Btn */
+.audio-btn{position:fixed;top:0.15rem;right:0.15rem;width:0.38rem;height:0.38rem;border-radius:50%;background:rgba(0,0,0,0.5);border:0.01rem solid #DAA520;z-index:200;display:flex;align-items:center;justify-content:center;font-size:0.18rem;cursor:pointer;color:#fff}
+
+/* Ending */
+.end-title{font-size:0.46rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1;text-align:center}
+.end-line{width:1.5rem;height:0.02rem;background:#DAA520;margin:0.15rem auto;z-index:1}
+.end-producer{font-size:0.2rem;color:#cdb38b;z-index:1}
+</style>
+</head>
+<body>
+
+<div class="audio-btn" id="audioBtn" title="背景音乐">🔇</div>
+<div class="dots" id="dots"></div>
+
+<!-- Audio element (replace with your file) -->
+<audio id="bgm" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+  <!-- 用户替换: 将 music.mp3 放到同目录下 -->
+</audio>
+
+<div class="container" id="container">
+
+<!-- ====== P1: Video Cover ====== -->
+<section class="page" data-label="封面">
+  <div class="cover-bg">
+    <video autoplay muted loop playsinline poster="images/cover.jpg">
+      <source src="videos/cover.mp4" type="video/mp4">
+      <!-- 用户替换: 将封面视频放到 videos/cover.mp4 -->
+    </video>
+  </div>
+  <div class="cover-overlay"></div>
+  <div class="cover-content">
+    <div class="cover-logo">📖</div>
+    <div class="cover-title">延安革命旧址</div>
+    <div class="cover-title" style="font-size:0.36rem;margin-top:0.1rem">是一本永远读不完的书</div>
+    <div class="cover-sub">互动学习H5</div>
+  </div>
+  <div class="cover-hint">↑ 向上滑动开始阅读 ↑</div>
+</section>
+
+<!-- ====== P2: Introduction ====== -->
+<section class="page page-dark" data-label="引言">
+  <div class="page-ttl">革命圣地 · 延安</div>
+  <div class="page-sttl">中共中央在此战斗生活了十三个春秋</div>
+  <div class="image-card placeholder" id="img01">
+    <span>📷 宝塔山图片</span>
+    <div class="image-label">宝塔山 —— 延安的标志</div>
+  </div>
+  <div class="page-txt" style="font-size:0.22rem;width:5.8rem">
+    延安是中国革命的圣地，新中国的摇篮。从1935年到1948年，以延安为中心的陕甘宁边区是中共中央的所在地，是中国人民抗日战争和解放战争的<span class="danwei">总后方</span>。
+  </div>
+</section>
+
+<!-- ====== P3: Video Page - 延安风貌 ====== -->
+<section class="page page-earth" data-label="延安风貌">
+  <div class="page-ttl">走进延安</div>
+  <div class="page-sttl">视频 · 延安革命旧址巡礼</div>
+  <div class="image-card" id="vid01">
+    <video controls playsinline poster="images/yanan_overview.jpg">
+      <source src="videos/yanan_overview.mp4" type="video/mp4">
+      <!-- 用户替换: 将延安视频放到 videos/yanan_overview.mp4 -->
+    </video>
+  </div>
+  <div class="page-txt" style="font-size:0.2rem;color:#cdb38b">点击上方视频播放 · 了解延安革命旧址</div>
+</section>
+
+<!-- ====== P4: Interactive Map ====== -->
+<section class="page page-red" data-label="革命旧址">
+  <div class="page-ttl">⭐ 革命旧址分布</div>
+  <div class="page-sttl">点击卡片了解各处旧址</div>
+  <div class="card-row">
+    <div class="card-item" onclick="showInfo('宝塔山','唐代古塔，高44米。中共中央在延安时期，宝塔山成为革命圣地的象征。每到夜晚宝塔灯火通明。')"><div class="card-icon">🗼</div><div class="card-title">宝塔山</div><div class="card-desc">延安标志</div></div>
+    <div class="card-item" onclick="showInfo('枣园','中共中央书记处所在地。毛泽东在此写下《为人民服务》《论联合政府》等光辉著作。园内五大书记铜像巍然屹立。')"><div class="card-icon">🏛️</div><div class="card-title">枣 园</div><div class="card-desc">书记处驻地</div></div>
+    <div class="card-item" onclick="showInfo('杨家岭','中共中央驻地。召开延安文艺座谈会和中共七大。七大确立了毛泽东思想为党的指导思想。')"><div class="card-icon">🏠</div><div class="card-title">杨家岭</div><div class="card-desc">七大召开地</div></div>
+    <div class="card-item" onclick="showInfo('王家坪','中央军委和八路军总部所在地。毛泽东在此提出\"一切反动派都是纸老虎\"的著名论断。')"><div class="card-icon">⚔️</div><div class="card-title">王家坪</div><div class="card-desc">军委驻地</div></div>
+  </div>
+  <div id="infoPopup" style="position:fixed;bottom:0.4rem;left:0.5rem;right:0.5rem;background:rgba(0,0,0,0.92);border:0.01rem solid #DAA520;border-radius:0.12rem;padding:0.2rem;z-index:50;display:none;color:#e8d5c4;font-size:0.2rem;line-height:1.6;text-align:center">
+    <div id="infoTitle" style="color:#DAA520;font-size:0.24rem;font-weight:bold;margin-bottom:0.08rem"></div>
+    <div id="infoText"></div>
+    <div style="margin-top:0.1rem;color:#cdb38b;font-size:0.16rem" onclick="document.getElementById('infoPopup').style.display='none'">点击关闭</div>
+  </div>
+</section>
+
+<!-- ====== P5: Historical Photos ====== -->
+<section class="page page-gold" data-label="历史影像">
+  <div class="page-ttl">历史影像</div>
+  <div class="page-sttl">镜头中的延安岁月</div>
+  <div class="image-card placeholder" id="img02">
+    <span>📷 延安时期历史照片</span>
+    <div class="image-label">毛泽东在延安窑洞撰写《论持久战》</div>
+  </div>
+  <div class="image-card placeholder" id="img03" style="height:2rem">
+    <span>📷 大生产运动照片</span>
+    <div class="image-label">359旅南泥湾开荒 · 自己动手丰衣足食</div>
+  </div>
+</section>
+
+<!-- ====== P6: Yan'an Spirit ====== -->
+<section class="page page-dark" data-label="延安精神">
+  <div class="page-ttl">延安精神</div>
+  <div class="page-sttl">中国共产党人精神谱系的核心内容</div>
+  <div class="card-row">
+    <div class="card-item"><div class="card-icon">🎯</div><div class="card-title">坚定正确的政治方向</div></div>
+    <div class="card-item"><div class="card-icon">💡</div><div class="card-title">解放思想实事求是</div></div>
+    <div class="card-item"><div class="card-icon">❤️</div><div class="card-title">全心全意为人民服务</div></div>
+    <div class="card-item"><div class="card-icon">💪</div><div class="card-title">自力更生艰苦奋斗</div></div>
+  </div>
+</section>
+
+<!-- ====== P7: Image Gallery ====== -->
+<section class="page page-earth" data-label="图片集" style="overflow-y:auto;justify-content:flex-start;padding-top:1rem">
+  <div class="page-ttl">延安画卷</div>
+  <div class="page-sttl">左右滑动查看 · 点击放大</div>
+  <div style="display:flex;gap:0.15rem;overflow-x:auto;padding:0 0.3rem;width:100%;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;z-index:1" class="gallery-track">
+    <div class="image-card placeholder" style="min-width:5rem;height:3rem;scroll-snap-align:center"><span>📷 枣园五大书记铜像</span></div>
+    <div class="image-card placeholder" style="min-width:5rem;height:3rem;scroll-snap-align:center"><span>📷 杨家岭中央大礼堂</span></div>
+    <div class="image-card placeholder" style="min-width:5rem;height:3rem;scroll-snap-align:center"><span>📷 南泥湾稻田</span></div>
+    <div class="image-card placeholder" style="min-width:5rem;height:3rem;scroll-snap-align:center"><span>📷 延安革命纪念馆</span></div>
+  </div>
+  <div class="page-txt" style="font-size:0.18rem;color:rgba(205,179,139,0.5);margin-top:0.15rem">← 滑动查看更多 →</div>
+</section>
+
+<!-- ====== P8: Interactive Learning ====== -->
+<section class="page page-red" data-label="互动学习">
+  <div class="page-ttl">⭐ 互动学习</div>
+  <div class="page-sttl">延安知识小测 · 点击选项作答</div>
+  <div id="quizBox" style="width:6rem;background:rgba(0,0,0,0.5);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.25rem;z-index:1">
+    <div id="qzQ" style="font-size:0.26rem;color:#DAA520;text-align:center;margin-bottom:0.2rem"></div>
+    <div id="qzO" style="display:flex;flex-wrap:wrap;gap:0.1rem"></div>
+    <div id="qzR" style="display:none;text-align:center;padding:0.3rem">
+      <div style="font-size:0.5rem;color:#DAA520;font-weight:bold" id="qzScore"></div>
+      <div style="font-size:0.2rem;color:#cdb38b;margin-top:0.08rem" id="qzComment"></div>
+      <div style="display:inline-block;padding:0.1rem 0.3rem;background:#c41e3a;color:#fff;border-radius:0.2rem;margin-top:0.15rem;cursor:pointer;font-size:0.18rem" onclick="resetQz()">再来一次</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== P9: Ending ====== -->
+<section class="page page-dark" style="background:radial-gradient(ellipse at center,#5c1414,#0d0000)">
+  <div class="end-title">不忘初心</div>
+  <div class="end-line"></div>
+  <div class="end-title" style="font-size:0.36rem">继续前进</div>
+  <div class="end-line"></div>
+  <div class="end-producer" style="margin-top:0.3rem">起点新闻出品</div>
+  <div class="end-producer" style="font-size:0.16rem;color:rgba(205,179,139,0.4);margin-top:0.1rem">互动学习H5 · 延安革命旧址是一本永远读不完的书</div>
+</section>
+
+</div>
+
+<script>
+'use strict';
+
+// Dot indicators
+const pages=document.querySelectorAll('.page'),dots=document.getElementById('dots'),totalPages=pages.length;
+for(let i=0;i<totalPages;i++){const d=document.createElement('span');d.title='第'+(i+1)+'页';d.addEventListener('click',()=>pages[i].scrollIntoView({behavior:'smooth'}));dots.appendChild(d)}
+const dotSpans=dots.querySelectorAll('span');dotSpans[0].classList.add('on');
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=Array.from(pages).indexOf(x.target);dotSpans.forEach((d,j)=>d.classList.toggle('on',j===i))}})},{threshold:0.6}).observe&&pages.forEach(p=>new IntersectionObserver(e1=>{e1.forEach(x=>{if(x.isIntersecting){const i=Array.from(pages).indexOf(x.target);dotSpans.forEach((d,j)=>d.classList.toggle('on',j===i))}})},{threshold:0.6}).observe(p));
+
+// Audio toggle
+let ap=false;document.getElementById('audioBtn').addEventListener('click',function(){ap=!ap;this.textContent=ap?'🔊':'🔇';const bgm=document.getElementById('bgm');ap?bgm.play().catch(()=>{}):bgm.pause()});
+
+// Card info popup
+function showInfo(title,text){document.getElementById('infoTitle').textContent=title;document.getElementById('infoText').textContent=text;document.getElementById('infoPopup').style.display='block'}
+
+// Quiz
+const qzData=[{q:'中共中央在延安驻了多少年？',o:['5年','8年','13年','15年'],a:2},{q:'延安的标志是什么？',o:['天安门','宝塔山','黄鹤楼','大雁塔'],a:1},{q:'359旅开垦了哪里？',o:['井冈山','南泥湾','陕北','陇东'],a:1},{q:'"老三篇"不包括哪篇？',o:['《为人民服务》','《纪念白求恩》','《愚公移山》','《论持久战》'],a:3},{q:'中共七大哪年召开？',o:['1942年','1943年','1945年','1947年'],a:2}];
+let qzIdx=0,qzScore=0;
+function renderQz(){const qE=document.getElementById('qzQ'),oE=document.getElementById('qzO'),rE=document.getElementById('qzR');rE.style.display='none';oE.style.display='flex';if(qzIdx>=qzData.length){showQzResult();return}const d=qzData[qzIdx];qE.textContent='Q'+(qzIdx+1)+'. '+d.q;oE.innerHTML=d.o.map((o,i)=>'<div style="width:calc(50% - 0.05rem);padding:0.18rem;background:rgba(255,255,255,0.06);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.08rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s" data-qi="'+i+'">'+o+'</div>').join('');oE.querySelectorAll('[data-qi]').forEach(o=>o.addEventListener('click',handleQz))}
+function handleQz(e){const sel=parseInt(e.target.dataset.qi),cor=qzData[qzIdx].a;document.querySelectorAll('#qzO [data-qi]').forEach((o,i)=>{o.style.pointerEvents='none';if(i===cor)o.style.background='rgba(0,200,0,0.3)';else if(i===sel&&sel!==cor)o.style.background='rgba(200,0,0,0.3)'});if(sel===cor)qzScore++;setTimeout(()=>{qzIdx++;renderQz()},1200)}
+function showQzResult(){document.getElementById('qzO').style.display='none';document.getElementById('qzQ').textContent='';const rE=document.getElementById('qzR'),t=qzData.length;let c=qzScore===t?'🏆 太棒了！':qzScore>=t-1?'👍 非常优秀！':qzScore>=t-2?'📖 不错！':'💪 继续学习！';document.getElementById('qzScore').textContent=qzScore+'/'+t;document.getElementById('qzComment').textContent=c;rE.style.display='block'}
+function resetQz(){qzIdx=0;qzScore=0;renderQz()}
+renderQz();
+
+// Keyboard nav
+let cp=0;document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();cp=Math.min(totalPages-1,cp+1);pages[cp].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();cp=Math.max(0,cp-1);pages[cp].scrollIntoView({behavior:'smooth'})}});
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)cp=Array.from(pages).indexOf(x.target)})},{threshold:0.6}).observe&&pages.forEach(p=>new IntersectionObserver(e2=>{e2.forEach(x=>{if(x.isIntersecting)cp=Array.from(pages).indexOf(x.target)})},{threshold:0.6}).observe(p));
+
+console.log('📖 互动学习H5 | 延安革命旧址是一本永远读不完的书');
+console.log('🎬 视频接口: videos/cover.mp4, videos/yanan_overview.mp4');
+console.log('📷 图片接口: images/ 目录下替换占位图');
+console.log('🎵 音乐接口: music.mp3');
+</script>
+</body>
+</html>
