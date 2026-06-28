@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>延安精神 · 动画互动H5</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:calc(100vw/7.5)}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#000;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;width:100vw;height:100vh}
+
+/* Main stage */
+#stage{width:100vw;height:100vh;position:relative}
+
+/* Each screen */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.6s;padding:0.5rem 0.4rem;overflow:hidden}
+.screen.active{opacity:1;pointer-events:auto;z-index:10}
+.screen.exiting{opacity:0;transition:opacity 0.3s}
+
+/* Background gradients */
+.bg1{background:radial-gradient(ellipse at 50% 30%,#5c1414,#0d0000)}
+.bg2{background:linear-gradient(180deg,#1a1010,#0d0d1a)}
+.bg3{background:linear-gradient(180deg,#0d0d1a,#1a0f0a)}
+.bg4{background:linear-gradient(180deg,#1a0a0a,#0a0a1a)}
+.bg5{background:linear-gradient(180deg,#1a1510,#0d1a0d)}
+.bg6{background:radial-gradient(ellipse at 50% 80%,#c41e3a,#0d0000)}
+.bg7{background:radial-gradient(ellipse at 50% 30%,#8B4513,#1a0000)}
+.bg8{background:linear-gradient(180deg,#1a0d0d,#1a0d0d)}
+.bg9{background:radial-gradient(ellipse at center,#5c1414,#0d0000)}
+
+/* ========== ANIMATIONS ========== */
+/* Fade + slide up */
+@keyframes fadeUp{0%{opacity:0;transform:translateY(0.4rem)}100%{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+@keyframes fadeLeft{0%{opacity:0;transform:translateX(-0.5rem)}100%{opacity:1;transform:translateX(0)}}
+@keyframes fadeRight{0%{opacity:0;transform:translateX(0.5rem)}100%{opacity:1;transform:translateX(0)}}
+@keyframes zoomIn{0%{opacity:0;transform:scale(0.8)}100%{opacity:1;transform:scale(1)}}
+@keyframes bounceIn{0%{opacity:0;transform:scale(0.3)}50%{opacity:1;transform:scale(1.08)}70%{transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
+@keyframes slideDown{0%{opacity:0;transform:translateY(-0.6rem)}100%{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-0.1rem)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+
+/* Animated elements - hidden until .show */
+.anim{opacity:0}
+.anim.show{}
+.anim.fadeUp.show{animation:fadeUp 0.6s ease-out forwards}
+.anim.fadeIn.show{animation:fadeIn 0.6s ease-out forwards}
+.anim.fadeLeft.show{animation:fadeLeft 0.6s ease-out forwards}
+.anim.fadeRight.show{animation:fadeRight 0.6s ease-out forwards}
+.anim.zoomIn.show{animation:zoomIn 0.5s ease-out forwards}
+.anim.bounceIn.show{animation:bounceIn 0.7s ease-out forwards}
+.anim.slideDown.show{animation:slideDown 0.6s ease-out forwards}
+
+/* Screen decorative particles */
+.particles{position:absolute;inset:0;pointer-events:none;z-index:0}
+.particle{position:absolute;background:#DAA520;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.15;box-shadow:0 0 0.01rem #DAA520}100%{opacity:0.8;box-shadow:0 0 0.04rem #ff6b6b}}
+
+/* UI Elements */
+.hero-icon{font-size:1.5rem;margin-bottom:0.15rem;z-index:1}
+.page-heading{font-size:0.48rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;text-align:center;z-index:1}
+.page-heading.small{font-size:0.36rem}
+.page-sub{font-size:0.22rem;color:#cdb38b;text-align:center;margin-top:0.1rem;z-index:1}
+.page-text{font-size:0.24rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
+.danwei{color:#c41e3a;font-weight:bold}
+
+/* Image placeholder */
+.img-box{width:5rem;height:3rem;border-radius:0.15rem;background:linear-gradient(135deg,rgba(139,69,19,0.3),rgba(0,0,0,0.5));border:0.015rem solid rgba(218,165,32,0.3);display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(218,165,32,0.3);z-index:1;overflow:hidden;position:relative}
+.img-box img,.img-box video{width:100%;height:100%;object-fit:cover}
+.img-tag{position:absolute;bottom:0;left:0;right:0;padding:0.15rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.7));color:#fff;font-size:0.18rem;text-align:center;z-index:2}
+
+/* Buttons */
+.btn-next{display:inline-block;padding:0.14rem 0.6rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border-radius:0.3rem;font-size:0.22rem;cursor:pointer;z-index:1;animation:pulse 2s ease-in-out infinite;border:none;letter-spacing:0.04rem}
+.btn-next.gold{background:linear-gradient(135deg,#DAA520,#8B4513)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0.06rem #c41e3a}50%{box-shadow:0 0 0.2rem #DAA520,0 0 0.35rem #c41e3a}}
+.btn-prev{position:fixed;top:0.5rem;left:0.2rem;z-index:100;width:0.4rem;height:0.4rem;border-radius:50%;background:rgba(0,0,0,0.5);border:0.01rem solid rgba(218,165,32,0.4);color:#DAA520;font-size:0.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+.btn-prev:active{background:rgba(196,30,58,0.5)}
+
+/* Progress bar */
+.progress{position:fixed;top:0;left:0;right:0;height:0.04rem;z-index:200;background:rgba(255,255,255,0.1)}
+.progress-bar{height:100%;background:#DAA520;transition:width 0.4s}
+.page-indicator{position:fixed;top:0.15rem;right:0.2rem;z-index:200;font-size:0.16rem;color:rgba(255,255,255,0.5)}
+
+/* Card grid */
+.card-row{display:flex;gap:0.12rem;flex-wrap:wrap;justify-content:center;max-width:6rem;z-index:1}
+.card-sm{width:2.8rem;padding:0.2rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.12rem;text-align:center}
+.card-sm .icon{font-size:0.4rem;margin-bottom:0.08rem}
+.card-sm .title{font-size:0.2rem;color:#DAA520;font-weight:bold}
+.card-sm .desc{font-size:0.16rem;color:#cdb38b;margin-top:0.05rem;line-height:1.4}
+
+/* Quiz in-screen */
+.quiz-block{width:6rem;background:rgba(0,0,0,0.5);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.25rem;z-index:1}
+.quiz-block .q{font-size:0.26rem;color:#DAA520;text-align:center;margin-bottom:0.15rem}
+.quiz-block .opts{display:flex;flex-wrap:wrap;gap:0.1rem}
+.quiz-block .opt{width:calc(50% - 0.05rem);padding:0.15rem;background:rgba(255,255,255,0.06);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.08rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
+.quiz-block .opt:active{transform:scale(0.95)}
+.quiz-block .opt.right{background:rgba(0,200,0,0.3)!important;border-color:#0a0}
+.quiz-block .opt.wrong{background:rgba(200,0,0,0.3)!important;border-color:#c00}
+.quiz-feedback{text-align:center;padding:0.2rem;display:none}
+.quiz-feedback .score{font-size:0.5rem;color:#DAA520;font-weight:bold}
+
+/* Message */
+.msg-input{width:5.5rem;height:0.8rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.1rem;color:#e8d5c4;font-size:0.2rem;padding:0.15rem;resize:none;font-family:inherit;z-index:1}
+.msg-input:focus{outline:none;border-color:#DAA520}
+.msg-submit{display:block;width:1.5rem;height:0.5rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.25rem;font-size:0.2rem;margin:0.15rem auto 0;cursor:pointer;z-index:1}
+.msg-list{max-height:1.2rem;overflow-y:auto;margin-top:0.15rem;text-align:left;width:5.5rem;z-index:1}
+.msg-item{font-size:0.18rem;color:#e8d5c4;padding:0.06rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.06)}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="page-indicator" id="pageIndicator">1/9</div>
+<button class="btn-prev" id="btnPrev" style="display:none" onclick="prevScreen()">←</button>
+
+<div id="stage">
+
+<!-- S1: Cover -->
+<div class="screen bg1 active" id="s1">
+  <div class="particles" id="particles1"></div>
+  <div class="hero-icon anim bounceIn">📖</div>
+  <div class="page-heading anim fadeUp" style="animation-delay:0.5s">延安革命旧址</div>
+  <div class="page-heading small anim fadeUp" style="animation-delay:0.7s">是一本永远读不完的书</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:1s">动画互动H5</div>
+  <div style="margin-top:0.5rem" class="anim fadeIn" style="animation-delay:1.4s">
+    <button class="btn-next gold" onclick="nextScreen()">开始阅读</button>
+  </div>
+</div>
+
+<!-- S2: Intro -->
+<div class="screen bg2" id="s2">
+  <div class="page-heading anim fadeUp">革命圣地 · 延安</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.3s">中共中央在此战斗生活了十三个春秋</div>
+  <div class="img-box anim zoomIn" style="animation-delay:0.6s;margin:0.2rem 0"><span>📷 宝塔山图片</span><div class="img-tag">宝塔山 —— 延安的标志</div></div>
+  <div class="page-text anim fadeUp" style="animation-delay:0.9s;font-size:0.22rem">1935年10月到1948年3月，延安是中共中央所在地，是中国人民抗日战争和解放战争的<span class="danwei">总后方</span>。</div>
+  <div style="margin-top:0.3rem" class="anim fadeIn" style="animation-delay:1.3s">
+    <button class="btn-next" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S3: Historical Sites -->
+<div class="screen bg3" id="s3">
+  <div class="page-heading anim fadeUp">革命旧址</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.2s">走进延安的历史坐标</div>
+  <div class="card-row" style="margin-top:0.15rem">
+    <div class="card-sm anim fadeLeft" style="animation-delay:0.5s"><div class="icon">🗼</div><div class="title">宝塔山</div><div class="desc">延安标志·唐代古塔</div></div>
+    <div class="card-sm anim fadeRight" style="animation-delay:0.7s"><div class="icon">🏛️</div><div class="title">枣 园</div><div class="desc">书记处驻地</div></div>
+    <div class="card-sm anim fadeLeft" style="animation-delay:0.9s"><div class="icon">🏠</div><div class="title">杨家岭</div><div class="desc">七大召开地</div></div>
+    <div class="card-sm anim fadeRight" style="animation-delay:1.1s"><div class="icon">⚔️</div><div class="title">王家坪</div><div class="desc">军委驻地</div></div>
+  </div>
+  <div style="margin-top:0.3rem" class="anim fadeIn" style="animation-delay:1.4s">
+    <button class="btn-next" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S4: Production Campaign -->
+<div class="screen bg4" id="s4">
+  <div class="page-heading anim fadeUp">大生产运动</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.2s">自己动手 · 丰衣足食</div>
+  <div class="img-box anim zoomIn" style="animation-delay:0.5s;margin:0.2rem 0"><span>📷 南泥湾开荒图片</span><div class="img-tag">359旅开垦南泥湾 · 荒山变江南</div></div>
+  <div class="page-text anim fadeUp" style="animation-delay:0.8s;font-size:0.22rem">王震率领359旅开荒<span class="danwei">26万亩</span>，毛泽东、周恩来带头纺线织布，延安的纺车声日夜不停。</div>
+  <div style="margin-top:0.25rem" class="anim fadeIn" style="animation-delay:1.2s">
+    <button class="btn-next" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S5: Yan'an Literature -->
+<div class="screen bg5" id="s5">
+  <div class="page-heading anim fadeUp">延安文艺</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.2s">1942年 · 延安文艺座谈会</div>
+  <div class="page-text anim fadeLeft" style="animation-delay:0.5s;font-size:0.22rem;width:5.5rem;text-align:left;line-height:1.7">
+    <p>🎵 《黄河大合唱》—— 冼星海</p>
+    <p style="margin-top:0.08rem">🎭 《白毛女》—— 延安鲁艺</p>
+    <p style="margin-top:0.08rem">📖 《小二黑结婚》—— 赵树理</p>
+    <p style="margin-top:0.08rem">📖 《太阳照在桑干河上》—— 丁玲</p>
+  </div>
+  <div class="page-text anim fadeIn" style="animation-delay:0.9s;font-size:0.2rem;color:#DAA520;margin-top:0.15rem">文艺为工农兵服务，<br>开创人民文艺新纪元。</div>
+  <div style="margin-top:0.3rem" class="anim fadeIn" style="animation-delay:1.3s">
+    <button class="btn-next" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S6: Yan'an Spirit -->
+<div class="screen bg6" id="s6">
+  <div class="page-heading anim slideDown" style="color:#ffd700">延安精神</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.3s">中国共产党人精神谱系的核心内容</div>
+  <div class="card-row" style="margin-top:0.2rem">
+    <div class="card-sm anim fadeLeft" style="animation-delay:0.6s"><div class="icon">🎯</div><div class="title">坚定正确的政治方向</div></div>
+    <div class="card-sm anim fadeRight" style="animation-delay:0.8s"><div class="icon">💡</div><div class="title">解放思想实事求是</div></div>
+    <div class="card-sm anim fadeLeft" style="animation-delay:1.0s"><div class="icon">❤️</div><div class="title">全心全意为人民服务</div></div>
+    <div class="card-sm anim fadeRight" style="animation-delay:1.2s"><div class="icon">💪</div><div class="title">自力更生艰苦奋斗</div></div>
+  </div>
+  <div style="margin-top:0.3rem" class="anim fadeIn" style="animation-delay:1.5s">
+    <button class="btn-next gold" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S7: Interactive Quiz -->
+<div class="screen bg7" id="s7">
+  <div class="page-heading anim fadeUp">⭐ 互动问答</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.2s">延安知识小测</div>
+  <div class="quiz-block anim zoomIn" style="animation-delay:0.5s" id="quizBlock">
+    <div class="q" id="qzQ"></div>
+    <div class="opts" id="qzO"></div>
+    <div class="quiz-feedback" id="qzR">
+      <div class="score" id="qzScore"></div>
+      <div style="color:#cdb38b;margin-top:0.05rem;font-size:0.2rem" id="qzComment"></div>
+    </div>
+  </div>
+  <div style="margin-top:0.25rem" class="anim fadeIn" style="animation-delay:1s">
+    <button class="btn-next" id="qzNextBtn" style="display:none" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S8: Message -->
+<div class="screen bg8" id="s8">
+  <div class="page-heading anim fadeUp">致敬延安</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:0.3s">写下对革命先辈的敬意</div>
+  <textarea class="msg-input anim fadeUp" style="animation-delay:0.6s" id="msgInput" placeholder="向延安时期的革命先辈致敬..." maxlength="80"></textarea>
+  <button class="msg-submit anim fadeIn" style="animation-delay:0.8s" onclick="addMsg()">🇨🇳 致敬</button>
+  <div class="msg-list anim fadeIn" style="animation-delay:1s" id="msgWall"><div class="msg-item">📝 延安精神永放光芒，吾辈当自强！</div><div class="msg-item">📝 向延安时期的革命先辈致敬！🇨🇳</div></div>
+  <div style="margin-top:0.25rem" class="anim fadeIn" style="animation-delay:1.3s">
+    <button class="btn-next gold" onclick="nextScreen()">继续阅读</button>
+  </div>
+</div>
+
+<!-- S9: Ending -->
+<div class="screen bg9" id="s9">
+  <div class="hero-icon anim bounceIn">🌟</div>
+  <div class="page-heading anim fadeUp" style="animation-delay:0.5s;font-size:0.5rem">不忘初心</div>
+  <div class="page-heading small anim fadeUp" style="animation-delay:0.8s;font-size:0.32rem">继续前进</div>
+  <div class="page-sub anim fadeIn" style="animation-delay:1.1s;margin-top:0.3rem">延安革命旧址是一本永远读不完的书</div>
+  <div style="margin-top:0.5rem" class="anim fadeIn" style="animation-delay:1.5s">
+    <button class="btn-next gold" onclick="location.reload()">再次阅读</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+'use strict';
+
+let currentScreen = 0;
+const screens = document.querySelectorAll('.screen');
+const totalScreens = screens.length;
+
+// ===== Navigation =====
+function showScreen(idx) {
+  if (idx < 0 || idx >= totalScreens) return;
+  // Exit current
+  if (currentScreen >= 0) {
+    screens[currentScreen].classList.remove('active');
+  }
+  // Show new
+  currentScreen = idx;
+  screens[currentScreen].classList.add('active');
+  // Reset animations
+  screens[currentScreen].querySelectorAll('.anim').forEach(el => {
+    el.classList.remove('show');
+    void el.offsetWidth;
+    el.classList.add('show');
+  });
+  // Update UI
+  document.getElementById('progressBar').style.width = ((currentScreen+1)/totalScreens*100)+'%';
+  document.getElementById('pageIndicator').textContent = (currentScreen+1)+'/'+totalScreens;
+  document.getElementById('btnPrev').style.display = currentScreen > 0 ? 'flex' : 'none';
+  // Init quiz if on S7
+  if (idx === 6) initQuiz();
+}
+
+function nextScreen() { showScreen(currentScreen + 1) }
+function prevScreen() { showScreen(currentScreen - 1) }
+
+// Init first screen
+showScreen(0);
+
+// ===== Star Particles =====
+(function(){
+  const el = document.getElementById('particles1');
+  if (!el) return;
+  let h = '';
+  for (let i = 0; i < 40; i++) {
+    const x = Math.random()*100, y = Math.random()*100;
+    h += `<div class="particle" style="left:${x}%;top:${y}%;width:${Math.random()*0.03+0.01}rem;height:${Math.random()*0.03+0.01}rem;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s"></div>`;
+  }
+  el.innerHTML = h;
+})();
+
+// ===== Quiz Logic =====
+const qzData = [
+  {q:'中共中央在延安驻了多少年？',o:['5年','8年','13年','15年'],a:2},
+  {q:'大生产运动中359旅开垦了哪里？',o:['井冈山','南泥湾','陕北','陇东'],a:1},
+  {q:'中共七大哪年召开？',o:['1943年','1945年','1947年','1949年'],a:1}
+];
+let qzIdx = 0, qzScore = 0, qzDone = false;
+
+function initQuiz() {
+  if (qzDone) return;
+  qzIdx = 0; qzScore = 0;
+  renderQz();
+}
+
+function renderQz() {
+  document.getElementById('qzR').style.display = 'none';
+  document.getElementById('qzO').style.display = 'flex';
+  if (qzIdx >= qzData.length) { showQzResult(); return; }
+  const d = qzData[qzIdx];
+  document.getElementById('qzQ').textContent = 'Q' + (qzIdx+1) + '. ' + d.q;
+  document.getElementById('qzO').innerHTML = d.o.map((o,i) =>
+    `<div class="opt" data-qi="${i}">${o}</div>`
+  ).join('');
+  document.querySelectorAll('#qzO .opt').forEach(o => o.addEventListener('click', handleQz));
+}
+
+function handleQz(e) {
+  const sel = parseInt(e.target.dataset.qi), cor = qzData[qzIdx].a;
+  document.querySelectorAll('#qzO .opt').forEach((o,i) => {
+    o.style.pointerEvents = 'none';
+    if (i === cor) o.classList.add('right');
+    else if (i === sel && sel !== cor) o.classList.add('wrong');
+  });
+  if (sel === cor) qzScore++;
+  setTimeout(() => { qzIdx++; renderQz(); }, 1000);
+}
+
+function showQzResult() {
+  document.getElementById('qzO').style.display = 'none';
+  document.getElementById('qzQ').textContent = '';
+  const t = qzData.length;
+  let c = qzScore === t ? '🏆 太棒了！' : qzScore >= t-1 ? '👍 非常优秀！' : '💪 继续学习！';
+  document.getElementById('qzScore').textContent = qzScore + '/' + t;
+  document.getElementById('qzComment').textContent = c;
+  document.getElementById('qzR').style.display = 'block';
+  document.getElementById('qzNextBtn').style.display = 'inline-block';
+  qzDone = true;
+}
+
+// ===== Message =====
+function addMsg() {
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  document.getElementById('msgWall').innerHTML += `<div class="msg-item">📝 ${text}</div>`;
+}
+
+// ===== Keyboard =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); nextScreen(); }
+  else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); prevScreen(); }
+});
+
+console.log('🎬 动画互动H5 · 延安革命旧址 · 就绪');
+console.log('📷 图片接口：每页 .img-box 内替换为 <img src="你的图片.jpg"> 即可');
+console.log('🎵 音乐接口：在任意 screen 内添加 <audio autoplay loop>');
+</script>
+</body>
+</html>
