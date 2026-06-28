@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>万水千山 · 长征红色文化</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:calc(100vw/7.5);scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#0d0808;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.container{width:100vw;height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.container::-webkit-scrollbar{display:none}
+.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;position:relative;overflow-y:auto;overflow-x:hidden;padding:0.5rem 0.4rem 0.6rem}
+.page-1{background:radial-gradient(ellipse at 50% 40%,#5c1414 0%,#0d0000 70%)}
+.page-2{background:linear-gradient(180deg,#1a0d0d 0%,#0d0d1a 100%)}
+.page-3{background:linear-gradient(180deg,#0d0d1a 0%,#1a0f0a 100%)}
+.page-4{background:linear-gradient(180deg,#1a0808 0%,#0a0a1a 100%)}
+.page-5{background:radial-gradient(ellipse at 50% 30%,#7a1a1a 0%,#1a0000 100%)}
+.page-6{background:linear-gradient(180deg,#0a0a1a 0%,#1a0a0a 100%)}
+.page-7{background:linear-gradient(180deg,#1a0f0a 0%,#1a0a0a 100%)}
+.page-8{background:linear-gradient(180deg,#f0f4f8 0%,#d4dbe4 100%)}
+.page-9{background:linear-gradient(180deg,#1a1414 0%,#1a0a0a 100%)}
+.page-10{background:radial-gradient(ellipse at 50% 20%,#8b1a1a 0%,#0d0000 100%)}
+.page-11{background:linear-gradient(180deg,#1a0a0a 0%,#1a0a0a 100%)}
+.page-12{background:radial-gradient(ellipse at 50% 80%,#c41e3a 0%,#0d0000 100%)}
+.page-13{background:linear-gradient(180deg,#1a0d0d 0%,#1a0d0d 100%)}
+.page-14{background:radial-gradient(ellipse at center,#8b1a1a 0%,#0d0000 100%)}
+
+.page-title{font-size:0.48rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.15rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
+.page-subtitle{font-size:0.22rem;color:#cdb38b;text-align:center;margin-bottom:0.2rem;z-index:1}
+.page-text{font-size:0.26rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
+.page-text.left{text-align:left}
+.danwei{color:#c41e3a;font-weight:bold}
+
+.indicator{position:fixed;right:0.12rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:0.08rem}
+.indicator-dot{width:0.08rem;height:0.08rem;border-radius:50%;background:rgba(255,255,255,0.25);transition:all 0.3s;cursor:pointer}
+.indicator-dot.active{background:#DAA520;height:0.28rem;border-radius:0.04rem;box-shadow:0 0 0.08rem #DAA520}
+
+/* Cover */
+.cover-svg{width:2rem;height:2.2rem;z-index:1;margin-bottom:0.1rem}
+.cover-title{font-size:0.6rem;color:#DAA520;font-weight:bold;letter-spacing:0.08rem;font-family:"STKaiti","KaiTi","楷体",serif;text-shadow:0 0 0.25rem #c41e3a;z-index:1}
+.cover-line{width:2rem;height:0.02rem;background:linear-gradient(90deg,transparent,#DAA520,transparent);margin:0.15rem auto;z-index:1}
+.cover-sub{font-size:0.26rem;color:#cdb38b;z-index:1;letter-spacing:0.04rem}
+.cover-swipe{position:absolute;bottom:0.25rem;font-size:0.18rem;color:rgba(218,165,32,0.6);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(0.08rem)}}
+
+.star{position:absolute;background:#DAA520;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.2;box-shadow:0 0 0.01rem #DAA520}100%{opacity:1;box-shadow:0 0 0.06rem #ff6b6b}}
+
+/* Map/Illust */
+.map-illust{width:5rem;height:2.8rem;z-index:1;margin:0.1rem 0}
+.battle-ill{width:5rem;height:2.5rem;z-index:1;margin-bottom:0.1rem}
+
+/* Event cards */
+.event-card{cursor:pointer;transition:all 0.3s;border-radius:0.1rem;padding:0.1rem 0.15rem;border:0.01rem solid rgba(218,165,32,0.2);margin:0.05rem 0;background:rgba(0,0,0,0.2);width:5.5rem}
+.event-card:active{background:rgba(196,30,58,0.3);border-color:#DAA520}
+.event-detail{max-height:0;overflow:hidden;transition:max-height 0.3s;font-size:0.2rem;color:#cdb38b;line-height:1.5}
+.event-card.open .event-detail{max-height:1.2rem}
+
+/* Timeline */
+.tl-box{width:100%;overflow-x:auto;overflow-y:hidden;padding:0.15rem 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.tl-box::-webkit-scrollbar{height:0.03rem}
+.tl-box::-webkit-scrollbar-thumb{background:#DAA520;border-radius:0.02rem}
+.tl-track{display:flex;gap:0;padding:0 0.4rem;min-width:max-content;position:relative}
+.tl-track::before{content:'';position:absolute;left:0.4rem;right:0.4rem;top:0.7rem;height:0.025rem;background:linear-gradient(90deg,#DAA520 0%,#c41e3a 50%,#DAA520 100%)}
+.tl-item{min-width:1.8rem;padding:0.15rem 0.12rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
+.tl-item.on{min-width:3rem}
+.tl-year{font-size:0.28rem;color:#DAA520;font-weight:bold}
+.tl-dot{width:0.18rem;height:0.18rem;background:#c41e3a;border-radius:50%;margin:0.1rem auto;border:0.025rem solid #DAA520;box-shadow:0 0 0.08rem #c41e3a}
+.tl-title{font-size:0.2rem;color:#e8d5c4;white-space:nowrap}
+.tl-desc{font-size:0.18rem;color:#cdb38b;display:none;line-height:1.5;margin-top:0.06rem}
+.tl-item.on .tl-desc{display:block}
+.tl-hint{font-size:0.16rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.12rem}
+
+/* Flip */
+.flip-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:5.5rem;perspective:1000px;z-index:1}
+.flip-card{width:1.6rem;height:2.2rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.12rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
+.flip-front{background:linear-gradient(180deg,rgba(196,30,58,0.5),rgba(0,0,0,0.7));border:0.015rem solid rgba(218,165,32,0.4)}
+.flip-back{background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(139,0,0,0.7));border:0.015rem solid #DAA520;transform:rotateY(180deg);padding:0.18rem}
+.flip-emoji{font-size:0.5rem;margin-bottom:0.1rem}
+.flip-name{font-size:0.22rem;color:#DAA520;font-weight:bold}
+.flip-story{font-size:0.17rem;color:#e8d5c4;line-height:1.5;text-align:center}
+.flip-hint{font-size:0.15rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.2rem;z-index:1}
+
+/* Quiz */
+.quiz-container{width:5.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.2rem;padding:0.3rem;z-index:1}
+.quiz-question{font-size:0.28rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
+.quiz-options{display:flex;flex-wrap:wrap;gap:0.12rem}
+.quiz-option{width:calc(50% - 0.06rem);padding:0.18rem;background:rgba(255,255,255,0.06);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.08rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
+.quiz-option:active{transform:scale(0.96)}
+.quiz-option.correct{background:rgba(0,200,0,0.3);border-color:#0a0;color:#0f0}
+.quiz-option.wrong{background:rgba(200,0,0,0.3);border-color:#c00;color:#f66}
+.quiz-result{display:none;text-align:center;padding:0.3rem}
+.quiz-result.show{display:block}
+.quiz-score{font-size:0.55rem;color:#DAA520;font-weight:bold}
+.quiz-comment{font-size:0.2rem;color:#cdb38b;margin-top:0.08rem}
+.quiz-retry{display:inline-block;padding:0.12rem 0.35rem;background:#c41e3a;color:#fff;border-radius:0.2rem;font-size:0.18rem;margin-top:0.15rem;cursor:pointer}
+
+/* Legacy */
+.legacy-cards{display:flex;gap:0.2rem;flex-wrap:wrap;justify-content:center;max-width:5.5rem;z-index:1}
+.legacy-card{width:2.4rem;padding:0.2rem;background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(0,0,0,0.4));border-radius:0.15rem;border:0.01rem solid rgba(218,165,32,0.3);text-align:center;opacity:0;animation:cardUp 0.5s forwards;cursor:pointer;transform-style:preserve-3d;transition:transform 0.5s}
+.legacy-card.flipped{transform:rotateY(180deg)}
+.legacy-card:nth-child(1){animation-delay:0.1s}.legacy-card:nth-child(2){animation-delay:0.25s}
+.legacy-card:nth-child(3){animation-delay:0.4s}.legacy-card:nth-child(4){animation-delay:0.55s}
+@keyframes cardUp{0%{opacity:0;transform:translateY(0.3rem)}100%{opacity:1;transform:translateY(0)}}
+.legacy-front,.legacy-back{backface-visibility:hidden}
+.legacy-back{position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,0,0,0.8),rgba(0,0,0,0.9));border:0.01rem solid #DAA520;border-radius:0.15rem;padding:0.2rem;transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;align-items:center}
+.legacy-icon{font-size:0.4rem;text-align:center;margin-bottom:0.1rem}
+.legacy-title{font-size:0.22rem;color:#DAA520;text-align:center;font-weight:bold}
+.legacy-desc{font-size:0.18rem;color:#cdb38b;text-align:center;line-height:1.6;margin-top:0.08rem}
+.legacy-back-title{font-size:0.2rem;color:#DAA520;font-weight:bold;margin-bottom:0.05rem}
+.legacy-back-desc{font-size:0.17rem;color:#e8d5c4;line-height:1.5;text-align:center}
+.legacy-hint{font-size:0.14rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.1rem;z-index:1}
+
+/* Snow page */
+.page-8 .page-title,.page-8 .page-subtitle{color:#8B4513}
+.page-8 .danwei{color:#B22222}
+
+/* End */
+.end-title{font-size:0.48rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1;text-align:center}
+.end-stats{display:flex;gap:0.35rem;margin:0.25rem 0;z-index:1}
+.end-stat{text-align:center}
+.end-num{font-size:0.5rem;color:#DAA520;font-weight:bold}
+.end-label{font-size:0.18rem;color:#cdb38b}
+.end-share{display:inline-block;padding:0.12rem 0.45rem;background:linear-gradient(135deg,#DAA520,#c41e3a);color:#fff;border-radius:0.25rem;font-size:0.2rem;cursor:pointer;z-index:1;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0.08rem #DAA520}50%{box-shadow:0 0 0.25rem #DAA520,0 0 0.4rem #c41e3a}}
+.firework{position:absolute;width:0.04rem;height:0.04rem;border-radius:50%;animation:fw 1.5s ease-out forwards}
+@keyframes fw{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* Song cards */
+.song-card{width:5rem;background:rgba(196,30,58,0.15);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.1rem;padding:0.15rem 0.2rem;text-align:center;cursor:pointer;margin:0.06rem 0;z-index:1;transition:all 0.3s}
+.song-card.open{background:rgba(196,30,58,0.3);border-color:#DAA520}
+.slyric{font-size:0.18rem;color:#cdb38b;max-height:0;overflow:hidden;transition:max-height 0.4s}
+.song-card.open .slyric{max-height:1.5rem!important}
+
+/* Message */
+.msg-area{width:5.5rem;background:rgba(0,0,0,0.3);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.2rem;z-index:1;margin:0.15rem 0}
+.msg-input{width:100%;height:0.8rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.1rem;color:#e8d5c4;font-size:0.2rem;padding:0.15rem;resize:none;font-family:inherit}
+.msg-input:focus{outline:none;border-color:#DAA520}
+.msg-submit{display:block;width:1.5rem;height:0.5rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.25rem;font-size:0.2rem;margin:0.15rem auto 0;cursor:pointer}
+.msg-wall{max-height:1.5rem;overflow-y:auto;margin-top:0.15rem}
+.msg-item{font-size:0.18rem;color:#e8d5c4;padding:0.08rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.08);animation:msgIn 0.3s}
+@keyframes msgIn{0%{opacity:0;transform:translateX(0.2rem)}100%{opacity:1;transform:translateX(0)}}
+
+@media(max-width:375px){
+  .flip-card{width:1.4rem;height:2rem}
+  .legacy-card{width:45%}
+}
+</style>
+</head>
+<body>
+<div class="indicator" id="indicator"></div>
+<div class="container" id="container">
+
+<!-- ====== P1 Cover ====== -->
+<section class="page page-1" id="page1">
+  <div id="particles1" style="position:absolute;width:100%;height:100%;pointer-events:none;z-index:0"></div>
+  <svg class="cover-svg" viewBox="0 0 120 150"><defs><radialGradient id="fg"><stop offset="0%" stop-color="#fff8dc"/><stop offset="25%" stop-color="#DAA520"/><stop offset="55%" stop-color="#c41e3a"/><stop offset="100%" stop-color="#8b0000" stop-opacity="0"/></radialGradient></defs><rect x="40" y="90" width="40" height="55" rx="4" fill="#8B4513"/><rect x="35" y="85" width="50" height="10" rx="2" fill="#A0522D"/><ellipse cx="60" cy="45" rx="24" ry="40" fill="url(#fg)" opacity="0.9"><animate attributeName="ry" values="40;35;42;40" dur="0.3s" repeatCount="indefinite"/></ellipse><ellipse cx="60" cy="35" rx="14" ry="22" fill="#ff8c00" opacity="0.7"><animate attributeName="ry" values="22;18;24;22" dur="0.25s" repeatCount="indefinite"/></ellipse><ellipse cx="60" cy="25" rx="7" ry="12" fill="#ffd700" opacity="0.8"><animate attributeName="ry" values="12;9;14;12" dur="0.2s" repeatCount="indefinite"/></ellipse></svg>
+  <div class="cover-title">万水千山</div>
+  <div class="cover-line"></div>
+  <div class="cover-sub">红军长征红色文化主题展</div>
+  <div class="cover-line"></div>
+  <div style="font-size:0.2rem;color:#cdb38b;z-index:1">1934.10 — 1936.10</div>
+  <div class="cover-swipe">↑ 向上滑动启阅 ↑</div>
+</section>
+
+<!-- ====== P2 Overview ====== -->
+<section class="page page-2">
+  <div class="page-title">伟大的长征</div>
+  <div class="page-subtitle">人类战争史上的奇迹</div>
+  <svg class="map-illust" viewBox="0 0 400 220"><rect width="400" height="220" rx="8" fill="#1a0d0d"/><path d="M20,180 Q60,120 120,140 Q180,160 200,100 Q220,50 280,80 Q320,100 360,40 Q370,30 380,35" fill="none" stroke="#DAA520" stroke-width="2.5" stroke-dasharray="6 3"><animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1s" repeatCount="indefinite"/></path><circle cx="20" cy="180" r="6" fill="#c41e3a"/><text x="15" y="195" fill="#cdb38b" font-size="8">于都</text><circle cx="200" cy="100" r="8" fill="#DAA520"><animate attributeName="r" values="8;14;8" dur="2s" repeatCount="indefinite"/></circle><text x="195" y="85" text-anchor="end" fill="#DAA520" font-size="10" font-weight="bold">★ 遵义</text><circle cx="380" cy="35" r="6" fill="#c41e3a"/><text x="375" y="25" text-anchor="end" fill="#cdb38b" font-size="8">会宁</text></svg>
+  <div class="page-text">1934年10月至1936年10月，红军第一、二、四方面军和红二十五军进行了伟大的长征。历时<span class="danwei">两年</span>，纵横<span class="danwei">14省</span>，行程<span class="danwei">二万五千里</span>，是中国共产党和红军谱写的壮丽史诗。</div>
+</section>
+
+<!-- ====== P3 Departure ====== -->
+<section class="page page-3">
+  <div class="page-title">于都出发</div>
+  <div class="page-subtitle">1934年10月 · 江西于都</div>
+  <svg width="2rem" height="1.4rem" viewBox="0 0 200 140" style="z-index:1;margin-bottom:0.1rem"><rect width="200" height="140" fill="#1a0f0a"/><path d="M0,110 Q50,60 100,100 Q150,140 200,90 L200,140 L0,140Z" fill="#2d1515"/><line x1="80" y1="55" x2="80" y2="30" stroke="#8B4513" stroke-width="2"/><rect x="80" y="20" width="24" height="16" rx="1" fill="#c41e3a"/><polygon points="92,24 89,36 95,36" fill="#DAA520"/><rect x="30" y="90" width="4" height="8" fill="#c41e3a" opacity="0.7"/><rect x="50" y="88" width="4" height="8" fill="#c41e3a" opacity="0.7"/><rect x="70" y="92" width="4" height="8" fill="#c41e3a" opacity="0.7"/><rect x="130" y="85" width="4" height="8" fill="#c41e3a" opacity="0.7"/><rect x="150" y="90" width="4" height="8" fill="#c41e3a" opacity="0.7"/><rect x="170" y="87" width="4" height="8" fill="#c41e3a" opacity="0.7"/></svg>
+  <div class="page-text">8.6万余名红军将士从江西于都集结出发，夜渡于都河，踏上战略转移的征途。于都人民拆门板、架浮桥，全力支援红军过河。当时谁也没有想到，这一去就是两万五千里。</div>
+</section>
+
+<!-- ====== P4 Zunyi Conference (Advanced 1: Timeline) ====== -->
+<section class="page page-4">
+  <div class="page-title">⭐ 长征时间轴</div>
+  <div class="page-subtitle">交互组件 · 左右滑动浏览重大事件</div>
+  <div class="tl-box">
+    <div class="tl-track" id="tlTrack">
+      <div class="tl-item"><div class="tl-year">1934.10</div><div class="tl-dot"></div><div class="tl-title">于都出发</div><div class="tl-desc">8.6万红军从江西于都集结出发，夜渡于都河。</div></div>
+      <div class="tl-item"><div class="tl-year">1934.11</div><div class="tl-dot"></div><div class="tl-title">血战湘江</div><div class="tl-desc">红军突破第四道封锁线，从8.6万锐减至3万余人。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.01</div><div class="tl-dot"></div><div class="tl-title">遵义会议</div><div class="tl-desc">确立毛泽东的领导地位，挽救了党和红军。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.01</div><div class="tl-dot"></div><div class="tl-title">四渡赤水</div><div class="tl-desc">毛泽东军事生涯的得意之笔，跳出包围圈。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.05</div><div class="tl-dot"></div><div class="tl-title">巧渡金沙江</div><div class="tl-desc">七天七夜，3万红军渡过金沙江。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.05</div><div class="tl-dot"></div><div class="tl-title">飞夺泸定桥</div><div class="tl-desc">22勇士冒着弹雨攀铁索，一举夺桥。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.06</div><div class="tl-dot"></div><div class="tl-title">翻越大雪山</div><div class="tl-desc">翻越海拔4000多米的夹金山等雪山。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.08</div><div class="tl-dot"></div><div class="tl-title">过草地</div><div class="tl-desc">穿越松潘草地，牺牲万余人。</div></div>
+      <div class="tl-item"><div class="tl-year">1935.10</div><div class="tl-dot"></div><div class="tl-title">到达陕北</div><div class="tl-desc">中央红军到达吴起镇，长征胜利结束。</div></div>
+      <div class="tl-item"><div class="tl-year">1936.10</div><div class="tl-dot"></div><div class="tl-title">三大主力会师</div><div class="tl-desc">红一二四方面军在会宁会师。</div></div>
+    </div>
+  </div>
+  <div class="tl-hint">← 左右滑动浏览 → 点击节点展开详情</div>
+</section>
+
+<!-- ====== P5 Zunyi Conference ====== -->
+<section class="page page-5">
+  <div class="page-title">遵义会议</div>
+  <div class="page-subtitle">1935年1月15—17日 · 贵州遵义</div>
+  <svg width="2.5rem" height="1.8rem" viewBox="0 0 250 180" style="z-index:1;margin-bottom:0.1rem"><rect width="250" height="180" fill="#2a1515" rx="5"/><rect x="80" y="40" width="90" height="100" rx="3" fill="#4a2a2a" stroke="#DAA520" stroke-width="1.5"/><rect x="60" y="30" width="130" height="15" rx="2" fill="#5a3a3a"/><rect x="70" y="60" width="18" height="12" rx="1" fill="#DAA520" opacity="0.4"/><rect x="95" y="60" width="18" height="12" rx="1" fill="#DAA520" opacity="0.4"/><rect x="120" y="60" width="18" height="12" rx="1" fill="#DAA520" opacity="0.4"/><text x="125" y="155" text-anchor="middle" fill="#DAA520" font-size="12" font-weight="bold">遵义会议会址</text></svg>
+  <div class="page-text">遵义会议是党的历史上一个生死攸关的转折点，事实上确立了<span class="danwei">毛泽东</span>在党中央和红军的领导地位，开启了党独立自主解决中国革命实际问题的新阶段，在最危急关头挽救了党、挽救了红军、挽救了中国革命。</div>
+</section>
+
+<!-- ====== P6 Four Crossings ====== -->
+<section class="page page-6">
+  <div class="page-title">四渡赤水</div>
+  <div class="page-subtitle">毛泽东军事生涯的"得意之笔"</div>
+  <svg class="battle-ill" viewBox="0 0 300 160"><rect width="300" height="160" fill="#1a0d0d"/><path d="M10,120 Q60,100 80,120 Q100,140 130,105 Q160,70 190,100 Q210,120 230,90 Q250,60 290,95" fill="none" stroke="#3B82F6" stroke-width="2" opacity="0.6"/><path d="M130,105 Q150,90 170,100 Q190,110 200,95 Q220,70 240,85" fill="none" stroke="#DAA520" stroke-width="2"/><circle cx="130" cy="105" r="5" fill="#c41e3a"><animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/></circle><text x="130" y="90" text-anchor="middle" fill="#DAA520" font-size="9">红军</text><circle cx="190" cy="100" r="4" fill="#8b8b8b"/><text x="195" y="95" fill="#ccc" font-size="8">敌军</text><circle cx="230" cy="90" r="4" fill="#8b8b8b"/><circle cx="80" cy="120" r="4" fill="#8b8b8b"/><text x="150" y="155" text-anchor="middle" fill="#cdb38b" font-size="10">赤水河四渡路线示意图</text></svg>
+  <div class="page-text">1935年1月29日至3月22日，毛泽东指挥中央红军<span class="danwei">四渡赤水</span>，在川黔滇边境大迂回，以<span class="danwei">3万对40万</span>的劣势兵力，巧妙调动和打击敌军，跳出了国民党军的包围圈，成为战争史上以少胜多的经典战役。</div>
+</section>
+
+<!-- ====== P7 Bridge ====== -->
+<section class="page page-7">
+  <div class="page-title">飞夺泸定桥</div>
+  <div class="page-subtitle">1935年5月29日 · 四川泸定</div>
+  <svg class="battle-ill" viewBox="0 0 300 180"><rect width="300" height="180" fill="#1a0d0d"/><polygon points="0,120 80,70 160,130 240,60 300,110 300,180 0,180" fill="#2d1515" opacity="0.5"/><line x1="40" y1="100" x2="260" y2="80" stroke="#8B4513" stroke-width="3"/><line x1="40" y1="105" x2="260" y2="85" stroke="#8B4513" stroke-width="2"/><rect x="35" y="90" width="10" height="25" fill="#5a3a1a"/><rect x="255" y="70" width="10" height="25" fill="#5a3a1a"/><circle cx="140" cy="92" r="4" fill="#c41e3a"><animate attributeName="fill" values="#c41e3a;#DAA520;#c41e3a" dur="0.5s" repeatCount="indefinite"/></circle><circle cx="160" cy="90" r="4" fill="#c41e3a"><animate attributeName="fill" values="#c41e3a;#DAA520;#c41e3a" dur="0.5s" begin="0.15s" repeatCount="indefinite"/></circle><circle cx="180" cy="88" r="4" fill="#c41e3a"><animate attributeName="fill" values="#c41e3a;#DAA520;#c41e3a" dur="0.5s" begin="0.3s" repeatCount="indefinite"/></circle><text x="150" y="160" text-anchor="middle" fill="#cdb38b" font-size="10">22勇士攀铁索夺桥</text></svg>
+  <div class="page-text">红四团官兵冒着枪林弹雨，攀着<span class="danwei">13根铁索</span>冲向对岸，22名突击队员在前，后续部队铺板跟进，一举夺取泸定桥，打破了蒋介石"让红军成为石达开第二"的企图。</div>
+</section>
+
+<!-- ====== P8 Snow Mountain ====== -->
+<section class="page page-8">
+  <div class="page-title" style="color:#2F4F4F;z-index:1">翻雪山 · 过草地</div>
+  <div class="page-subtitle" style="color:#708090;z-index:1">1935年6月—8月 · 最艰险的征程</div>
+  <svg class="battle-ill" viewBox="0 0 300 160"><rect width="300" height="160" fill="#d4dbe4" rx="5"/><polygon points="0,100 60,30 140,90 200,20 260,80 300,10 300,160 0,160" fill="white"/><polygon points="0,140 80,60 150,110 220,50 280,100 300,60 300,160 0,160" fill="#e8edf2"/><rect x="80" y="115" width="4" height="8" fill="#c41e3a" opacity="0.6"/><rect x="120" y="108" width="4" height="8" fill="#c41e3a" opacity="0.6"/><rect x="160" y="118" width="4" height="8" fill="#c41e3a" opacity="0.6"/><rect x="200" y="105" width="4" height="8" fill="#c41e3a" opacity="0.6"/><text x="150" y="155" text-anchor="middle" fill="#555" font-size="9">夹金山 · 海拔4114米</text></svg>
+  <div class="page-text" style="color:#333;z-index:1">红军翻越了<span class="danwei" style="color:#B22222">海拔4000米以上</span>的夹金山等多座大雪山，又穿越了被称为"死亡陷阱"的<span class="danwei" style="color:#B22222">松潘草地</span>。缺衣少食、高原缺氧，许多战士永远长眠在了雪山草地上。红军以惊人的意志力战胜了极端自然环境。</div>
+</section>
+
+<!-- ====== P9 Artifacts (Advanced 2: Flip Cards) ====== -->
+<section class="page page-9">
+  <div class="page-title">⭐ 长征文物</div>
+  <div class="page-subtitle">交互组件 · 点击卡片翻转查看故事</div>
+  <div class="flip-grid" id="flipGrid">
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🥾</div><div class="flip-name">草鞋</div></div><div class="flip-face flip-back"><div class="flip-story">红军脚穿草鞋走完两万五千里，许多战士到达陕北时双脚已磨烂见骨。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🧥</div><div class="flip-name">半条棉被</div></div><div class="flip-face flip-back"><div class="flip-story">三名女红军借宿老乡家，临走把仅有的一条棉被剪下半条留给老人——"什么是共产党？共产党就是自己有一条被子，也要剪下半条给老百姓的人。"</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">📜</div><div class="flip-name">七根火柴</div></div><div class="flip-face flip-back"><div class="flip-story">草地行军，无名战士用生命守护七根干燥火柴交给组织。每一根火柴在草地中都是生与死的距离。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🏅</div><div class="flip-name">金色鱼钩</div></div><div class="flip-face flip-back"><div class="flip-story">老班长用缝衣针做成鱼钩钓鱼给伤员吃，自己却只啃鱼骨头，最终饿死在草地边缘。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🔗</div><div class="flip-name">铁索链</div></div><div class="flip-face flip-back"><div class="flip-story">泸定桥13根铁索见证22勇士飞夺天险——桥上木板被敌军抽走，红军攀着滚烫铁索冒弹雨冲锋。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">🪖</div><div class="flip-name">红军帽</div></div><div class="flip-face flip-back"><div class="flip-story">一顶缀着红星的八角帽，是红军的标志。长征途中多少战士牺牲时仍紧握着这顶帽子面向北方。</div></div></div>
+  </div>
+  <div class="flip-hint">👆 单击翻转 · 双击全部还原</div>
+</section>
+
+<!-- ====== P10 Spirit ====== -->
+<section class="page page-10">
+  <div class="page-title">长征精神</div>
+  <div class="page-subtitle">中国共产党人精神谱系的重要组成部分</div>
+  <div style="text-align:center;z-index:1;font-size:0.28rem;color:#DAA520;line-height:2.2;font-family:'STKaiti','KaiTi','楷体',serif">
+    <p>把全国人民和中华民族的<br>根本利益看得高于一切</p>
+    <p>坚定革命的<span class="danwei">理想和信念</span><br>坚信正义事业必然胜利</p>
+    <p>为了救国救民<br>不怕任何<span class="danwei">艰难险阻</span></p>
+    <p>独立自主、实事求是<br><span class="danwei">一切从实际出发</span></p>
+  </div>
+</section>
+
+<!-- ====== P11 Quiz (Advanced 3) ====== -->
+<section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.5rem">
+  <div class="page-title">⭐ 长征知识挑战</div>
+  <div class="page-subtitle">交互组件 · 答题测试你对长征的了解</div>
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-question" id="quizQ"></div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div class="quiz-result" id="quizResult">
+      <div style="font-size:0.2rem;color:#cdb38b">你的得分</div>
+      <div class="quiz-score" id="quizScore"></div>
+      <div class="quiz-comment" id="quizComment"></div>
+      <div class="quiz-retry" onclick="resetQuiz()">再来一次</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== P12 Legacy ====== -->
+<section class="page page-12">
+  <div class="page-title">薪火相传</div>
+  <div class="page-subtitle">长征精神在新时代</div>
+  <div class="legacy-cards" id="legacyGrid">
+    <div class="legacy-card"><div class="legacy-front"><div class="legacy-icon">🏛️</div><div class="legacy-title">长征国家文化公园</div><div class="legacy-desc">国家重大文化工程，沿长征路线建设文化地标</div></div><div class="legacy-back"><div class="legacy-back-title">🏛️ 长征国家文化公园</div><div class="legacy-back-desc">覆盖15省区市，打造"重走长征路"红色旅游精品线路，让长征历史可感可触。</div></div></div>
+    <div class="legacy-card"><div class="legacy-front"><div class="legacy-icon">🎓</div><div class="legacy-title">长征干部学院</div><div class="legacy-desc">多地建立长征干部学院，传承红色基因</div></div><div class="legacy-back"><div class="legacy-back-title">🎓 长征干部学院</div><div class="legacy-back-desc">四川长征干部学院、遵义干部学院等，每年培训数万名党员干部"重走长征路"。</div></div></div>
+    <div class="legacy-card"><div class="legacy-front"><div class="legacy-icon">🚀</div><div class="legacy-title">新长征路</div><div class="legacy-desc">每一代人有每一代人的长征路</div></div><div class="legacy-back"><div class="legacy-back-title">🚀 新长征路</div><div class="legacy-back-desc">习近平总书记指出："每一代人有每一代人的长征路，每一代人都要走好自己的长征路。"中华民族伟大复兴就是新时代的长征。</div></div></div>
+    <div class="legacy-card"><div class="legacy-front"><div class="legacy-icon">📖</div><div class="legacy-title">长征精神永存</div><div class="legacy-desc">坚定理想信念，走好新时代长征路</div></div><div class="legacy-back"><div class="legacy-back-title">📖 长征精神永存</div><div class="legacy-back-desc">长征已过去近90年，但长征精神穿越时空，成为激励中华民族在复兴之路上奋勇前进的强大动力。</div></div></div>
+  </div>
+  <div class="legacy-hint">👆 点击卡片翻转查看详情 · 双击还原</div>
+</section>
+
+<!-- ====== P13 Message ====== -->
+<section class="page page-13">
+  <div class="page-title">致敬长征英烈</div>
+  <div class="page-subtitle">写下你的致敬留言</div>
+  <div class="msg-area">
+    <textarea class="msg-input" id="msgInput" placeholder="向长征英烈致敬..." maxlength="80"></textarea>
+    <button class="msg-submit" onclick="addMessage()">🇨🇳 致敬</button>
+    <div class="msg-wall" id="msgWall"></div>
+  </div>
+</section>
+
+<!-- ====== P14 End ====== -->
+<section class="page page-14" id="page14">
+  <div class="end-title">万水千山<br>不忘初心</div>
+  <div class="end-stats">
+    <div class="end-stat"><div class="end-num">14</div><div class="end-label">页面</div></div>
+    <div class="end-stat"><div class="end-num">3</div><div class="end-label">高级组件</div></div>
+    <div class="end-stat"><div class="end-num">2.5万</div><div class="end-label">里征程</div></div>
+  </div>
+  <div class="end-share" onclick="shareH5()">📤 分享给朋友</div>
+  <div style="font-size:0.16rem;color:rgba(205,179,139,0.5);margin-top:0.2rem;z-index:1">红军长征红色文化主题展 · 2024</div>
+</section>
+
+</div>
+
+<script>
+'use strict';
+// Stars
+(function(){const e=document.getElementById('particles1');if(!e)return;let h='';for(let i=0;i<60;i++){const x=Math.random()*100,y=Math.random()*100,d=Math.random()*3,s=Math.random()*0.04+0.02;h+='<div class="star" style="left:'+x+'%;top:'+y+'%;width:'+s+'rem;height:'+s+'rem;animation-delay:'+d+'s;animation-duration:'+(1.5+Math.random()*2.5)+'s;opacity:'+(0.2+Math.random()*0.5)+'"></div>'}e.innerHTML=h})();
+
+// Indicator
+const pages=document.querySelectorAll('.page'),indicator=document.getElementById('indicator'),totalPages=pages.length;
+for(let i=0;i<totalPages;i++){const d=document.createElement('div');d.className='indicator-dot';d.title='第'+(i+1)+'页';d.addEventListener('click',()=>pages[i].scrollIntoView({behavior:'smooth'}));indicator.appendChild(d)}
+const dots=document.querySelectorAll('.indicator-dot');dots[0].classList.add('active');
+const po=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=Array.from(pages).indexOf(x.target);dots.forEach((d,j)=>d.classList.toggle('active',j===i))}})},{threshold:0.6});
+pages.forEach(p=>po.observe(p));
+
+// Timeline
+document.querySelectorAll('.tl-item').forEach(item=>{item.addEventListener('click',function(){const was=this.classList.contains('on');document.querySelectorAll('.tl-item').forEach(i=>i.classList.remove('on'));if(!was){this.classList.add('on');this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}})});
+
+// Flip cards
+(function(){const cards=document.querySelectorAll('.flip-card');const taps={};cards.forEach((card,idx)=>{card.addEventListener('click',function(e){e.stopPropagation();const now=Date.now(),last=taps[idx]||0;if(now-last<350){cards.forEach(c=>c.classList.remove('flipped'));taps[idx]=0}else{this.classList.toggle('flipped');taps[idx]=now}})})})();
+
+// Legacy flip
+document.querySelectorAll('.legacy-card').forEach(card=>{let tap=0;card.addEventListener('click',function(){const now=Date.now();if(now-tap<350){document.querySelectorAll('.legacy-card').forEach(c=>c.classList.remove('flipped'));tap=0}else{this.classList.toggle('flipped');tap=now}})});
+
+// Quiz
+const quizData=[{q:'红军长征开始于哪一年？',o:['1933年','1934年','1935年','1936年'],a:1},{q:'遵义会议召开于哪一年？',o:['1934年','1935年','1936年','1937年'],a:1},{q:'长征中的"湘江战役"发生在哪条江边？',o:['赣江','乌江','湘江','赤水'],a:2},{q:'红军翻越的第一座大雪山叫什么？',o:['玉龙雪山','夹金山','梅里雪山','贡嘎山'],a:1},{q:'长征的最后一站是哪里？',o:['延安','遵义','会宁','吴起镇'],a:3},{q:'红军长征共走了大约多少里？',o:['一万','一万五','两万五','三万'],a:2}];
+let qIdx=0,qScore=0;
+function renderQuiz(){const qE=document.getElementById('quizQ'),oE=document.getElementById('quizOpts'),rE=document.getElementById('quizResult');rE.classList.remove('show');oE.style.display='flex';if(qIdx>=quizData.length){showResult();return}const d=quizData[qIdx];qE.textContent='Q'+(qIdx+1)+'. '+d.q;oE.innerHTML=d.o.map((o,i)=>'<div class="quiz-option" data-i="'+i+'">'+o+'</div>').join('');oE.querySelectorAll('.quiz-option').forEach(o=>o.addEventListener('click',handleAnswer))}
+function handleAnswer(e){const sel=parseInt(e.target.dataset.i),cor=quizData[qIdx].a;document.querySelectorAll('#quizOpts .quiz-option').forEach((o,i)=>{o.style.pointerEvents='none';if(i===cor)o.classList.add('correct');else if(i===sel&&sel!==cor)o.classList.add('wrong')});if(sel===cor)qScore++;setTimeout(()=>{qIdx++;renderQuiz()},1200)}
+function showResult(){document.getElementById('quizOpts').style.display='none';document.getElementById('quizQ').textContent='';const rE=document.getElementById('quizResult'),t=quizData.length;let c=qScore===t?'🏆 太棒了！你是长征历史专家！':qScore>=t-1?'👍 非常优秀！':qScore>=t-2?'📖 不错！再了解一些~':'💪 继续学习长征历史！';document.getElementById('quizScore').textContent=qScore+'/'+t;document.getElementById('quizComment').textContent=c;rE.classList.add('show')}
+function resetQuiz(){qIdx=0;qScore=0;renderQuiz()}
+renderQuiz();
+
+// Messages
+const defMsgs=['向长征英烈致以最崇高的敬意！🇨🇳','万水千山不忘来时路，长征精神永放光芒！','每一代人都要走好自己的长征路！'];
+(function(){const w=document.getElementById('msgWall');defMsgs.forEach(m=>{w.innerHTML+='<div class="msg-item">📝 '+m+'</div>'})})();
+function addMessage(){const i=document.getElementById('msgInput'),t=i.value.trim();if(!t)return;i.value='';const w=document.getElementById('msgWall');w.innerHTML+='<div class="msg-item">📝 '+t+'</div>';w.scrollTop=w.scrollHeight}
+
+// Fireworks
+const page14=document.getElementById('page14');if(page14){new IntersectionObserver(e=>{if(e[0].isIntersecting)spawnFW()}).observe(page14)}
+function spawnFW(){const c=['#DAA520','#c41e3a','#ff6b6b','#ffd700','#ff4500'];for(let i=0;i<40;i++){setTimeout(()=>{const f=document.createElement('div');f.className='firework';f.style.cssText='left:'+(20+Math.random()*60)+'%;top:'+(20+Math.random()*40)+'%;width:'+(0.025+Math.random()*0.04)+'rem;height:'+(0.025+Math.random()*0.04)+'rem;background:'+c[Math.floor(Math.random()*c.length)]+';--dx:'+((Math.random()-0.5)*2)+'rem;--dy:'+((Math.random()-0.5)*2)+'rem;animation-duration:'+(0.8+Math.random()*1.2)+'s';page14.appendChild(f);setTimeout(()=>f.remove(),2000)},i*80)}}
+
+// Share
+function shareH5(){if(navigator.share)navigator.share({title:'万水千山·红军长征红色文化主题展',text:'快来了解伟大的长征历史！',url:location.href});else{navigator.clipboard&&navigator.clipboard.writeText(location.href).then(()=>alert('链接已复制！'))}}
+
+// Keyboard
+let cp=0;document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();cp=Math.min(totalPages-1,cp+1);pages[cp].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();cp=Math.max(0,cp-1);pages[cp].scrollIntoView({behavior:'smooth'})}});
+const ko=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)cp=Array.from(pages).indexOf(x.target)})},{threshold:0.6});pages.forEach(p=>ko.observe(p));
+
+console.log('🔥 万水千山·红军长征红色文化主题展 H5 已就绪');
+</script>
+</body>
+</html>
