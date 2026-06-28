@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>延安精神 · 红色文化主题展</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:calc(100vw/7.5);scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;background:#0d0808;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.container{width:100vw;height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.container::-webkit-scrollbar{display:none}
+.page{width:100vw;height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;position:relative;overflow-y:auto;overflow-x:hidden;padding:0.4rem 0.35rem 0.5rem}
+
+/* Yan'an earth-tone palette */
+.page-1{background:radial-gradient(ellipse at 50% 35%,#8B4513 0%,#2a1005 75%)}
+.page-2{background:linear-gradient(180deg,#2d1810 0%,#1a1010 100%)}
+.page-3{background:linear-gradient(180deg,#1a1010 0%,#1a1510 100%)}
+.page-4{background:linear-gradient(180deg,#1a1008 0%,#0a0a1a 100%)}
+.page-5{background:linear-gradient(180deg,#1a0d0d 0%,#1a0a0a 100%)}
+.page-6{background:linear-gradient(180deg,#1a1510 0%,#0d1a0d 100%)}
+.page-7{background:linear-gradient(180deg,#1a0a0a 0%,#1a0d1a 100%)}
+.page-8{background:linear-gradient(180deg,#0d0d1a 0%,#1a0f0a 100%)}
+.page-9{background:linear-gradient(180deg,#1a0d0d 0%,#1a1414 100%)}
+.page-10{background:radial-gradient(ellipse at 50% 20%,#8B4513 0%,#1a0000 100%)}
+.page-11{background:linear-gradient(180deg,#1a0a0a 0%,#1a0a0a 100%)}
+.page-12{background:radial-gradient(ellipse at 50% 70%,#c41e3a 0%,#1a0000 100%)}
+.page-13{background:linear-gradient(180deg,#1a0d0d 0%,#1a0d0d 100%)}
+.page-14{background:radial-gradient(ellipse at center,#8B4513 0%,#1a0000 100%)}
+
+.page-title{font-size:0.46rem;color:#DAA520;font-weight:bold;text-align:center;margin-bottom:0.1rem;letter-spacing:0.04rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
+.page-subtitle{font-size:0.22rem;color:#cdb38b;text-align:center;margin-bottom:0.18rem;z-index:1}
+.page-text{font-size:0.26rem;color:#e8d5c4;line-height:1.8;text-align:center;max-width:6rem;z-index:1}
+.danwei{color:#c41e3a;font-weight:bold}
+
+.indicator{position:fixed;right:0.1rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:0.07rem}
+.indicator-dot{width:0.07rem;height:0.07rem;border-radius:50%;background:rgba(255,255,255,0.2);transition:all 0.3s;cursor:pointer}
+.indicator-dot.active{background:#DAA520;height:0.25rem;border-radius:0.04rem;box-shadow:0 0 0.06rem #DAA520}
+
+/* Cover */
+.cover-svg{width:1.8rem;height:2rem;z-index:1;margin-bottom:0.08rem}
+.cover-title{font-size:0.58rem;color:#DAA520;font-weight:bold;letter-spacing:0.08rem;font-family:"STKaiti","KaiTi","楷体",serif;text-shadow:0 0 0.2rem #c41e3a;z-index:1}
+.cover-line{width:2rem;height:0.02rem;background:linear-gradient(90deg,transparent,#DAA520,transparent);margin:0.12rem auto;z-index:1}
+.cover-sub{font-size:0.26rem;color:#cdb38b;z-index:1}
+.cover-swipe{position:absolute;bottom:0.25rem;font-size:0.18rem;color:rgba(218,165,32,0.5);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(0.06rem)}}
+
+.star{position:absolute;background:#DAA520;border-radius:50%;animation:twinkle ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.15;box-shadow:0 0 0.01rem #DAA520}100%{opacity:1;box-shadow:0 0 0.05rem #ff6b6b}}
+
+/* Map */
+.route-map{width:5.8rem;height:3.2rem;position:relative;z-index:1}
+.route-waypoint{cursor:pointer;transition:all 0.3s}
+.route-waypoint:active{filter:drop-shadow(0 0 5px #DAA520)}
+.route-popup{position:absolute;bottom:0.05rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);border:0.01rem solid #DAA520;border-radius:0.1rem;padding:0.12rem 0.18rem;font-size:0.2rem;color:#e8d5c4;text-align:center;z-index:5;opacity:0;transition:opacity 0.3s;width:5.2rem;pointer-events:none}
+.route-popup.show{opacity:1}
+
+/* Timeline */
+.tl-box{width:100%;overflow-x:auto;overflow-y:hidden;padding:0.12rem 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.tl-box::-webkit-scrollbar{height:0.03rem}
+.tl-box::-webkit-scrollbar-thumb{background:#DAA520;border-radius:0.02rem}
+.tl-track{display:flex;gap:0;padding:0 0.35rem;min-width:max-content;position:relative}
+.tl-track::before{content:'';position:absolute;left:0.35rem;right:0.35rem;top:0.65rem;height:0.02rem;background:linear-gradient(90deg,#DAA520,#c41e3a,#DAA520)}
+.tl-item{min-width:1.7rem;padding:0.12rem 0.1rem;text-align:center;position:relative;z-index:1;cursor:pointer;scroll-snap-align:center;transition:all 0.3s}
+.tl-item.on{min-width:2.8rem}
+.tl-year{font-size:0.26rem;color:#DAA520;font-weight:bold}
+.tl-dot{width:0.16rem;height:0.16rem;background:#c41e3a;border-radius:50%;margin:0.08rem auto;border:0.02rem solid #DAA520}
+.tl-title{font-size:0.2rem;color:#e8d5c4;white-space:nowrap}
+.tl-desc{font-size:0.17rem;color:#cdb38b;display:none;line-height:1.4;margin-top:0.05rem}
+.tl-item.on .tl-desc{display:block}
+
+/* 3D Flip */
+.flip-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:5.5rem;perspective:1000px;z-index:1}
+.flip-card{width:1.6rem;height:2.3rem;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:0.12rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
+.flip-front{background:linear-gradient(180deg,rgba(139,69,19,0.5),rgba(0,0,0,0.7));border:0.015rem solid rgba(218,165,32,0.4)}
+.flip-back{background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(139,0,0,0.7));border:0.015rem solid #DAA520;transform:rotateY(180deg);padding:0.18rem}
+.flip-emoji{font-size:0.5rem;margin-bottom:0.08rem}
+.flip-name{font-size:0.22rem;color:#DAA520;font-weight:bold}
+.flip-story{font-size:0.17rem;color:#e8d5c4;line-height:1.5;text-align:center}
+
+/* Scratch */
+.scratch-grid{display:flex;flex-wrap:wrap;gap:0.12rem;justify-content:center;max-width:5.5rem;z-index:1}
+.scratch-card{width:2.5rem;height:3rem;position:relative;border-radius:0.12rem;overflow:hidden;border:0.01rem solid rgba(218,165,32,0.3)}
+.scratch-card canvas{position:absolute;inset:0;z-index:2}
+.scratch-content{width:100%;height:100%;background:linear-gradient(180deg,rgba(139,0,0,0.65),rgba(0,0,0,0.8));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.2rem;position:absolute;inset:0;z-index:1}
+.scratch-story{font-size:0.2rem;color:#e8d5c4;line-height:1.6;text-align:center}
+
+/* Quiz */
+.quiz-box{width:5.5rem;background:rgba(0,0,0,0.4);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.15rem;padding:0.25rem;z-index:1}
+.quiz-q{font-size:0.28rem;color:#DAA520;margin-bottom:0.2rem;text-align:center}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:0.12rem}
+.quiz-opt{width:calc(50% - 0.06rem);padding:0.18rem;background:rgba(255,255,255,0.06);border:0.01rem solid rgba(255,255,255,0.15);border-radius:0.08rem;font-size:0.2rem;color:#e8d5c4;text-align:center;cursor:pointer;transition:all 0.2s}
+.quiz-opt:active{transform:scale(0.95)}
+.quiz-opt.ok{background:rgba(0,180,0,0.3);border-color:#0a0}
+.quiz-opt.no{background:rgba(200,0,0,0.3);border-color:#c00;color:#f66}
+.quiz-result{display:none;text-align:center;padding:0.25rem}
+.quiz-result.show{display:block}
+.quiz-score{font-size:0.5rem;color:#DAA520;font-weight:bold}
+.quiz-comment{font-size:0.2rem;color:#cdb38b;margin-top:0.08rem}
+.quiz-retry{display:inline-block;padding:0.1rem 0.3rem;background:#c41e3a;color:#fff;border-radius:0.2rem;font-size:0.18rem;margin-top:0.12rem;cursor:pointer}
+
+/* Song */
+.song-card{width:5rem;background:rgba(139,69,19,0.15);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.1rem;padding:0.12rem 0.2rem;text-align:center;cursor:pointer;margin:0.05rem 0;z-index:1;transition:all 0.3s}
+.song-card.open{background:rgba(139,69,19,0.3);border-color:#DAA520}
+.slyric{font-size:0.18rem;color:#cdb38b;max-height:0;overflow:hidden;transition:max-height 0.4s}
+.song-card.open .slyric{max-height:1.2rem!important}
+
+/* End */
+.end-title{font-size:0.48rem;color:#DAA520;font-weight:bold;letter-spacing:0.06rem;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1;text-align:center}
+.end-stats{display:flex;gap:0.3rem;margin:0.2rem 0;z-index:1}
+.end-stat{text-align:center}
+.end-num{font-size:0.45rem;color:#DAA520;font-weight:bold}
+.end-label{font-size:0.17rem;color:#cdb38b}
+.end-share{display:inline-block;padding:0.1rem 0.4rem;background:linear-gradient(135deg,#DAA520,#8B4513);color:#fff;border-radius:0.2rem;font-size:0.2rem;cursor:pointer;z-index:1;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0.06rem #DAA520}50%{box-shadow:0 0 0.2rem #DAA520,0 0 0.35rem #8B4513}}
+.firework{position:absolute;width:0.03rem;height:0.03rem;border-radius:50%;animation:fw 1.5s ease-out forwards}
+@keyframes fw{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* Message */
+.msg-box{width:5.5rem;background:rgba(0,0,0,0.3);border:0.01rem solid rgba(218,165,32,0.3);border-radius:0.12rem;padding:0.2rem;z-index:1}
+.msg-input{width:100%;height:0.7rem;background:rgba(255,255,255,0.08);border:0.01rem solid rgba(255,255,255,0.2);border-radius:0.08rem;color:#e8d5c4;font-size:0.2rem;padding:0.12rem;resize:none;font-family:inherit}
+.msg-input:focus{outline:none;border-color:#DAA520}
+.msg-submit{display:block;width:1.4rem;height:0.45rem;background:linear-gradient(135deg,#8B4513,#5a2a0a);color:#fff;border:none;border-radius:0.2rem;font-size:0.18rem;margin:0.12rem auto 0;cursor:pointer}
+.msg-wall{max-height:1.3rem;overflow-y:auto;margin-top:0.12rem}
+.msg-item{font-size:0.17rem;color:#e8d5c4;padding:0.06rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.06);animation:msgIn 0.3s}
+@keyframes msgIn{0%{opacity:0;transform:translateX(0.2rem)}100%{opacity:1;transform:translateX(0)}}
+
+.hint{font-size:0.16rem;color:rgba(205,179,139,0.5);text-align:center;margin-top:0.12rem;z-index:1}
+</style>
+</head>
+<body>
+<div class="indicator" id="indicator"></div>
+<div class="container" id="container">
+
+<!-- P1 Cover -->
+<section class="page page-1"><div id="stars1" style="position:absolute;width:100%;height:100%;pointer-events:none;z-index:0"></div>
+  <svg class="cover-svg" viewBox="0 0 120 140"><defs><radialGradient id="fg"><stop offset="0%" stop-color="#fff8dc"/><stop offset="25%" stop-color="#DAA520"/><stop offset="55%" stop-color="#c41e3a"/><stop offset="100%" stop-color="#8B4513" stop-opacity="0"/></radialGradient></defs><polygon points="60,20 50,55 20,55 45,78 35,110 60,90 85,110 75,78 100,55 70,55" fill="url(#fg)" opacity="0.85"><animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/></polygon></svg>
+  <div class="cover-title">延安精神</div><div class="cover-line"></div>
+  <div class="cover-sub">红色文化主题展</div><div class="cover-line"></div>
+  <div style="font-size:0.2rem;color:#cdb38b;z-index:1">1935.10 — 1948.03</div>
+  <div class="cover-swipe">↑ 向上滑动启阅 ↑</div>
+</section>
+
+<!-- P2 Overview -->
+<section class="page page-2">
+  <div class="page-title">革命圣地 · 延安</div>
+  <div class="page-subtitle">中共中央所在地十三年</div>
+  <svg width="5rem" height="2.5rem" viewBox="0 0 400 200" style="z-index:1;margin-bottom:0.1rem"><rect width="400" height="200" fill="#2a1810" rx="6"/><polygon points="200,20 260,160 140,160" fill="#8B4513" opacity="0.5" stroke="#DAA520" stroke-width="1.5"/><rect x="190" y="55" width="20" height="110" fill="#5a3a1a"/><text x="200" y="185" text-anchor="middle" fill="#DAA520" font-size="10">宝塔山</text><circle cx="200" cy="40" r="5" fill="#DAA520"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle></svg>
+  <div class="page-text">1935年10月，中央红军到达陕北吴起镇。从此，<span class="danwei">延安</span>成为中共中央所在地，成为中国人民抗日战争和解放战争的指挥中心。十三年里，中国共产党在这里领导了敌后抗战、大生产运动、整风运动，形成了光照千秋的<span class="danwei">延安精神</span>。</div>
+</section>
+
+<!-- P3 Route Map (Advanced 1) -->
+<section class="page page-3">
+  <div class="page-title">⭐ 延安革命旧址地图</div>
+  <div class="page-subtitle">交互组件 · 点击地标解锁历史</div>
+  <div class="route-map">
+    <svg viewBox="0 0 500 280"><rect width="500" height="280" fill="#1a1010" rx="6"/>
+      <g class="route-waypoint" data-title="宝塔山" data-info="延安标志性建筑，始建于唐，高44米。中共中央在延安时期，宝塔山成为革命圣地的象征。"><circle cx="260" cy="60" r="9" fill="#DAA520" stroke="#fff" stroke-width="2"/><text x="260" y="45" text-anchor="middle" fill="#DAA520" font-size="9" font-weight="bold">★ 宝塔山</text></g>
+      <g class="route-waypoint" data-title="枣园" data-info="中共中央书记处所在地。毛泽东在此写了《为人民服务》等多篇著作。"><circle cx="340" cy="130" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="325" y="148" text-anchor="end" fill="#cdb38b" font-size="8">枣园</text></g>
+      <g class="route-waypoint" data-title="杨家岭" data-info="中共中央驻地。召开了延安文艺座谈会和中共七大，确立了毛泽东思想为党的指导思想。"><circle cx="200" cy="140" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="200" y="158" text-anchor="middle" fill="#cdb38b" font-size="8">杨家岭</text></g>
+      <g class="route-waypoint" data-title="王家坪" data-info="中央军委和八路军总部所在地。毛泽东在此发表了《和美国记者安娜·路易斯·斯特朗的谈话》。"><circle cx="280" cy="180" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="295" y="195" fill="#cdb38b" font-size="8">王家坪</text></g>
+      <g class="route-waypoint" data-title="南泥湾" data-info="大生产运动的典范。王震率领359旅开垦荒地26万亩，将荒山变成'陕北好江南'。"><circle cx="120" cy="200" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="100" y="218" text-anchor="end" fill="#cdb38b" font-size="8">南泥湾</text></g>
+      <g class="route-waypoint" data-title="凤凰山" data-info="中共中央初到延安时的驻地。毛泽东在此会见白求恩，写了《实践论》《矛盾论》。"><circle cx="200" cy="90" r="8" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/><text x="180" y="82" text-anchor="end" fill="#cdb38b" font-size="8">凤凰山</text></g>
+      <path d="M260,60 Q280,90 200,90 Q180,90 200,140 Q220,180 280,180 Q320,180 340,130 Q360,80 340,130 Q320,180 280,180 Q240,180 200,140 Q160,100 120,200" fill="none" stroke="#DAA520" stroke-width="1.5" opacity="0.4" stroke-dasharray="4 3"/>
+    </svg>
+    <div class="route-popup" id="routePopup"></div>
+  </div>
+  <div class="hint">👆 点击地标圆点查看详情</div>
+</section>
+
+<!-- P4 Timeline (Advanced 2) -->
+<section class="page page-4">
+  <div class="page-title">⭐ 延安岁月时间轴</div>
+  <div class="page-subtitle">交互组件 · 左右滑动 + 点击展开</div>
+  <div class="tl-box"><div class="tl-track" id="tlTrack">
+    <div class="tl-item"><div class="tl-year">1935.10</div><div class="tl-dot"></div><div class="tl-title">中央红军到陕北</div><div class="tl-desc">中央红军到达吴起镇，与陕北红军会师。</div></div>
+    <div class="tl-item"><div class="tl-year">1937.01</div><div class="tl-dot"></div><div class="tl-title">中央进驻延安</div><div class="tl-desc">中共中央机关由保安迁驻延安。</div></div>
+    <div class="tl-item"><div class="tl-year">1942.02</div><div class="tl-dot"></div><div class="tl-title">整风运动</div><div class="tl-desc">全党范围内的马克思主义思想教育运动。</div></div>
+    <div class="tl-item"><div class="tl-year">1942.05</div><div class="tl-dot"></div><div class="tl-title">延安文艺座谈会</div><div class="tl-desc">毛泽东发表《在延安文艺座谈会上的讲话》。</div></div>
+    <div class="tl-item"><div class="tl-year">1943.01</div><div class="tl-dot"></div><div class="tl-title">大生产运动</div><div class="tl-desc">359旅南泥湾开荒，实现自给自足。</div></div>
+    <div class="tl-item"><div class="tl-year">1945.04</div><div class="tl-dot"></div><div class="tl-title">中共七大</div><div class="tl-desc">确立毛泽东思想为党的指导思想。</div></div>
+    <div class="tl-item"><div class="tl-year">1945.08</div><div class="tl-dot"></div><div class="tl-title">抗日战争胜利</div><div class="tl-desc">中国抗日战争取得最终胜利。</div></div>
+    <div class="tl-item"><div class="tl-year">1947.03</div><div class="tl-dot"></div><div class="tl-title">转战陕北</div><div class="tl-desc">中央主动撤离延安，转战陕北。</div></div>
+    <div class="tl-item"><div class="tl-year">1948.03</div><div class="tl-dot"></div><div class="tl-title">离开陕北</div><div class="tl-desc">中央东渡黄河，前往西柏坡。</div></div>
+  </div></div>
+  <div class="hint">← 左右滑动 → 点击节点展开</div>
+</section>
+
+<!-- P5 Rectification -->
+<section class="page page-5">
+  <div class="page-title">整风运动</div>
+  <div class="page-subtitle">1942年 — 全党范围的马克思主义教育</div>
+  <svg width="2rem" height="1.4rem" viewBox="0 0 200 140" style="z-index:1;margin-bottom:0.08rem"><rect width="200" height="140" fill="#1a0d0d" rx="4"/><rect x="40" y="30" width="120" height="80" rx="3" fill="#2a1810" stroke="#DAA520" stroke-width="1"/><line x1="60" y1="50" x2="140" y2="50" stroke="#cdb38b" stroke-width="0.5"/><line x1="60" y1="65" x2="130" y2="65" stroke="#cdb38b" stroke-width="0.5"/><line x1="60" y1="80" x2="135" y2="80" stroke="#cdb38b" stroke-width="0.5"/><text x="100" y="130" text-anchor="middle" fill="#DAA520" font-size="10">整顿三风：学风·党风·文风</text></svg>
+  <div class="page-text">延安整风运动是党的历史上第一次大规模的马克思主义思想教育运动，核心内容是<span class="danwei">反对主观主义以整顿学风，反对宗派主义以整顿党风，反对党八股以整顿文风</span>。通过整风，全党达到了空前的团结和统一，为抗日战争和解放战争的胜利奠定了坚实的思想基础。</div>
+</section>
+
+<!-- P6 Production Campaign -->
+<section class="page page-6">
+  <div class="page-title">大生产运动</div>
+  <div class="page-subtitle">自己动手 · 丰衣足食</div>
+  <svg width="2.5rem" height="1.5rem" viewBox="0 0 250 150" style="z-index:1;margin-bottom:0.08rem"><rect width="250" height="150" fill="#1a1510" rx="4"/><rect x="30" y="60" width="190" height="60" fill="#3a2a10" stroke="#8B4513" stroke-width="1"/><circle cx="100" cy="90" r="20" fill="#5a4a20" opacity="0.5"/><text x="100" y="95" text-anchor="middle" fill="#DAA520" font-size="14">🌾</text><rect x="60" y="50" width="8" height="12" fill="#c41e3a" opacity="0.6"/><rect x="150" y="45" width="8" height="12" fill="#c41e3a" opacity="0.6"/></svg>
+  <div class="page-text">面对日军"扫荡"和国民党封锁造成的严重经济困难，毛泽东发出<span class="danwei">"自己动手，丰衣足食"</span>的号召。王震率领359旅在南泥湾开荒<span class="danwei">26万亩</span>，将荒山野岭变成"陕北好江南"。大生产运动不仅解决了部队和机关的生存问题，更锤炼了<span class="danwei">自力更生、艰苦奋斗</span>的革命精神。</div>
+</section>
+
+<!-- P7 Figures (Advanced 3: 3D Flip Gallery) -->
+<section class="page page-7" style="overflow-y:auto">
+  <div class="page-title">⭐ 延安时期的革命人物</div>
+  <div class="page-subtitle">交互组件 · 单击翻转查看事迹</div>
+  <div class="flip-grid" id="flipGrid">
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">毛泽东</div></div><div class="flip-face flip-back"><div class="flip-story">在延安十三年写下《实践论》《矛盾论》《论持久战》等光辉著作，领导整风运动和大生产运动。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">周恩来</div></div><div class="flip-face flip-back"><div class="flip-story">在延安主持南方局工作，参与领导整风运动，在中共七大上作重要讲话。延安的窑洞里留下了他日夜工作的身影。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">朱 德</div></div><div class="flip-face flip-back"><div class="flip-story">八路军总司令。在延安领导敌后抗战，提出"屯田政策"，推动南泥湾大生产。朱德与战士们一起纺线织布。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">刘少奇</div></div><div class="flip-face flip-back"><div class="flip-story">在延安参与领导整风运动，在七大上作《关于修改党章的报告》，系统阐述了毛泽东思想。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">任弼时</div></div><div class="flip-face flip-back"><div class="flip-story">"五大书记"之一。在延安负责中央日常工作和组织工作，参与领导整风运动和大生产运动。被誉为"党的骆驼"。</div></div></div>
+    <div class="flip-card"><div class="flip-face flip-front"><div class="flip-emoji">👤</div><div class="flip-name">张思德</div></div><div class="flip-face flip-back"><div class="flip-story">中央警卫团战士。1944年在安塞烧炭时因窑洞坍塌牺牲。毛泽东在其追悼会上发表《为人民服务》的著名演讲。</div></div></div>
+  </div>
+  <div class="hint">👆 单击翻转 · 双击全部还原</div>
+</section>
+
+<!-- P8 Nanniwan Scratch (Advanced 4) -->
+<section class="page page-8">
+  <div class="page-title">⭐ 擦开南泥湾</div>
+  <div class="page-subtitle">交互组件 · 手指擦除涂层揭示故事</div>
+  <div class="scratch-grid">
+    <div class="scratch-card"><canvas></canvas><div class="scratch-content"><span style="font-size:0.3rem">🌾</span><div class="scratch-story" style="margin-top:0.1rem">王震将军率领359旅开进荒无人烟的南泥湾，风餐露宿，开荒种田。</div></div></div>
+    <div class="scratch-card"><canvas></canvas><div class="scratch-content"><span style="font-size:0.3rem">🧵</span><div class="scratch-story" style="margin-top:0.1rem">毛泽东、周恩来、朱德等领导人带头纺线织布，延安的纺车声日夜不停。</div></div></div>
+    <div class="scratch-card"><canvas></canvas><div class="scratch-content"><span style="font-size:0.3rem">🏭</span><div class="scratch-story" style="margin-top:0.1rem">延安办起了兵工厂、纺织厂、造纸厂，在极端困难条件下建立起初级工业体系。</div></div></div>
+    <div class="scratch-card"><canvas></canvas><div class="scratch-content"><span style="font-size:0.3rem">📚</span><div class="scratch-story" style="margin-top:0.1rem">抗日军政大学在延安培养了大批革命干部，简陋的窑洞里走出十万英才。</div></div></div>
+  </div>
+  <div class="hint">👆 手指涂抹灰色涂层 · 擦开查看故事</div>
+</section>
+
+<!-- P9 Art & Literature -->
+<section class="page page-9">
+  <div class="page-title">延安文艺</div>
+  <div class="page-subtitle">1942年 · 延安文艺座谈会</div>
+  <div class="page-text">毛泽东发表《在延安文艺座谈会上的讲话》，提出文艺<span class="danwei">"为工农兵服务"</span>的方向。此后涌现了《白毛女》《黄河大合唱》《小二黑结婚》等一批经典作品，开创了人民文艺的新纪元。</div>
+  <div class="song-card" onclick="this.classList.toggle('open')"><div style="font-size:0.22rem;color:#DAA520">🎵 黄河大合唱</div><div class="slyric">风在吼 马在叫 黄河在咆哮 黄河在咆哮</div></div>
+  <div class="song-card" onclick="this.classList.toggle('open')"><div style="font-size:0.22rem;color:#DAA520">🎵 南泥湾</div><div class="slyric">花篮的花儿香 听我来唱一唱 · 如今的南泥湾 与往年不一般</div></div>
+</section>
+
+<!-- P10 Works -->
+<section class="page page-10">
+  <div class="page-title">经典著作</div>
+  <div class="page-subtitle">延安时期的理论创新</div>
+  <div class="page-text" style="text-align:left;line-height:1.6;width:5.5rem">
+    <p>📖 《实践论》《矛盾论》—— 1937年，凤凰山</p>
+    <p style="margin-top:0.08rem">📖 《论持久战》—— 1938年，延安窑洞</p>
+    <p style="margin-top:0.08rem">📖 《在延安文艺座谈会上的讲话》—— 1942年</p>
+    <p style="margin-top:0.08rem">📖 《为人民服务》—— 1944年9月8日</p>
+    <p style="margin-top:0.08rem">📖 《纪念白求恩》—— 1939年12月21日</p>
+    <p style="margin-top:0.08rem">📖 《愚公移山》—— 1945年6月11日</p>
+    <p style="margin-top:0.15rem;color:#DAA520">以上三篇合称"老三篇"，<br>成为延安精神的重要载体。</p>
+  </div>
+</section>
+
+<!-- P11 Quiz (Advanced 5) -->
+<section class="page page-11" style="overflow-y:auto;justify-content:flex-start;padding-top:0.3rem">
+  <div class="page-title">⭐ 延安知识问答</div>
+  <div class="page-subtitle">交互组件 · 测试你对延安历史的了解</div>
+  <div class="quiz-box">
+    <div class="quiz-q" id="quizQ"></div>
+    <div class="quiz-opts" id="quizOpts"></div>
+    <div class="quiz-result" id="quizResult">
+      <div style="font-size:0.2rem;color:#cdb38b">你的得分</div>
+      <div class="quiz-score" id="quizScore"></div>
+      <div class="quiz-comment" id="quizComment"></div>
+      <div class="quiz-retry" onclick="resetQuiz()">再来一次</div>
+    </div>
+  </div>
+</section>
+
+<!-- P12 Spirit -->
+<section class="page page-12">
+  <div class="page-title">延安精神</div>
+  <div class="page-subtitle">中国共产党人精神谱系的核心内容</div>
+  <div style="text-align:center;z-index:1;font-size:0.26rem;color:#DAA520;line-height:2.4;font-family:'STKaiti','KaiTi','楷体',serif">
+    <p>坚定正确的<span class="danwei">政治方向</span></p>
+    <p>解放思想、<span class="danwei">实事求是</span>的思想路线</p>
+    <p>全心全意为人民服务的<span class="danwei">根本宗旨</span></p>
+    <p>自力更生、<span class="danwei">艰苦奋斗</span>的创业精神</p>
+  </div>
+</section>
+
+<!-- P13 Message -->
+<section class="page page-13">
+  <div class="page-title">致敬延安</div>
+  <div class="page-subtitle">写下你对革命先辈的敬意</div>
+  <div class="msg-box">
+    <textarea class="msg-input" id="msgInput" placeholder="向延安时期的革命先辈致敬..." maxlength="80"></textarea>
+    <button class="msg-submit" onclick="addMsg()">🇨🇳 致敬</button>
+    <div class="msg-wall" id="msgWall"></div>
+  </div>
+</section>
+
+<!-- P14 End -->
+<section class="page page-14" id="page14">
+  <div class="end-title">发扬延安精神<br>走好新长征路</div>
+  <div class="end-stats">
+    <div class="end-stat"><div class="end-num">14</div><div class="end-label">页面</div></div>
+    <div class="end-stat"><div class="end-num">5</div><div class="end-label">高级组件</div></div>
+    <div class="end-stat"><div class="end-num">13</div><div class="end-label">年延安岁月</div></div>
+  </div>
+  <div class="end-share" onclick="shareH5()">📤 分享给朋友</div>
+  <div style="font-size:0.14rem;color:rgba(205,179,139,0.4);margin-top:0.15rem;z-index:1">延安精神红色文化主题展 · 2024</div>
+</section>
+
+</div>
+
+<script>
+'use strict';
+// Stars
+(function(){const e=document.getElementById('stars1');if(!e)return;let h='';for(let i=0;i<50;i++){const x=Math.random()*100,y=Math.random()*100;h+='<div class="star" style="left:'+x+'%;top:'+y+'%;width:'+(Math.random()*0.03+0.015)+'rem;height:'+(Math.random()*0.03+0.015)+'rem;animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(1.5+Math.random()*2.5)+'s;opacity:'+(0.15+Math.random()*0.5)+'"></div>'}e.innerHTML=h})();
+
+// Indicator
+const pages=document.querySelectorAll('.page'),indicator=document.getElementById('indicator'),totalPages=pages.length;
+for(let i=0;i<totalPages;i++){const d=document.createElement('div');d.className='indicator-dot';d.title='第'+(i+1)+'页';d.addEventListener('click',()=>pages[i].scrollIntoView({behavior:'smooth'}));indicator.appendChild(d)}
+const dots=document.querySelectorAll('.indicator-dot');dots[0].classList.add('active');
+const po=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=Array.from(pages).indexOf(x.target);dots.forEach((d,j)=>d.classList.toggle('active',j===i))}})},{threshold:0.6});
+pages.forEach(p=>po.observe(p));
+
+// Route Map Waypoints
+document.querySelectorAll('.route-waypoint').forEach(wp=>{wp.addEventListener('click',function(e){e.stopPropagation();const p=document.getElementById('routePopup');p.innerHTML='<strong style="color:#DAA520">'+this.dataset.title+'</strong><br>'+this.dataset.info;p.classList.add('show');setTimeout(()=>p.classList.remove('show'),3500)})});
+
+// Timeline
+document.querySelectorAll('.tl-item').forEach(item=>{item.addEventListener('click',function(){const was=this.classList.contains('on');document.querySelectorAll('.tl-item').forEach(i=>i.classList.remove('on'));if(!was){this.classList.add('on');this.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}})});
+
+// Flip Cards
+(function(){const cards=document.querySelectorAll('.flip-card');const taps={};cards.forEach((card,idx)=>{card.addEventListener('click',function(e){e.stopPropagation();const now=Date.now(),last=taps[idx]||0;if(now-last<350){cards.forEach(c=>c.classList.remove('flipped'));taps[idx]=0}else{this.classList.toggle('flipped');taps[idx]=now}})})})();
+
+// Scratch Cards
+(function(){document.querySelectorAll('.scratch-card').forEach(card=>{const canvas=card.querySelector('canvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=card.clientWidth,h=card.clientHeight;canvas.width=w;canvas.height=h;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.fillStyle='#4a3a1a';ctx.fillRect(0,0,w,h);for(let i=0;i<25;i++){ctx.fillStyle='rgba(60,40,10,'+(0.3+Math.random()*0.5)+')';ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*12+2,0,Math.PI*2);ctx.fill()}ctx.fillStyle='#DAA520';ctx.font='bold '+Math.floor(w*0.11)+'px sans-serif';ctx.textAlign='center';ctx.fillText('擦开查看',w/2,h/2);let scratching=false;canvas.addEventListener('mousedown',()=>{scratching=true});canvas.addEventListener('mouseup',()=>{scratching=false});canvas.addEventListener('mouseleave',()=>{scratching=false});canvas.addEventListener('mousemove',e=>{if(scratching)erase(e,canvas,ctx)});canvas.addEventListener('touchstart',e=>{e.preventDefault();scratching=true;eraseT(e,canvas,ctx)});canvas.addEventListener('touchmove',e=>{e.preventDefault();if(scratching)eraseT(e,canvas,ctx)});canvas.addEventListener('touchend',()=>{scratching=false})});function erase(e,c,ctx){const r=c.getBoundingClientRect();ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(e.clientX-r.left,e.clientY-r.top,22,0,Math.PI*2);ctx.fill()}function eraseT(e,c,ctx){const r=c.getBoundingClientRect();Array.from(e.touches).forEach(t=>{ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(t.clientX-r.left,t.clientY-r.top,25,0,Math.PI*2);ctx.fill()})}})();
+
+// Quiz
+const quizData=[{q:'中共中央在延安共驻了多少年？',o:['5年','8年','13年','15年'],a:2},{q:'延安的标志性建筑是什么？',o:['天安门','宝塔山','黄鹤楼','大雁塔'],a:1},{q:'大生产运动中359旅开垦了哪里？',o:['井冈山','南泥湾','陕北','陇东'],a:1},{q:'毛泽东在张思德追悼会上发表了哪篇演讲？',o:['《纪念白求恩》','《愚公移山》','《论持久战》','《为人民服务》'],a:3},{q:'中共七大在哪一年召开？',o:['1942年','1943年','1945年','1947年'],a:2},{q:'延安精神的核心内容不包括哪项？',o:['坚定正确的政治方向','解放思想实事求是','枪杆子里出政权','自力更生艰苦奋斗'],a:2}];
+let qIdx=0,qScore=0;
+function renderQuiz(){const qE=document.getElementById('quizQ'),oE=document.getElementById('quizOpts'),rE=document.getElementById('quizResult');rE.classList.remove('show');oE.style.display='flex';if(qIdx>=quizData.length){showResult();return}const d=quizData[qIdx];qE.textContent='Q'+(qIdx+1)+'. '+d.q;oE.innerHTML=d.o.map((o,i)=>'<div class="quiz-opt" data-i="'+i+'">'+o+'</div>').join('');oE.querySelectorAll('.quiz-opt').forEach(o=>o.addEventListener('click',handleAnswer))}
+function handleAnswer(e){const sel=parseInt(e.target.dataset.i),cor=quizData[qIdx].a;document.querySelectorAll('#quizOpts .quiz-opt').forEach((o,i)=>{o.style.pointerEvents='none';if(i===cor)o.classList.add('ok');else if(i===sel&&sel!==cor)o.classList.add('no')});if(sel===cor)qScore++;setTimeout(()=>{qIdx++;renderQuiz()},1200)}
+function showResult(){document.getElementById('quizOpts').style.display='none';document.getElementById('quizQ').textContent='';const rE=document.getElementById('quizResult'),t=quizData.length;let c=qScore===t?'🏆 太棒了！你是延安历史专家！':qScore>=t-1?'👍 非常优秀！':qScore>=t-2?'📖 不错！再了解一些~':'💪 继续学习延安精神！';document.getElementById('quizScore').textContent=qScore+'/'+t;document.getElementById('quizComment').textContent=c;rE.classList.add('show')}
+function resetQuiz(){qIdx=0;qScore=0;renderQuiz()}
+renderQuiz();
+
+// Messages
+const defMsgs=['向延安时期的革命先辈致敬！🇨🇳','延安精神永放光芒，吾辈当自强！','发扬延安精神，走好新时代长征路！'];
+(function(){const w=document.getElementById('msgWall');defMsgs.forEach(m=>{w.innerHTML+='<div class="msg-item">📝 '+m+'</div>'})})();
+function addMsg(){const i=document.getElementById('msgInput'),t=i.value.trim();if(!t)return;i.value='';const w=document.getElementById('msgWall');w.innerHTML+='<div class="msg-item">📝 '+t+'</div>';w.scrollTop=w.scrollHeight}
+
+// Fireworks
+const page14=document.getElementById('page14');if(page14){new IntersectionObserver(e=>{if(e[0].isIntersecting)spawnFW()}).observe(page14)}
+function spawnFW(){const c=['#DAA520','#c41e3a','#ff6b6b','#ffd700','#8B4513'];for(let i=0;i<35;i++){setTimeout(()=>{const f=document.createElement('div');f.className='firework';f.style.cssText='left:'+(20+Math.random()*60)+'%;top:'+(20+Math.random()*40)+'%;width:'+(0.02+Math.random()*0.04)+'rem;height:'+(0.02+Math.random()*0.04)+'rem;background:'+c[Math.floor(Math.random()*c.length)]+';--dx:'+((Math.random()-0.5)*2)+'rem;--dy:'+((Math.random()-0.5)*2)+'rem;animation-duration:'+(0.8+Math.random()*1.2)+'s';page14.appendChild(f);setTimeout(()=>f.remove(),2000)},i*80)}}
+
+// Share
+function shareH5(){if(navigator.share)navigator.share({title:'延安精神·红色文化主题展',text:'快来了解延安精神和红色文化！',url:location.href});else{navigator.clipboard&&navigator.clipboard.writeText(location.href).then(()=>alert('链接已复制！'))}}
+
+// Keyboard
+let cp=0;document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();cp=Math.min(totalPages-1,cp+1);pages[cp].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();cp=Math.max(0,cp-1);pages[cp].scrollIntoView({behavior:'smooth'})}});
+const ko=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)cp=Array.from(pages).indexOf(x.target)})},{threshold:0.6});pages.forEach(p=>ko.observe(p));
+console.log('🕯️ 延安精神·红色文化主题展 H5 已就绪');
+</script>
+</body>
+</html>
