@@ -101,6 +101,44 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#000;over
 .msg-submit{display:block;width:1.5rem;height:0.5rem;background:linear-gradient(135deg,#c41e3a,#8b0000);color:#fff;border:none;border-radius:0.25rem;font-size:0.2rem;margin:0.15rem auto 0;cursor:pointer;z-index:1}
 .msg-list{max-height:1.2rem;overflow-y:auto;margin-top:0.15rem;text-align:left;width:5.5rem;z-index:1}
 .msg-item{font-size:0.18rem;color:#e8d5c4;padding:0.06rem 0;border-bottom:0.01rem solid rgba(255,255,255,0.06)}
+
+/* ====== NEW COMPONENT: Image Compare Slider (S9) ====== */
+.compare-box{width:6rem;height:3.5rem;position:relative;overflow:hidden;border-radius:0.12rem;border:0.015rem solid rgba(218,165,32,0.3);z-index:1}
+.compare-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,69,19,0.4),rgba(0,0,0,0.6))}
+.compare-left,.compare-right{position:absolute;top:0;height:100%;width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.4rem}
+.compare-left{left:0;background:rgba(60,30,10,0.7)}
+.compare-right{right:0;background:rgba(20,60,20,0.7)}
+.compare-label{font-size:0.2rem;color:#DAA520;margin-top:0.08rem}
+.compare-divider{position:absolute;top:0;left:50%;width:0.04rem;height:100%;background:#DAA520;cursor:ew-resize;z-index:2;transform:translateX(-50%)}
+.compare-divider::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#c41e3a;color:#fff;width:0.4rem;height:0.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.2rem}
+
+/* ====== NEW COMPONENT: Interactive Letter (S10) ====== */
+.letter-box{width:5.5rem;height:3.8rem;position:relative;z-index:1;perspective:800px}
+.letter-env{width:100%;height:100%;background:linear-gradient(180deg,#d4c5a9,#c4b595);border-radius:0.1rem;position:relative;cursor:pointer;overflow:hidden;border:0.02rem solid #8B7355}
+.letter-flap{position:absolute;top:0;left:0;right:0;height:55%;background:linear-gradient(180deg,#e0d0b0,#c8b898);transform-origin:top center;transition:transform 0.6s;z-index:3;border-bottom:0.02rem dashed #8B7355}
+.letter-flap.open{transform:rotateX(180deg)}
+.letter-seal{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:0.6rem;height:0.6rem;border-radius:50%;background:#c41e3a;z-index:4;display:flex;align-items:center;justify-content:center;font-size:0.3rem;cursor:pointer;box-shadow:0 0.04rem 0.1rem rgba(0,0,0,0.3);transition:all 0.3s}
+.letter-seal.broken{opacity:0.3;transform:translate(-50%,-50%) scale(0.5)}
+.letter-content{position:absolute;top:55%;left:0;right:0;bottom:0;padding:0.2rem;display:flex;align-items:center;justify-content:center;text-align:center;color:#3a2a1a;font-size:0.2rem;line-height:1.7;font-family:"STKaiti","KaiTi","楷体",serif;z-index:1}
+.letter-seals-row{display:flex;justify-content:center;gap:0.3rem;margin-top:0.15rem}
+
+/* ====== NEW COMPONENT: Spin Wheel (S11) ====== */
+.wheel-wrap{position:relative;width:3.2rem;height:3.2rem;z-index:1}
+.wheel-svg{width:100%;height:100%;transform:rotate(0deg);transition:transform 3s cubic-bezier(0.17,0.67,0.12,0.99)}
+.wheel-pointer{position:absolute;top:-0.3rem;left:50%;transform:translateX(-50%);font-size:0.4rem;z-index:2}
+.wheel-btn{margin-top:0.2rem;padding:0.12rem 0.5rem;background:linear-gradient(135deg,#DAA520,#c41e3a);color:#fff;border:none;border-radius:0.25rem;font-size:0.22rem;cursor:pointer;z-index:1}
+.wheel-result{font-size:0.22rem;color:#DAA520;text-align:center;margin-top:0.15rem;z-index:1;min-height:0.5rem}
+
+/* ====== NEW COMPONENT: Time Capsule (S12) ====== */
+.capsule-grid{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center;max-width:6rem;z-index:1}
+.capsule-card{width:2.6rem;height:2.2rem;position:relative;cursor:pointer;perspective:600px}
+.capsule-inner{width:100%;height:100%;transition:transform 0.6s;transform-style:preserve-3d;position:relative}
+.capsule-card.open .capsule-inner{transform:rotateY(180deg)}
+.capsule-front,.capsule-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:0.12rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
+.capsule-front{background:linear-gradient(135deg,#5a3a1a,#3a2010);border:0.015rem solid #DAA520;font-size:0.5rem}
+.capsule-year{font-size:0.22rem;color:#DAA520;font-weight:bold;margin-top:0.05rem}
+.capsule-back{background:linear-gradient(135deg,rgba(196,30,58,0.5),rgba(0,0,0,0.8));border:0.015rem solid #DAA520;transform:rotateY(180deg)}
+.capsule-fact{font-size:0.17rem;color:#e8d5c4;text-align:center;line-height:1.5}
 </style>
 </head>
 <body>
@@ -229,8 +267,94 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#000;over
   </div>
 </div>
 
-<!-- S9: Ending -->
-<div class="screen bg9" id="s9">
+<!-- S9: Image Compare Slider -->
+<div class="screen bg4" id="s9">
+  <div class="page-heading anim fadeUp">⭐ 今昔对比</div>
+  <div class="page-sub anim fadeIn" data-delay="0.2s">拖动滑块查看延安的变迁</div>
+  <div class="compare-box anim zoomIn" data-delay="0.5s" id="compareBox">
+    <div class="compare-left"><span>🏚️</span><div class="compare-label">老延安 · 窑洞岁月</div></div>
+    <div class="compare-right"><span>🏙️</span><div class="compare-label">新延安 · 今日风貌</div></div>
+    <div class="compare-divider" id="compareDivider"></div>
+  </div>
+  <div class="page-sub anim fadeIn" data-delay="1s" style="font-size:0.16rem;color:rgba(205,179,139,0.5);margin-top:0.1rem">👆 拖动中间分隔线查看对比</div>
+  <button class="btn-next anim fadeIn" data-delay="1.4s" onclick="nextScreen()">继续阅读</button>
+</div>
+
+<!-- S10: Interactive Letter -->
+<div class="screen bg2" id="s10">
+  <div class="page-heading anim fadeUp">⭐ 革命书信</div>
+  <div class="page-sub anim fadeIn" data-delay="0.2s">点击火漆印章打开革命书信</div>
+  <div class="letter-box anim zoomIn" data-delay="0.5s">
+    <div class="letter-env" id="letterEnv">
+      <div class="letter-flap" id="letterFlap"></div>
+      <div class="letter-seals-row">
+        <div class="letter-seal" data-letter="为人民服务" onclick="openLetter(this,'1944年9月8日，毛泽东在张思德追悼会上发表《为人民服务》的演讲。\n人固有一死，或重于泰山，或轻于鸿毛。')">📮</div>
+        <div class="letter-seal" data-letter="纪念白求恩" onclick="openLetter(this,'1939年12月，毛泽东写下《纪念白求恩》。\n一个外国人，毫无利己的动机，把中国人民的解放事业当作他自己的事业。')">📮</div>
+        <div class="letter-seal" data-letter="愚公移山" onclick="openLetter(this,'1945年6月，毛泽东在七大闭幕词中讲述愚公移山的故事。\n下定决心，不怕牺牲，排除万难，去争取胜利。')">📮</div>
+      </div>
+      <div class="letter-content" id="letterText"></div>
+    </div>
+  </div>
+  <button class="btn-next anim fadeIn" data-delay="1.5s" onclick="nextScreen()">继续阅读</button>
+</div>
+
+<!-- S11: Spin Wheel -->
+<div class="screen bg5" id="s11">
+  <div class="page-heading anim fadeUp">⭐ 知识转盘</div>
+  <div class="page-sub anim fadeIn" data-delay="0.2s">转动转盘，随机获取延安知识</div>
+  <div class="wheel-wrap anim zoomIn" data-delay="0.5s">
+    <div class="wheel-pointer">▼</div>
+    <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="95" fill="#2a1a10" stroke="#DAA520" stroke-width="3"/>
+      <path d="M100,100 L100,5 A95,95 0 0,1 189,150 Z" fill="rgba(196,30,58,0.6)"/><text x="140" y="50" fill="#fff" font-size="8">宝塔山</text>
+      <path d="M100,100 L189,150 A95,95 0 0,1 65,190 Z" fill="rgba(139,69,19,0.6)"/><text x="130" y="170" fill="#fff" font-size="8">南泥湾</text>
+      <path d="M100,100 L65,190 A95,95 0 0,1 10,100 Z" fill="rgba(218,165,32,0.6)"/><text x="20" y="150" fill="#fff" font-size="8">枣园</text>
+      <path d="M100,100 L10,100 A95,95 0 0,1 65,10 Z" fill="rgba(196,30,58,0.5)"/><text x="20" y="60" fill="#fff" font-size="8">杨家岭</text>
+      <path d="M100,100 L65,10 A95,95 0 0,1 140,8 Z" fill="rgba(139,69,19,0.5)"/><text x="80" y="20" fill="#fff" font-size="8">王家坪</text>
+      <path d="M100,100 L140,8 A95,95 0 0,1 189,55 Z" fill="rgba(218,165,32,0.5)"/><text x="165" y="40" fill="#fff" font-size="8">凤凰山</text>
+      <circle cx="100" cy="100" r="15" fill="#c41e3a" stroke="#DAA520" stroke-width="2"/>
+    </svg>
+  </div>
+  <button class="wheel-btn anim fadeIn" data-delay="0.9s" id="wheelBtn" onclick="spinWheel()">🎯 转动转盘</button>
+  <div class="wheel-result anim fadeIn" data-delay="1.2s" id="wheelResult"></div>
+  <button class="btn-next anim fadeIn" data-delay="1.6s" onclick="nextScreen()">继续阅读</button>
+</div>
+
+<!-- S12: Time Capsule -->
+<div class="screen bg8" id="s12">
+  <div class="page-heading anim fadeUp">⭐ 时间胶囊</div>
+  <div class="page-sub anim fadeIn" data-delay="0.2s">点击年份卡片翻开历史瞬间</div>
+  <div class="capsule-grid" style="margin-top:0.15rem">
+    <div class="capsule-card anim fadeLeft" data-delay="0.5s" onclick="this.classList.toggle('open')">
+      <div class="capsule-inner">
+        <div class="capsule-front"><span>📦</span><div class="capsule-year">1935</div></div>
+        <div class="capsule-back"><div class="capsule-fact">中央红军到达陕北吴起镇，长征胜利结束，中国革命转危为安。</div></div>
+      </div>
+    </div>
+    <div class="capsule-card anim fadeRight" data-delay="0.7s" onclick="this.classList.toggle('open')">
+      <div class="capsule-inner">
+        <div class="capsule-front"><span>📦</span><div class="capsule-year">1942</div></div>
+        <div class="capsule-back"><div class="capsule-fact">延安整风运动全面展开，全党思想达到空前团结和统一。</div></div>
+      </div>
+    </div>
+    <div class="capsule-card anim fadeLeft" data-delay="0.9s" onclick="this.classList.toggle('open')">
+      <div class="capsule-inner">
+        <div class="capsule-front"><span>📦</span><div class="capsule-year">1944</div></div>
+        <div class="capsule-back"><div class="capsule-fact">毛泽东发表《为人民服务》，成为中国共产党根本宗旨的经典表述。</div></div>
+      </div>
+    </div>
+    <div class="capsule-card anim fadeRight" data-delay="1.1s" onclick="this.classList.toggle('open')">
+      <div class="capsule-inner">
+        <div class="capsule-front"><span>📦</span><div class="capsule-year">1945</div></div>
+        <div class="capsule-back"><div class="capsule-fact">中共七大召开，确立毛泽东思想为党的指导思想。</div></div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-next anim fadeIn" data-delay="1.5s" onclick="nextScreen()">继续阅读</button>
+</div>
+
+<!-- S13: Ending -->
+<div class="screen bg9" id="s13">
   <div class="hero-icon anim bounceIn">🌟</div>
   <div class="page-heading anim fadeUp" data-delay="0.5s" style="font-size:0.5rem">不忘初心</div>
   <div class="page-heading small anim fadeUp" data-delay="0.8s" style="font-size:0.32rem">继续前进</div>
@@ -353,6 +477,66 @@ function checkScratch() {
     btn.textContent = '继续阅读';
     btn.onclick = nextScreen;
   }
+}
+
+// ===== Image Compare Slider =====
+(function(){
+  const divider = document.getElementById('compareDivider');
+  const box = document.getElementById('compareBox');
+  if (!divider || !box) return;
+  let dragging = false;
+  divider.addEventListener('mousedown', () => dragging = true);
+  document.addEventListener('mouseup', () => dragging = false);
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const r = box.getBoundingClientRect();
+    let pct = ((e.clientX - r.left) / r.width) * 100;
+    pct = Math.max(10, Math.min(90, pct));
+    divider.style.left = pct + '%';
+    box.querySelector('.compare-left').style.width = pct + '%';
+    box.querySelector('.compare-right').style.width = (100 - pct) + '%';
+  });
+  divider.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; });
+  document.addEventListener('touchend', () => dragging = false);
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const r = box.getBoundingClientRect();
+    let pct = ((e.touches[0].clientX - r.left) / r.width) * 100;
+    pct = Math.max(10, Math.min(90, pct));
+    divider.style.left = pct + '%';
+    box.querySelector('.compare-left').style.width = pct + '%';
+    box.querySelector('.compare-right').style.width = (100 - pct) + '%';
+  });
+})();
+
+// ===== Interactive Letter =====
+function openLetter(seal, text) {
+  seal.classList.add('broken');
+  document.getElementById('letterFlap').classList.add('open');
+  document.getElementById('letterText').textContent = text;
+}
+
+// ===== Spin Wheel =====
+function spinWheel() {
+  const btn = document.getElementById('wheelBtn');
+  if (btn.disabled) return;
+  btn.disabled = true;
+  const wheel = document.getElementById('wheelSvg');
+  const facts = [
+    '宝塔山：唐代古塔，高44米，延安标志性建筑。',
+    '南泥湾：359旅开荒26万亩，荒山变江南。',
+    '枣园：中共中央书记处所在地，毛泽东在此写下光辉著作。',
+    '杨家岭：中共七大召开地，确立毛泽东思想为指导思想。',
+    '王家坪：中央军委驻地，指挥全国解放战争。',
+    '凤凰山：中共中央初到延安驻地，毛泽东会见白求恩。'
+  ];
+  const deg = 720 + Math.random() * 720;
+  wheel.style.transform = 'rotate(' + deg + 'deg)';
+  setTimeout(() => {
+    const idx = Math.floor(Math.random() * facts.length);
+    document.getElementById('wheelResult').innerHTML = '📌 ' + facts[idx];
+    btn.disabled = false;
+  }, 3100);
 }
 
 // ===== Message =====
