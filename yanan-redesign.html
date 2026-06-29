@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>延安精神 · 红色文化</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:calc(100vw/7.5)}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#F5F5DC;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;width:100vw;height:100vh}
+
+#stage{width:100vw;height:100vh;position:relative}
+
+/* ====== Screen Base ====== */
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.5s;overflow-y:auto;overflow-x:hidden;background:#F5F5DC;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")}
+.scr.active{opacity:1;pointer-events:auto;z-index:10}
+.scr::-webkit-scrollbar{width:0.03rem}
+.scr::-webkit-scrollbar-thumb{background:rgba(196,30,58,0.2);border-radius:0.02rem}
+
+/* ====== TOP NAV BAR ====== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.4rem 0;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#F5F5DC 80%,transparent)}
+.topbar-title{font-size:0.36rem;font-family:"STKaiti","KaiTi","楷体",serif;color:#C41E3A;font-weight:bold;letter-spacing:0.04rem}
+.topbar-badge{font-size:0.18rem;color:#DAA520;background:rgba(218,165,32,0.1);padding:0.04rem 0.12rem;border-radius:0.2rem}
+
+/* ====== HERO BANNER ====== */
+.hero{position:relative;margin:0.2rem 0.4rem;border-radius:0.25rem;overflow:hidden;height:3.8rem;background:linear-gradient(180deg,#f5e6d3 0%,#e8d5c4 30%,#d4a574 70%,#8B4513 100%)}
+.hero-bg{position:absolute;inset:0}
+.hero-mountains{position:absolute;bottom:0;left:0;right:0;height:60%}
+.hero-tower{position:absolute;right:0.3rem;bottom:0.8rem;width:1.2rem;height:2rem;background:linear-gradient(180deg,#DAA520,#8B4513);clip-path:polygon(50% 0%,85% 30%,85% 100%,15% 100%,15% 30%);opacity:0.85;filter:drop-shadow(0 0 0.15rem rgba(218,165,32,0.5))}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.hero-particle{position:absolute;background:#DAA520;border-radius:50%;animation:twinkle 2s ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:0.1}100%{opacity:0.7}}
+.hero-title{position:absolute;left:0.4rem;top:0.5rem;font-size:0.56rem;font-family:"STKaiti","KaiTi","楷体",serif;color:#C41E3A;font-weight:bold;letter-spacing:0.06rem;text-shadow:0 0.02rem 0.04rem rgba(0,0,0,0.1);z-index:2}.hero-sub{position:absolute;left:0.4rem;top:1.2rem;font-size:0.2rem;color:#8B4513;z-index:2}
+
+/* ====== SEARCH BAR ====== */
+.search-bar{display:flex;align-items:center;margin:-0.6rem 0.6rem 0;padding:0.2rem 0.3rem;background:rgba(255,255,255,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:0.3rem;box-shadow:0 0.05rem 0.2rem rgba(0,0,0,0.08);z-index:5;position:relative}
+.search-icon{font-size:0.3rem;color:#DAA520;margin-right:0.15rem}
+.search-hint{font-size:0.24rem;color:#999}
+
+/* ====== KING KONG NAV (金刚区) ====== */
+.kk-row{display:flex;justify-content:space-around;margin:0.35rem 0.4rem 0.25rem}
+.kk-item{display:flex;flex-direction:column;align-items:center;gap:0.1rem;cursor:pointer;transition:all 0.3s}
+.kk-item:active{transform:scale(0.9)}
+.kk-icon{width:0.9rem;height:0.9rem;border-radius:0.2rem;background:rgba(218,165,32,0.08);border:0.02rem solid rgba(218,165,32,0.3);display:flex;align-items:center;justify-content:center;font-size:0.4rem}
+.kk-label{font-size:0.2rem;color:#5a3a1a}
+
+/* ====== SECTION HEADER ====== */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin:0.3rem 0.4rem 0.15rem}
+.sec-title{font-size:0.32rem;color:#1a1a1a;font-weight:bold}
+.sec-title::before{content:'';display:inline-block;width:0.06rem;height:0.28rem;background:#C41E3A;border-radius:0.03rem;margin-right:0.12rem;vertical-align:middle}
+.sec-more{font-size:0.2rem;color:#DAA520}
+
+/* ====== BIG CARD ====== */
+.big-card{margin:0 0.4rem;border-radius:0.2rem;overflow:hidden;background:#fff;box-shadow:0 0.06rem 0.25rem rgba(196,30,58,0.08)}
+.big-card-img{width:100%;height:3rem;background:linear-gradient(135deg,#f0e0c0,#e8d0a0);display:flex;align-items:center;justify-content:center;font-size:1.2rem;position:relative}
+.big-card-body{padding:0.25rem 0.3rem}
+.big-card-title{font-size:0.28rem;color:#1a1a1a;font-weight:bold;line-height:1.4}
+.big-card-meta{font-size:0.18rem;color:#999;margin-top:0.1rem}
+
+/* ====== SMALL CARD LIST ====== */
+.card-list{margin:0 0.4rem;display:flex;flex-direction:column;gap:0.2rem}
+.card-item{display:flex;gap:0.2rem;background:#fff;border-radius:0.15rem;padding:0.2rem;box-shadow:0 0.04rem 0.15rem rgba(196,30,58,0.05);cursor:pointer;transition:all 0.3s;align-items:center}
+.card-item:active{transform:scale(0.97)}
+.card-thumb{width:1.6rem;height:1.6rem;border-radius:0.12rem;background:linear-gradient(135deg,#f5e6d3,#e8d5c4);display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0}
+.card-info{flex:1;min-width:0}
+.card-info-title{font-size:0.26rem;color:#1a1a1a;font-weight:bold;line-height:1.4;margin-bottom:0.08rem}
+.card-tags{display:flex;gap:0.1rem;flex-wrap:wrap}
+.card-tag{padding:0.05rem 0.15rem;background:rgba(196,30,58,0.06);color:#C41E3A;border-radius:0.15rem;font-size:0.18rem}
+
+/* ====== BOTTOM TAB BAR ====== */
+.btm-tabs{position:fixed;bottom:0;left:0;right:0;height:1.2rem;background:#fff;border-top:0.01rem solid rgba(218,165,32,0.2);display:flex;justify-content:space-around;align-items:center;z-index:200;padding-bottom:env(safe-area-inset-bottom)}
+.btm-tab{display:flex;flex-direction:column;align-items:center;gap:0.04rem;cursor:pointer;transition:all 0.3s;font-size:0.2rem;color:#999}
+.btm-tab.on{color:#C41E3A}
+.btm-tab-icon{font-size:0.4rem}
+
+/* ====== INTERACTIVE COMPONENTS IN CARDS ====== */
+.comp-box{margin:0.3rem 0.4rem;background:#fff;border-radius:0.2rem;padding:0.3rem;box-shadow:0 0.04rem 0.15rem rgba(196,30,58,0.05)}
+.comp-title{font-size:0.3rem;color:#1a1a1a;font-weight:bold;margin-bottom:0.15rem}
+
+/* Scratch */
+.scratch-row{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center}
+.scratch-card{width:calc(50% - 0.08rem);height:2.4rem;position:relative;border-radius:0.15rem;overflow:hidden;border:0.01rem solid rgba(218,165,32,0.3)}
+.scratch-card canvas{position:absolute;inset:0;z-index:2}
+.scratch-story{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,248,240,0.95),#f5e6d3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem;text-align:center;font-size:0.18rem;color:#5a3a1a;line-height:1.5}
+.scratch-story span{font-size:0.4rem;margin-bottom:0.06rem}
+
+/* Spin Wheel */
+.wheel-box{display:flex;flex-direction:column;align-items:center;gap:0.15rem}
+.wheel-svg{width:2.8rem;height:2.8rem;transition:transform 3s cubic-bezier(0.17,0.67,0.12,0.99)}
+.wheel-btn{padding:0.15rem 0.6rem;background:linear-gradient(135deg,#C41E3A,#8b0000);color:#fff;border:none;border-radius:0.3rem;font-size:0.24rem;cursor:pointer}
+.wheel-result{font-size:0.22rem;color:#C41E3A;text-align:center;min-height:0.4rem}
+
+/* Time Capsule */
+.caps-row{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center}
+.caps-card{width:calc(50% - 0.08rem);height:2rem;perspective:600px;cursor:pointer}
+.caps-inner{width:100%;height:100%;transition:transform 0.6s;transform-style:preserve-3d;position:relative}
+.caps-card.open .caps-inner{transform:rotateY(180deg)}
+.caps-front,.caps-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:0.15rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem}
+.caps-front{background:linear-gradient(135deg,#faf0e0,#f0e0c0);border:0.02rem solid #DAA520;font-size:0.5rem}
+.caps-year{font-size:0.26rem;color:#C41E3A;font-weight:bold;margin-top:0.06rem}
+.caps-back{background:linear-gradient(135deg,#fff5f0,#ffe8e0);border:0.02rem solid #C41E3A;transform:rotateY(180deg)}
+.caps-fact{font-size:0.18rem;color:#5a1a1a;text-align:center;line-height:1.5}
+
+/* Letter */
+.letter-box{display:flex;justify-content:center;gap:0.25rem}
+.letter-seal{cursor:pointer;transition:all 0.3s;font-size:0.3rem}
+.letter-seal:active{transform:scale(1.2)}
+.letter-text{margin-top:0.2rem;padding:0.25rem;background:rgba(250,240,224,0.5);border-radius:0.12rem;font-size:0.2rem;color:#5a3a1a;line-height:1.8;text-align:center;font-family:"STKaiti","KaiTi","楷体",serif;min-height:0.8rem}
+
+/* Compare */
+.compare-box{position:relative;width:100%;height:2.5rem;border-radius:0.15rem;overflow:hidden}
+.compare-l,.compare-r{position:absolute;top:0;height:100%;width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.5rem}
+.compare-l{left:0;background:linear-gradient(135deg,#f5e6d3,#e8d0b0)}
+.compare-r{right:0;background:linear-gradient(135deg,#e0f0e0,#c0dcc0)}
+.compare-label{font-size:0.22rem;color:#5a3a1a;margin-top:0.08rem;font-weight:bold}
+.compare-div{position:absolute;top:0;left:50%;width:0.04rem;height:100%;background:#DAA520;cursor:ew-resize;z-index:2;transform:translateX(-50%)}
+.compare-div::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#C41E3A;color:#fff;width:0.5rem;height:0.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.24rem}
+
+/* Animations */
+.anim{opacity:0}
+.anim.show{animation:aFade 0.5s ease-out forwards}
+@keyframes aFade{0%{opacity:0;transform:translateY(0.3rem)}100%{opacity:1;transform:translateY(0)}}
+.anim.d0{animation-delay:0s}.anim.d1{animation-delay:0.1s}.anim.d2{animation-delay:0.2s}.anim.d3{animation-delay:0.3s}.anim.d4{animation-delay:0.4s}.anim.d5{animation-delay:0.5s}.anim.d6{animation-delay:0.6s}.anim.d8{animation-delay:0.8s}.anim.d10{animation-delay:1s}
+
+/* To top button */
+.to-top{position:fixed;bottom:1.5rem;right:0.3rem;z-index:150;width:0.7rem;height:0.7rem;border-radius:50%;background:rgba(196,30,58,0.8);color:#fff;border:none;font-size:0.3rem;cursor:pointer;display:none;box-shadow:0 0.06rem 0.2rem rgba(196,30,58,0.3)}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+<!-- ====== S1: Home Feed ====== -->
+<div class="scr active" id="s1">
+  <div class="topbar"><div class="topbar-title">延安精神</div><div class="topbar-badge">红色文化</div></div>
+  <div class="hero anim d0"><div class="hero-bg" id="heroBg"></div><div class="hero-title">延安精神</div><div class="hero-sub">YAN'AN SPIRIT</div><div class="hero-tower"></div></div>
+  <div class="search-bar anim d1"><span class="search-icon">🔍</span><span class="search-hint">探索红色印记...</span></div>
+  <div class="kk-row anim d2">
+    <div class="kk-item" onclick="goScreen(1)"><div class="kk-icon">📜</div><div class="kk-label">历史足迹</div></div>
+    <div class="kk-item" onclick="goScreen(4)"><div class="kk-icon">🌟</div><div class="kk-label">英雄故事</div></div>
+    <div class="kk-item" onclick="goScreen(7)"><div class="kk-icon">🏛️</div><div class="kk-label">数字展馆</div></div>
+    <div class="kk-item" onclick="goScreen(10)"><div class="kk-icon">📝</div><div class="kk-label">学习心得</div></div>
+  </div>
+  <div class="sec-hd anim d3"><div class="sec-title">红色记忆</div><div class="sec-more">更多 ▸</div></div>
+  <div class="big-card anim d4" onclick="goScreen(3)">
+    <div class="big-card-img">🌾</div>
+    <div class="big-card-body"><div class="big-card-title">自力更生，丰衣足食——南泥湾精神的时代内涵</div><div class="big-card-meta">延安·大生产运动 · 359旅</div></div>
+  </div>
+  <div class="card-list anim d5" style="margin-top:0.2rem">
+    <div class="card-item" onclick="goScreen(5)"><div class="card-thumb">📖</div><div class="card-info"><div class="card-info-title">窑洞里的灯光：延安时期的实事求是</div><div class="card-tags"><span class="card-tag">#理论学习</span></div></div></div>
+    <div class="card-item" onclick="goScreen(2)"><div class="card-thumb">🏛️</div><div class="card-info"><div class="card-info-title">延安四大革命旧址巡礼</div><div class="card-tags"><span class="card-tag">#革命旧址</span><span class="card-tag">#红色旅游</span></div></div></div>
+    <div class="card-item" onclick="goScreen(4)"><div class="card-thumb">🧵</div><div class="card-info"><div class="card-info-title">自己动手，丰衣足食——大生产运动</div><div class="card-tags"><span class="card-tag">#自力更生</span></div></div></div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S2: Historical Sites ====== -->
+<div class="scr" id="s2">
+  <div class="topbar"><div class="topbar-title">📜 历史足迹</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">革命旧址分布</div>
+    <div class="card-list" style="margin:0">
+      <div class="card-item"><div class="card-thumb">🗼</div><div class="card-info"><div class="card-info-title">宝塔山</div><div style="font-size:0.2rem;color:#666">唐代古塔·高44米·延安标志</div></div></div>
+      <div class="card-item"><div class="card-thumb">🏛️</div><div class="card-info"><div class="card-info-title">枣园</div><div style="font-size:0.2rem;color:#666">中共中央书记处所在地</div></div></div>
+      <div class="card-item"><div class="card-thumb">🏠</div><div class="card-info"><div class="card-info-title">杨家岭</div><div style="font-size:0.2rem;color:#666">中共七大召开地</div></div></div>
+      <div class="card-item"><div class="card-thumb">⚔️</div><div class="card-info"><div class="card-info-title">王家坪</div><div style="font-size:0.2rem;color:#666">中央军委驻地</div></div></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S3: Production Campaign ====== -->
+<div class="scr" id="s3">
+  <div class="topbar"><div class="topbar-title">大生产运动</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="hero" style="height:3rem;margin-top:0.2rem"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#e8d5b0,#d4c090);display:flex;align-items:center;justify-content:center;font-size:2rem">🌾</div><div class="hero-title" style="font-size:0.4rem;top:1.5rem">南泥湾</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">自己动手 · 丰衣足食</div>
+    <p style="font-size:0.24rem;color:#5a3a1a;line-height:1.8">面对日军"扫荡"和国民党封锁，毛泽东发出<span style="color:#C41E3A;font-weight:bold">"自己动手，丰衣足食"</span>的号召。王震率领359旅在南泥湾开荒<span style="color:#C41E3A;font-weight:bold">26万亩</span>，将荒山变成"陕北好江南"。</p>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S4: Spirit ====== -->
+<div class="scr" id="s4">
+  <div class="topbar"><div class="topbar-title">🌟 英雄故事</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">延安精神</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.2rem">
+      <div style="width:calc(50% - 0.1rem);padding:0.3rem 0.2rem;background:linear-gradient(135deg,rgba(196,30,58,0.04),rgba(218,165,32,0.04));border-radius:0.15rem;text-align:center"><div style="font-size:0.5rem;margin-bottom:0.1rem">🎯</div><div style="font-size:0.22rem;color:#C41E3A;font-weight:bold">坚定正确的政治方向</div></div>
+      <div style="width:calc(50% - 0.1rem);padding:0.3rem 0.2rem;background:linear-gradient(135deg,rgba(196,30,58,0.04),rgba(218,165,32,0.04));border-radius:0.15rem;text-align:center"><div style="font-size:0.5rem;margin-bottom:0.1rem">💡</div><div style="font-size:0.22rem;color:#C41E3A;font-weight:bold">解放思想实事求是</div></div>
+      <div style="width:calc(50% - 0.1rem);padding:0.3rem 0.2rem;background:linear-gradient(135deg,rgba(196,30,58,0.04),rgba(218,165,32,0.04));border-radius:0.15rem;text-align:center"><div style="font-size:0.5rem;margin-bottom:0.1rem">❤️</div><div style="font-size:0.22rem;color:#C41E3A;font-weight:bold">全心全意为人民服务</div></div>
+      <div style="width:calc(50% - 0.1rem);padding:0.3rem 0.2rem;background:linear-gradient(135deg,rgba(196,30,58,0.04),rgba(218,165,32,0.04));border-radius:0.15rem;text-align:center"><div style="font-size:0.5rem;margin-bottom:0.1rem">💪</div><div style="font-size:0.22rem;color:#C41E3A;font-weight:bold">自力更生艰苦奋斗</div></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S5: Literature ====== -->
+<div class="scr" id="s5">
+  <div class="topbar"><div class="topbar-title">延安文艺</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">1942年 · 延安文艺座谈会</div>
+    <div class="card-list" style="margin:0">
+      <div class="card-item"><div class="card-thumb">🎵</div><div class="card-info"><div class="card-info-title">黄河大合唱</div><div style="font-size:0.2rem;color:#666">冼星海 · 民族怒吼</div></div></div>
+      <div class="card-item"><div class="card-thumb">🎭</div><div class="card-info"><div class="card-info-title">白毛女</div><div style="font-size:0.2rem;color:#666">延安鲁艺 · 新歌剧里程碑</div></div></div>
+      <div class="card-item"><div class="card-thumb">📖</div><div class="card-info"><div class="card-info-title">小二黑结婚</div><div style="font-size:0.2rem;color:#666">赵树理 · 解放区文学经典</div></div></div>
+      <div class="card-item"><div class="card-thumb">📚</div><div class="card-info"><div class="card-info-title">太阳照在桑干河上</div><div style="font-size:0.2rem;color:#666">丁玲 · 土改文学代表作</div></div></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S6: Compare Slider ====== -->
+<div class="scr" id="s6">
+  <div class="topbar"><div class="topbar-title">⭐ 今昔对比</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">拖动分隔线 · 见证延安变迁</div>
+    <div class="compare-box" id="compareBox">
+      <div class="compare-l"><span>🏚️</span><div class="compare-label">老延安 · 窑洞岁月</div></div>
+      <div class="compare-r"><span>🏙️</span><div class="compare-label">新延安 · 今日风貌</div></div>
+      <div class="compare-div" id="compareDiv"></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S7: Scratch Cards ====== -->
+<div class="scr" id="s7">
+  <div class="topbar"><div class="topbar-title">🏛️ 数字展馆</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">⭐ 擦开历史——用手指涂抹揭示故事</div>
+    <div class="scratch-row" id="scratchBox">
+      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🏛️</span><p>枣园是中共中央书记处所在地，毛泽东在这里写下《为人民服务》。</p></div></div>
+      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🧵</span><p>大生产运动中，毛泽东、周恩来带头纺线，延安纺车声日夜不停。</p></div></div>
+      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>📖</span><p>延安文艺座谈会后，《白毛女》《黄河大合唱》等经典诞生。</p></div></div>
+      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🌾</span><p>王震率359旅将荒无人烟的南泥湾变成"陕北好江南"。</p></div></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S8: Time Capsule ====== -->
+<div class="scr" id="s8">
+  <div class="topbar"><div class="topbar-title">⭐ 时间胶囊</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">点击年份翻开历史瞬间</div>
+    <div class="caps-row">
+      <div class="caps-card" onclick="this.classList.toggle('open')"><div class="caps-inner"><div class="caps-front"><span>📦</span><div class="caps-year">1935</div></div><div class="caps-back"><div class="caps-fact">中央红军到达陕北吴起镇，长征胜利结束。</div></div></div></div>
+      <div class="caps-card" onclick="this.classList.toggle('open')"><div class="caps-inner"><div class="caps-front"><span>📦</span><div class="caps-year">1942</div></div><div class="caps-back"><div class="caps-fact">延安整风运动全面展开，全党达到空前团结。</div></div></div></div>
+      <div class="caps-card" onclick="this.classList.toggle('open')"><div class="caps-inner"><div class="caps-front"><span>📦</span><div class="caps-year">1944</div></div><div class="caps-back"><div class="caps-fact">毛泽东发表《为人民服务》，成为党的根本宗旨。</div></div></div></div>
+      <div class="caps-card" onclick="this.classList.toggle('open')"><div class="caps-inner"><div class="caps-front"><span>📦</span><div class="caps-year">1945</div></div><div class="caps-back"><div class="caps-fact">中共七大召开，确立毛泽东思想为指导思想。</div></div></div></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S9: Letter ====== -->
+<div class="scr" id="s9">
+  <div class="topbar"><div class="topbar-title">⭐ 革命书信</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">点击信件阅读老三篇</div>
+    <div class="letter-box">
+      <div class="letter-seal" onclick="openL(this,'1944年9月8日，毛泽东在张思德追悼会上发表《为人民服务》。\n人固有一死，或重于泰山，或轻于鸿毛。')">📨</div>
+      <div class="letter-seal" onclick="openL(this,'1939年12月，毛泽东写下《纪念白求恩》。\n一个外国人，毫无利己的动机，把中国人民的解放事业当作他自己的事业。')">📨</div>
+      <div class="letter-seal" onclick="openL(this,'1945年6月，毛泽东讲述愚公移山。\n下定决心，不怕牺牲，排除万难，去争取胜利。')">📨</div>
+    </div>
+    <div class="letter-text anim" id="letterText"></div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S10: Spin Wheel ====== -->
+<div class="scr" id="s10">
+  <div class="topbar"><div class="topbar-title">📝 学习心得</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">⭐ 知识转盘——随机获取延安知识</div>
+    <div class="wheel-box">
+      <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="#faf0e0" stroke="#DAA520" stroke-width="3"/><path d="M100,100 L100,5 A95,95 0 0,1 189,150 Z" fill="rgba(196,30,58,0.12)"/><text x="135" y="55" fill="#C41E3A" font-size="8" font-weight="bold">宝塔山</text><path d="M100,100 L189,150 A95,95 0 0,1 65,190 Z" fill="rgba(218,165,32,0.12)"/><text x="125" y="170" fill="#8B4513" font-size="8" font-weight="bold">南泥湾</text><path d="M100,100 L65,190 A95,95 0 0,1 10,100 Z" fill="rgba(196,30,58,0.08)"/><text x="20" y="150" fill="#C41E3A" font-size="8" font-weight="bold">枣园</text><path d="M100,100 L10,100 A95,95 0 0,1 65,10 Z" fill="rgba(218,165,32,0.1)"/><text x="15" y="60" fill="#8B4513" font-size="8" font-weight="bold">杨家岭</text><path d="M100,100 L65,10 A95,95 0 0,1 140,8 Z" fill="rgba(196,30,58,0.09)"/><text x="70" y="22" fill="#C41E3A" font-size="8" font-weight="bold">王家坪</text><path d="M100,100 L140,8 A95,95 0 0,1 189,55 Z" fill="rgba(218,165,32,0.1)"/><text x="160" y="42" fill="#8B4513" font-size="8" font-weight="bold">凤凰山</text><circle cx="100" cy="100" r="15" fill="#C41E3A" stroke="#DAA520" stroke-width="2"/></svg>
+      <button class="wheel-btn" id="wheelBtn" onclick="spinW()">🎯 转动转盘</button>
+      <div class="wheel-result" id="wheelResult"></div>
+    </div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S11: Message Wall ====== -->
+<div class="scr" id="s11">
+  <div class="topbar"><div class="topbar-title">致敬延安</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
+  <div class="comp-box anim d0"><div class="comp-title">写下对革命先辈的敬意</div>
+    <textarea id="msgInput" placeholder="向延安时期的革命先辈致敬..." maxlength="80" style="width:100%;height:1.2rem;border:0.02rem solid #e0d5c0;border-radius:0.15rem;padding:0.2rem;font-size:0.24rem;resize:none;font-family:inherit;background:#faf8f5"></textarea>
+    <button onclick="addM()" style="display:block;width:2rem;height:0.7rem;margin:0.2rem auto 0;background:linear-gradient(135deg,#C41E3A,#8b0000);color:#fff;border:none;border-radius:0.35rem;font-size:0.24rem;cursor:pointer">🇨🇳 致敬</button>
+    <div id="msgWall" style="max-height:2.5rem;overflow-y:auto;margin-top:0.2rem"></div>
+  </div>
+  <div style="height:1.5rem"></div>
+</div>
+
+<!-- ====== S12: About / Ending ====== -->
+<div class="scr" id="s12">
+  <div class="topbar"><div class="topbar-title">关于</div></div>
+  <div class="hero" style="height:3.5rem;margin-top:0.2rem"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#f5e0d0,#e8d0b8);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:2rem">🌟</div><div style="font-size:0.4rem;color:#C41E3A;font-weight:bold;font-family:STKaiti,KaiTi,楷体,serif;margin-top:0.15rem">不忘初心 · 继续前进</div></div></div>
+  <div class="comp-box" style="text-align:center"><p style="font-size:0.26rem;color:#5a3a1a;line-height:2">延安革命旧址是一本永远读不完的书</p><p style="font-size:0.2rem;color:#999;margin-top:0.15rem">红色文化主题 · 2024</p></div>
+  <div style="height:1.5rem"></div>
+</div>
+
+</div>
+
+<!-- BOTTOM TAB BAR -->
+<div class="btm-tabs" id="btmTabs">
+  <div class="btm-tab on" data-idx="0"><div class="btm-tab-icon">🏠</div>首页</div>
+  <div class="btm-tab" data-idx="6"><div class="btm-tab-icon">🏛️</div>展厅</div>
+  <div class="btm-tab" data-idx="10"><div class="btm-tab-icon">🎯</div>活动</div>
+  <div class="btm-tab" data-idx="11"><div class="btm-tab-icon">👤</div>我的</div>
+</div>
+
+<button class="to-top" id="toTop" onclick="goScreen(0)">↑</button>
+
+<script>
+'use strict';
+
+let cs = 0;
+const scrs = document.querySelectorAll('.scr');
+const total = scrs.length;
+
+function goScreen(idx) {
+  if (idx < 0 || idx >= total) return;
+  if (scrs[cs]) scrs[cs].classList.remove('active');
+  cs = idx;
+  scrs[cs].classList.add('active');
+  scrs[cs].scrollTop = 0;
+  // Trigger animations
+  scrs[cs].querySelectorAll('.anim').forEach(el => {
+    el.classList.remove('show');
+    void el.offsetWidth;
+    el.classList.add('show');
+  });
+  // Update tabs
+  document.querySelectorAll('.btm-tab').forEach(t => t.classList.remove('on'));
+  const tabMap = {0:0,1:0,2:0,3:0,4:0,5:0,6:1,7:1,8:1,9:1,10:2,11:3,12:3};
+  const ti = tabMap[idx] || 0;
+  document.querySelectorAll('.btm-tab')[ti].classList.add('on');
+  // Init components
+  if (idx === 7 && !window._scratchInit) initScratch();
+  // Scroll-to-top visibility
+  document.getElementById('toTop').style.display = idx > 2 ? 'block' : 'none';
+}
+
+// Tab clicks
+document.querySelectorAll('.btm-tab').forEach(tab => {
+  tab.addEventListener('click', () => goScreen(parseInt(tab.dataset.idx)));
+});
+
+// Hero particles
+(function(){
+  const bg = document.getElementById('heroBg');
+  if (!bg) return;
+  let h = '';
+  for (let i=0;i<30;i++) {
+    h += `<div class="hero-particle" style="left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*0.05+0.02}rem;height:${Math.random()*0.05+0.02}rem;animation-delay:${Math.random()*2}s"></div>`;
+  }
+  bg.innerHTML = h;
+})();
+
+// Compare slider
+(function(){
+  const d = document.getElementById('compareDiv');
+  const b = document.getElementById('compareBox');
+  if (!d||!b) return;
+  let dr = false;
+  d.addEventListener('mousedown',()=>dr=true);
+  document.addEventListener('mouseup',()=>dr=false);
+  document.addEventListener('mousemove',e=>{if(!dr)return;moveC(e.clientX,b,d)});
+  d.addEventListener('touchstart',e=>{e.preventDefault();dr=true});
+  document.addEventListener('touchend',()=>dr=false);
+  document.addEventListener('touchmove',e=>{if(!dr)return;moveC(e.touches[0].clientX,b,d)});
+  function moveC(cx,b,d){const r=b.getBoundingClientRect();let p=((cx-r.left)/r.width)*100;p=Math.max(8,Math.min(92,p));d.style.left=p+'%';b.querySelector('.compare-l').style.width=p+'%';b.querySelector('.compare-r').style.width=(100-p)+'%'}
+})();
+
+// Scratch
+let _scratchInit = false;
+function initScratch() {
+  _scratchInit = true;
+  document.querySelectorAll('#s7 .scvs').forEach(cvs => {
+    const ctx = cvs.getContext('2d');
+    const w = cvs.parentElement.clientWidth, h = cvs.parentElement.clientHeight;
+    cvs.width = w; cvs.height = h; cvs.style.width = w+'px'; cvs.style.height = h+'px';
+    ctx.fillStyle = '#c4a060'; ctx.fillRect(0,0,w,h);
+    for (let i=0;i<15;i++){ctx.fillStyle='rgba(160,120,60,'+(0.3+Math.random()*0.4)+')';ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*6+2,0,Math.PI*2);ctx.fill()}
+    ctx.fillStyle = '#fff'; ctx.font = 'bold '+Math.floor(w*0.09)+'px sans-serif'; ctx.textAlign='center'; ctx.fillText('擦开查看',w/2,h/2);
+    let sc = false;
+    const sf = (cx,cy) => {const r=cvs.getBoundingClientRect();ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(cx-r.left,cy-r.top,30,0,Math.PI*2);ctx.fill()};
+    cvs.addEventListener('mousedown',()=>sc=true);
+    cvs.addEventListener('mouseup',()=>sc=false);
+    cvs.addEventListener('mouseleave',()=>sc=false);
+    cvs.addEventListener('mousemove',e=>{if(!sc)return;sf(e.clientX,e.clientY)});
+    cvs.addEventListener('touchstart',e=>{e.preventDefault();sc=true;Array.from(e.touches).forEach(t=>sf(t.clientX,t.clientY))});
+    cvs.addEventListener('touchmove',e=>{e.preventDefault();if(!sc)return;Array.from(e.touches).forEach(t=>sf(t.clientX,t.clientY))});
+    cvs.addEventListener('touchend',()=>sc=false);
+  });
+}
+
+// Spin wheel
+function spinW() {
+  const btn = document.getElementById('wheelBtn');
+  if (btn.disabled) return;
+  btn.disabled = true;
+  const wheel = document.getElementById('wheelSvg');
+  const facts = ['宝塔山：唐代古塔，高44米，延安标志性建筑。','南泥湾：359旅开荒26万亩，荒山变江南。','枣园：中共中央书记处所在地，毛泽东在此写下光辉著作。','杨家岭：中共七大召开地，确立毛泽东思想。','王家坪：中央军委驻地，指挥全国解放战争。','凤凰山：中共中央初到延安驻地。'];
+  wheel.style.transform = 'rotate('+(720+Math.random()*720)+'deg)';
+  setTimeout(()=>{document.getElementById('wheelResult').textContent='📌 '+facts[Math.floor(Math.random()*facts.length)];btn.disabled=false},3100);
+}
+
+// Letter
+function openL(el, text) {
+  el.style.transform = 'scale(1.3)';
+  el.style.opacity = '0.3';
+  document.getElementById('letterText').textContent = text;
+  document.getElementById('letterText').classList.add('show');
+}
+
+// Message
+(function(){const w=document.getElementById('msgWall');if(w){['📝 延安精神永放光芒，吾辈当自强！','📝 向延安时期的革命先辈致敬！🇨🇳'].forEach(m=>w.innerHTML+='<div style="padding:0.1rem 0;border-bottom:0.01rem solid #eee;font-size:0.2rem;color:#5a3a1a">'+m+'</div>')}})();
+function addM(){const i=document.getElementById('msgInput'),t=i.value.trim();if(!t)return;i.value='';const w=document.getElementById('msgWall');w.innerHTML+='<div style="padding:0.1rem 0;border-bottom:0.01rem solid #eee;font-size:0.2rem;color:#5a3a1a">📝 '+t+'</div>';w.scrollTop=w.scrollHeight}
+
+// Init
+goScreen(0);
+console.log('📱 延安精神 UI重制版 · 宣纸暖白 · 卡片流 · 毛玻璃 · 12屏');
+</script>
+</body>
+</html>
