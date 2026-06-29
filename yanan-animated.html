@@ -293,9 +293,7 @@ showScreen(0);
 })();
 
 // ===== Scratch Cards =====
-let scratchedCount = 0;
 function initScratch() {
-  scratchedCount = 0;
   document.getElementById('scratchNext').style.display = 'none';
   document.querySelectorAll('#s7 .scratch-cvs').forEach(canvas => {
     const ctx = canvas.getContext('2d');
@@ -303,10 +301,8 @@ function initScratch() {
     const h = canvas.parentElement.clientHeight;
     canvas.width = w; canvas.height = h;
     canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    // Dark coating
     ctx.fillStyle = '#3a2a1a';
     ctx.fillRect(0, 0, w, h);
-    // Decorative dots
     for (let i = 0; i < 20; i++) {
       ctx.fillStyle = 'rgba(80,50,20,' + (0.3 + Math.random() * 0.5) + ')';
       ctx.beginPath();
@@ -319,48 +315,43 @@ function initScratch() {
     ctx.fillText('擦开查看', w / 2, h / 2);
 
     let scratching = false;
+    const scratchFn = (cx, cy) => {
+      const r = canvas.getBoundingClientRect();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(cx - r.left, cy - r.top, 28, 0, Math.PI * 2);
+      ctx.fill();
+    };
     canvas.addEventListener('mousedown', () => scratching = true);
-    canvas.addEventListener('mouseup', () => scratching = false);
-    canvas.addEventListener('mouseleave', () => scratching = false);
-    canvas.addEventListener('mousemove', e => {
-      if (!scratching) return;
-      scratch(e.clientX, e.clientY, canvas, ctx);
-    });
-    canvas.addEventListener('touchstart', e => {
-      e.preventDefault(); scratching = true;
-      Array.from(e.touches).forEach(t => scratch(t.clientX, t.clientY, canvas, ctx));
-    });
-    canvas.addEventListener('touchmove', e => {
-      e.preventDefault();
-      if (!scratching) return;
-      Array.from(e.touches).forEach(t => scratch(t.clientX, t.clientY, canvas, ctx));
-    });
-    canvas.addEventListener('touchend', () => { scratching = false; checkAll(); });
-    canvas.addEventListener('mouseup', () => { checkAll(); });
+    canvas.addEventListener('mouseup', () => { scratching = false; checkScratch(); });
+    canvas.addEventListener('mouseleave', () => { scratching = false; checkScratch(); });
+    canvas.addEventListener('mousemove', e => { if (!scratching) return; scratchFn(e.clientX, e.clientY); });
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); scratching = true; Array.from(e.touches).forEach(t => scratchFn(t.clientX, t.clientY)); });
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!scratching) return; Array.from(e.touches).forEach(t => scratchFn(t.clientX, t.clientY)); });
+    canvas.addEventListener('touchend', () => { scratching = false; checkScratch(); });
   });
+  // Always show skip option after 3 seconds
+  setTimeout(() => {
+    document.getElementById('scratchNext').style.display = 'inline-block';
+    document.getElementById('scratchNext').textContent = '跳过 →';
+    document.getElementById('scratchNext').onclick = nextScreen;
+  }, 4000);
 }
 
-function scratch(cx, cy, canvas, ctx) {
-  const r = canvas.getBoundingClientRect();
-  ctx.globalCompositeOperation = 'destination-out';
-  ctx.beginPath();
-  ctx.arc(cx - r.left, cy - r.top, 24, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function checkAll() {
+function checkScratch() {
   let cleared = 0;
   document.querySelectorAll('#s7 .scratch-cvs').forEach(c => {
     const ctx = c.getContext('2d');
     const data = ctx.getImageData(0, 0, c.width, c.height).data;
     let transparent = 0;
-    for (let i = 3; i < data.length; i += 4) {
-      if (data[i] < 128) transparent++;
-    }
-    if (transparent / (data.length / 4) > 0.4) cleared++;
+    for (let i = 3; i < data.length; i += 4) { if (data[i] < 128) transparent++; }
+    if (transparent / (data.length / 4) > 0.2) cleared++;
   });
   if (cleared >= 4) {
-    document.getElementById('scratchNext').style.display = 'inline-block';
+    const btn = document.getElementById('scratchNext');
+    btn.style.display = 'inline-block';
+    btn.textContent = '继续阅读';
+    btn.onclick = nextScreen;
   }
 }
 
