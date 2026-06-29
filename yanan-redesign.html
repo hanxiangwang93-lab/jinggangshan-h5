@@ -370,23 +370,46 @@ document.querySelectorAll('.btm-tab').forEach(tab => {
 let _scratchInit = false;
 function initScratch() {
   _scratchInit = true;
-  document.querySelectorAll('#s7 .scvs').forEach(cvs => {
-    const ctx = cvs.getContext('2d');
-    const w = cvs.parentElement.clientWidth, h = cvs.parentElement.clientHeight;
-    cvs.width = w; cvs.height = h; cvs.style.width = w+'px'; cvs.style.height = h+'px';
-    ctx.fillStyle = '#c4a060'; ctx.fillRect(0,0,w,h);
-    for (let i=0;i<15;i++){ctx.fillStyle='rgba(160,120,60,'+(0.3+Math.random()*0.4)+')';ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*6+2,0,Math.PI*2);ctx.fill()}
-    ctx.fillStyle = '#fff'; ctx.font = 'bold '+Math.floor(w*0.09)+'px sans-serif'; ctx.textAlign='center'; ctx.fillText('擦开查看',w/2,h/2);
-    let sc = false;
-    const sf = (cx,cy) => {const r=cvs.getBoundingClientRect();ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(cx-r.left,cy-r.top,30,0,Math.PI*2);ctx.fill()};
-    cvs.addEventListener('mousedown',()=>sc=true);
-    cvs.addEventListener('mouseup',()=>sc=false);
-    cvs.addEventListener('mouseleave',()=>sc=false);
-    cvs.addEventListener('mousemove',e=>{if(!sc)return;sf(e.clientX,e.clientY)});
-    cvs.addEventListener('touchstart',e=>{e.preventDefault();sc=true;Array.from(e.touches).forEach(t=>sf(t.clientX,t.clientY))});
-    cvs.addEventListener('touchmove',e=>{e.preventDefault();if(!sc)return;Array.from(e.touches).forEach(t=>sf(t.clientX,t.clientY))});
-    cvs.addEventListener('touchend',()=>sc=false);
-  });
+  // Delay to ensure screen is visible & elements have dimensions
+  setTimeout(() => {
+    document.querySelectorAll('#s7 .scvs').forEach(cvs => {
+      const ctx = cvs.getContext('2d');
+      const rect = cvs.parentElement.getBoundingClientRect();
+      const w = Math.max(rect.width, 50);
+      const h = Math.max(rect.height, 50);
+      cvs.width = w; cvs.height = h;
+      cvs.style.width = w + 'px'; cvs.style.height = h + 'px';
+      // Clear canvas
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#c4a060'; ctx.fillRect(0, 0, w, h);
+      for (let i = 0; i < 20; i++) {
+        ctx.fillStyle = 'rgba(140,100,40,' + (0.3 + Math.random() * 0.5) + ')';
+        ctx.beginPath();
+        ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 8 + 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = '#5a3a1a';
+      ctx.font = 'bold ' + Math.max(Math.floor(w * 0.08), 14) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('擦开查看', w / 2, h / 2);
+      // Scratch handlers
+      let sc = false;
+      const sf = (cx, cy) => {
+        const r = cvs.getBoundingClientRect();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(cx - r.left, cy - r.top, 32, 0, Math.PI * 2);
+        ctx.fill();
+      };
+      cvs.addEventListener('mousedown', () => sc = true);
+      cvs.addEventListener('mouseup', () => sc = false);
+      cvs.addEventListener('mouseleave', () => sc = false);
+      cvs.addEventListener('mousemove', e => { if (!sc) return; sf(e.clientX, e.clientY); });
+      cvs.addEventListener('touchstart', e => { e.preventDefault(); sc = true; Array.from(e.touches).forEach(t => sf(t.clientX, t.clientY)); });
+      cvs.addEventListener('touchmove', e => { e.preventDefault(); if (!sc) return; Array.from(e.touches).forEach(t => sf(t.clientX, t.clientY)); });
+      cvs.addEventListener('touchend', () => sc = false);
+    });
+  }, 300);
 }
 
 // Spin wheel
