@@ -77,12 +77,15 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#F5F5DC;o
 .comp-box{margin:0.3rem 0.4rem;background:#fff;border-radius:0.2rem;padding:0.3rem;box-shadow:0 0.04rem 0.15rem rgba(196,30,58,0.05)}
 .comp-title{font-size:0.3rem;color:#1a1a1a;font-weight:bold;margin-bottom:0.15rem}
 
-/* Scratch */
+/* Tap-to-Reveal Cards */
 .scratch-row{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center}
-.scratch-card{width:calc(50% - 0.08rem);height:2.4rem;position:relative;border-radius:0.15rem;overflow:hidden;border:0.01rem solid rgba(218,165,32,0.3)}
-.scratch-card canvas{position:absolute;inset:0;z-index:2}
-.scratch-story{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,248,240,0.95),#f5e6d3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem;text-align:center;font-size:0.18rem;color:#5a3a1a;line-height:1.5}
-.scratch-story span{font-size:0.4rem;margin-bottom:0.06rem}
+.tap-card{width:calc(50% - 0.08rem);height:2.6rem;position:relative;cursor:pointer;border-radius:0.15rem;overflow:hidden}
+.tap-cover{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,#c4a060,#a08040);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.5s;border:0.02rem solid #DAA520}
+.tap-cover span{font-size:0.45rem;margin-bottom:0.06rem}
+.tap-cover p{font-size:0.18rem;color:#fff}
+.tap-card.revealed .tap-cover{opacity:0;pointer-events:none;transform:scale(0.9)}
+.tap-reveal{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#fff8f0,#f5e6d3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem;text-align:center;font-size:0.18rem;color:#5a3a1a;line-height:1.5;border:0.02rem solid #DAA520}
+.tap-reveal span{font-size:0.4rem;margin-bottom:0.06rem}
 
 /* Spin Wheel */
 .wheel-box{display:flex;flex-direction:column;align-items:center;gap:0.15rem}
@@ -219,15 +222,27 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#F5F5DC;o
   <div style="height:1.5rem"></div>
 </div>
 
-<!-- ====== S7: Scratch Cards ====== -->
+<!-- ====== S7: Tap-to-Reveal Cards ====== -->
 <div class="scr" id="s7">
   <div class="topbar"><div class="topbar-title">🏛️ 数字展馆</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
-  <div class="comp-box anim d0"><div class="comp-title">⭐ 擦开历史——用手指涂抹揭示故事</div>
+  <div class="comp-box anim d0"><div class="comp-title">⭐ 点击揭开——轻触卡片揭示延安故事</div>
     <div class="scratch-row" id="scratchBox">
-      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🏛️</span><p>枣园是中共中央书记处所在地，毛泽东在这里写下《为人民服务》。</p></div></div>
-      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🧵</span><p>大生产运动中，毛泽东、周恩来带头纺线，延安纺车声日夜不停。</p></div></div>
-      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>📖</span><p>延安文艺座谈会后，《白毛女》《黄河大合唱》等经典诞生。</p></div></div>
-      <div class="scratch-card"><canvas class="scvs"></canvas><div class="scratch-story"><span>🌾</span><p>王震率359旅将荒无人烟的南泥湾变成"陕北好江南"。</p></div></div>
+      <div class="tap-card" onclick="revealCard(this)">
+        <div class="tap-cover"><span>🏛️</span><p>点击揭开</p></div>
+        <div class="tap-reveal"><span>🏛️</span><p>枣园是中共中央书记处所在地，毛泽东在这里写下《为人民服务》。</p></div>
+      </div>
+      <div class="tap-card" onclick="revealCard(this)">
+        <div class="tap-cover"><span>🧵</span><p>点击揭开</p></div>
+        <div class="tap-reveal"><span>🧵</span><p>大生产运动中，毛泽东、周恩来带头纺线，延安纺车声日夜不停。</p></div>
+      </div>
+      <div class="tap-card" onclick="revealCard(this)">
+        <div class="tap-cover"><span>📖</span><p>点击揭开</p></div>
+        <div class="tap-reveal"><span>📖</span><p>延安文艺座谈会后，《白毛女》《黄河大合唱》等经典诞生。</p></div>
+      </div>
+      <div class="tap-card" onclick="revealCard(this)">
+        <div class="tap-cover"><span>🌾</span><p>点击揭开</p></div>
+        <div class="tap-reveal"><span>🌾</span><p>王震率359旅将荒无人烟的南泥湾变成"陕北好江南"。</p></div>
+      </div>
     </div>
   </div>
   <div style="height:1.5rem"></div>
@@ -330,7 +345,6 @@ function goScreen(idx) {
   const ti = tabMap[idx] || 0;
   document.querySelectorAll('.btm-tab')[ti].classList.add('on');
   // Init components
-  if (idx === 7 && !window._scratchInit) initScratch();
   // Scroll-to-top visibility
   document.getElementById('toTop').style.display = idx > 2 ? 'block' : 'none';
 }
@@ -366,51 +380,8 @@ document.querySelectorAll('.btm-tab').forEach(tab => {
   function moveC(cx,b,d){const r=b.getBoundingClientRect();let p=((cx-r.left)/r.width)*100;p=Math.max(8,Math.min(92,p));d.style.left=p+'%';b.querySelector('.compare-l').style.width=p+'%';b.querySelector('.compare-r').style.width=(100-p)+'%'}
 })();
 
-// Scratch
-let _scratchInit = false;
-function initScratch() {
-  _scratchInit = true;
-  // Delay to ensure screen is visible & elements have dimensions
-  setTimeout(() => {
-    document.querySelectorAll('#s7 .scvs').forEach(cvs => {
-      const ctx = cvs.getContext('2d');
-      const rect = cvs.parentElement.getBoundingClientRect();
-      const w = Math.max(rect.width, 50);
-      const h = Math.max(rect.height, 50);
-      cvs.width = w; cvs.height = h;
-      cvs.style.width = w + 'px'; cvs.style.height = h + 'px';
-      // Clear canvas
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = '#c4a060'; ctx.fillRect(0, 0, w, h);
-      for (let i = 0; i < 20; i++) {
-        ctx.fillStyle = 'rgba(140,100,40,' + (0.3 + Math.random() * 0.5) + ')';
-        ctx.beginPath();
-        ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 8 + 3, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.fillStyle = '#5a3a1a';
-      ctx.font = 'bold ' + Math.max(Math.floor(w * 0.08), 14) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('擦开查看', w / 2, h / 2);
-      // Scratch handlers
-      let sc = false;
-      const sf = (cx, cy) => {
-        const r = cvs.getBoundingClientRect();
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.beginPath();
-        ctx.arc(cx - r.left, cy - r.top, 32, 0, Math.PI * 2);
-        ctx.fill();
-      };
-      cvs.addEventListener('mousedown', () => sc = true);
-      cvs.addEventListener('mouseup', () => sc = false);
-      cvs.addEventListener('mouseleave', () => sc = false);
-      cvs.addEventListener('mousemove', e => { if (!sc) return; sf(e.clientX, e.clientY); });
-      cvs.addEventListener('touchstart', e => { e.preventDefault(); sc = true; Array.from(e.touches).forEach(t => sf(t.clientX, t.clientY)); });
-      cvs.addEventListener('touchmove', e => { e.preventDefault(); if (!sc) return; Array.from(e.touches).forEach(t => sf(t.clientX, t.clientY)); });
-      cvs.addEventListener('touchend', () => sc = false);
-    });
-  }, 300);
-}
+// Tap-to-Reveal
+function revealCard(card) { card.classList.toggle('revealed') }
 
 // Spin wheel
 function spinW() {
