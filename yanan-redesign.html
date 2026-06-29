@@ -77,15 +77,17 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#F5F5DC;o
 .comp-box{margin:0.3rem 0.4rem;background:#fff;border-radius:0.2rem;padding:0.3rem;box-shadow:0 0.04rem 0.15rem rgba(196,30,58,0.05)}
 .comp-title{font-size:0.3rem;color:#1a1a1a;font-weight:bold;margin-bottom:0.15rem}
 
-/* Tap-to-Reveal Cards */
+/* 3D Flip Cards */
 .scratch-row{display:flex;flex-wrap:wrap;gap:0.15rem;justify-content:center}
-.tap-card{width:calc(50% - 0.08rem);height:2.6rem;position:relative;cursor:pointer;border-radius:0.15rem;overflow:hidden}
-.tap-cover{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,#c4a060,#a08040);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.5s;border:0.02rem solid #DAA520}
-.tap-cover span{font-size:0.45rem;margin-bottom:0.06rem}
-.tap-cover p{font-size:0.18rem;color:#fff}
-.tap-card.revealed .tap-cover{opacity:0;pointer-events:none;transform:scale(0.9)}
-.tap-reveal{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#fff8f0,#f5e6d3);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem;text-align:center;font-size:0.18rem;color:#5a3a1a;line-height:1.5;border:0.02rem solid #DAA520}
-.tap-reveal span{font-size:0.4rem;margin-bottom:0.06rem}
+.flip3d{width:calc(50% - 0.08rem);height:2.8rem;perspective:800px;cursor:pointer}
+.flip3d-inner{width:100%;height:100%;position:relative;transition:transform 0.6s;transform-style:preserve-3d}
+.flip3d.flipped .flip3d-inner{transform:rotateY(180deg)}
+.flip3d-front,.flip3d-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:0.15rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.15rem;border:0.02rem solid #DAA520}
+.flip3d-front{background:linear-gradient(135deg,#c4a060,#a08040);z-index:2}
+.flip3d-front span{font-size:0.5rem;margin-bottom:0.08rem}
+.flip3d-front p{font-size:0.2rem;color:#fff;font-weight:bold}
+.flip3d-back{background:linear-gradient(180deg,#fff8f0,#f5e6d3);transform:rotateY(180deg);text-align:center;font-size:0.19rem;color:#5a3a1a;line-height:1.6}
+.flip3d-back span{font-size:0.4rem;margin-bottom:0.06rem}
 
 /* Spin Wheel */
 .wheel-box{display:flex;flex-direction:column;align-items:center;gap:0.15rem}
@@ -227,22 +229,10 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#F5F5DC;o
   <div class="topbar"><div class="topbar-title">🏛️ 数字展馆</div><div class="topbar-badge" onclick="goScreen(0)">← 返回</div></div>
   <div class="comp-box anim d0"><div class="comp-title">⭐ 点击揭开——轻触卡片揭示延安故事</div>
     <div class="scratch-row" id="scratchBox">
-      <div class="tap-card" onclick="revealCard(this)">
-        <div class="tap-cover"><span>🏛️</span><p>点击揭开</p></div>
-        <div class="tap-reveal"><span>🏛️</span><p>枣园是中共中央书记处所在地，毛泽东在这里写下《为人民服务》。</p></div>
-      </div>
-      <div class="tap-card" onclick="revealCard(this)">
-        <div class="tap-cover"><span>🧵</span><p>点击揭开</p></div>
-        <div class="tap-reveal"><span>🧵</span><p>大生产运动中，毛泽东、周恩来带头纺线，延安纺车声日夜不停。</p></div>
-      </div>
-      <div class="tap-card" onclick="revealCard(this)">
-        <div class="tap-cover"><span>📖</span><p>点击揭开</p></div>
-        <div class="tap-reveal"><span>📖</span><p>延安文艺座谈会后，《白毛女》《黄河大合唱》等经典诞生。</p></div>
-      </div>
-      <div class="tap-card" onclick="revealCard(this)">
-        <div class="tap-cover"><span>🌾</span><p>点击揭开</p></div>
-        <div class="tap-reveal"><span>🌾</span><p>王震率359旅将荒无人烟的南泥湾变成"陕北好江南"。</p></div>
-      </div>
+      <div class="flip3d" onclick="this.classList.toggle('flipped')"><div class="flip3d-inner"><div class="flip3d-front"><span>🏛️</span><p>点击揭开</p></div><div class="flip3d-back"><span>🏛️</span><p>枣园是中共中央书记处所在地，毛泽东在这里写下《为人民服务》。</p></div></div></div>
+      <div class="flip3d" onclick="this.classList.toggle('flipped')"><div class="flip3d-inner"><div class="flip3d-front"><span>🧵</span><p>点击揭开</p></div><div class="flip3d-back"><span>🧵</span><p>大生产运动中，毛泽东、周恩来带头纺线，延安纺车声日夜不停。</p></div></div></div>
+      <div class="flip3d" onclick="this.classList.toggle('flipped')"><div class="flip3d-inner"><div class="flip3d-front"><span>📖</span><p>点击揭开</p></div><div class="flip3d-back"><span>📖</span><p>延安文艺座谈会后，《白毛女》《黄河大合唱》等经典诞生。</p></div></div></div>
+      <div class="flip3d" onclick="this.classList.toggle('flipped')"><div class="flip3d-inner"><div class="flip3d-front"><span>🌾</span><p>点击揭开</p></div><div class="flip3d-back"><span>🌾</span><p>王震率359旅将荒无人烟的南泥湾变成"陕北好江南"。</p></div></div></div>
     </div>
   </div>
   <div style="height:1.5rem"></div>
@@ -379,9 +369,6 @@ document.querySelectorAll('.btm-tab').forEach(tab => {
   document.addEventListener('touchmove',e=>{if(!dr)return;moveC(e.touches[0].clientX,b,d)});
   function moveC(cx,b,d){const r=b.getBoundingClientRect();let p=((cx-r.left)/r.width)*100;p=Math.max(8,Math.min(92,p));d.style.left=p+'%';b.querySelector('.compare-l').style.width=p+'%';b.querySelector('.compare-r').style.width=(100-p)+'%'}
 })();
-
-// Tap-to-Reveal
-function revealCard(card) { card.classList.toggle('revealed') }
 
 // Spin wheel
 function spinW() {
